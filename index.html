@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shivkrupa — Hero (new)</title>
+
+    <!-- bootstrap (optional) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- NEW CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Minimal nav for testing -->
+    <nav class="clean-navbar">
+        <div class="nav-container">
+
+            <!-- Logo -->
+            <div class="nav-left">
+                <img src="images/logo.png" alt="Logo" class="logo">
+            </div>
+
+            <!-- Toggle Button (Mobile) -->
+            <button class="nav-toggle" id="navToggle" aria-label="Open Menu">
+                ☰
+            </button>
+
+            <!-- Center Menu -->
+            <ul class="nav-menu" id="mainNav">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Product</a></li>
+                <li><a href="#">Gallery</a></li>
+            </ul>
+
+            <!-- Right Gradient Section -->
+            <div class="nav-right">
+                <button class="signin-btn">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- HERO (fixed markup) -->
+    <div class="hero-sec">
+        <header class="hero-crossfade" id="hero-new" aria-label="Hero">
+            <div class="slides">
+                <figure class="slide is-active" data-index="0">
+                    <img class="slide-img" src="./assets/heroImg-1.png" alt="Tensile canopy - 1">
+                    <figcaption class="slide-caption">
+                        <div>
+                        <h1>Premium Tensile Structures &amp; Awnings</h1>
+                        <p>Custom-designed shade solutions — durable, stylish and engineered for every space.</p>
+                        <div class="cta">
+                            <a class="btn btn-primary btn-lg gradient-btn" href="#contact">Get a Quote</a>
+                            <a class="btn btn-primary" href="#products">Products</a>
+                        </div>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="slide" data-index="1">
+                    <img class="slide-img" src="./assets/heroImg-2.png" alt="Tensile canopy - 2">
+                    <figcaption class="slide-caption">
+                        <h1>Engineered for Strength &amp; Elegance</h1>
+                        <p>From car-park canopies to retractable awnings — modern designs, reliable installation.</p>
+                        <div class="cta">
+                            <a class="btn btn-primary btn-lg gradient-btn" href="#projects">View Projects</a>
+                            <a class="btn btn-primary" href="#contact">Contact Us</a>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="slide" data-index="2">
+                    <img class="slide-img" src="./assets/heroImg-3.png" alt="Tensile canopy - 3">
+                    <figcaption class="slide-caption">
+                        <h1>Lightweight, Weather-Resistant Materials</h1>
+                        <p>Designed to protect, perform and enhance outdoor spaces — backed by craftsmanship.</p>
+                        <div class="cta">
+                            <a class="btn btn-primary btn-lg gradient-btn" href="#contact">Request Estimate</a>
+                            <a class="btn btn-primary" href="#gallery">Gallery</a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+
+            <div class="controls">
+                <div class="dots" role="tablist" aria-label="Slides"></div>
+            </div>
+        </header>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="about-section py-5">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <!-- Left: image -->
+                <div class="col-lg-6">
+                    <section id="tensile-3d-section">
+                        <div class="tensile-3d-wrapper">
+                            <img id="tensile-3d-img" src="./assets/img3d.png" alt="Tensile 3D render">
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right: content -->
+                <div class="col-lg-6">
+                    <h2 class="mb-3">About Shivkrupa Enterprises</h2>
+                    <p class="lead mb-3" style="color: #9c9b9b;">
+                        Since 2011, Shivkrupa Enterprises has been delivering high-quality tensile structures,
+                        retractable awnings and car parking sheds across residential and commercial projects.
+                        We focus on durable materials, precise engineering and timely installation.
+                    </p>
+
+                    <p class="mb-3" style="color: #9c9b9b;">
+                        Our team handles everything from initial site survey and custom design to manufacturing
+                        and on-site installation — ensuring each solution is tailored to your space and budget.
+                    </p>
+
+                    <!-- stats -->
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <div class="stat">
+                                <div class="stat-num">12+</div>
+                                <div class="stat-label">Years</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat">
+                                <div class="stat-num">500+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat">
+                                <div class="stat-num">24/7</div>
+                                <div class="stat-label">Support</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- values / bullets -->
+                    <ul class="about-list mb-3">
+                        <li>Custom designs to match architecture</li>
+                        <li>High-strength, weather-resistant materials</li>
+                        <li>End-to-end project management & warranty</li>
+                    </ul>
+
+                    <!-- CTAs -->
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#contact" class="btn btn-primary btn-lg gradient-btn">Request a Quote</a>
+                        <a href="/mnt/data/e profile  SHIVKRUPA ENTERPRISES.pdf.pdf.pdf" class="btn btn-dark btn-lg"
+                            download>
+                            <i class="bx bx-download"></i> Download Company Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLIENTS -->
+    <section class="clients-section">
+        <div class="clients-header">
+            <p class="clients-kicker">Trusted by brands</p>
+            <h2 class="clients-title">Boxes packed for these amazing clients</h2>
+            <p class="clients-sub">From boutique businesses to growing D2C brands, we help them deliver products in
+                eco-conscious, premium packaging.</p>
+        </div>
+
+        <div class="clients-slider" aria-hidden="false" aria-label="Client logos">
+            <div class="clients-track" id="clientsTrack">
+                <!-- we will duplicate the logos list in JS to ensure smooth infinite scroll -->
+                <!-- using the uploaded local image as logo placeholder as requested -->
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-1.png" alt="Client 1"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-2.png" alt="Client 2"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-3.png" alt="Client 3"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-4.png" alt="Client 4"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-6.png" alt="Client 5"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-5.png" alt="Client 6"></div>
+
+                <!-- duplicate for seamless loop -->
+                <<div class="client-logo-wrap"><img
+                        src="./assets/client-1.png" alt="Client 1"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-2.png" alt="Client 2"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-3.png" alt="Client 3"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-4.png" alt="Client 4"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-6.png" alt="Client 5"></div>
+                <div class="client-logo-wrap"><img
+                        src="./assets/client-5.png" alt="Client 6"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services grid--------------------------->
+    <main class="services-wrap" id="services-list">
+
+        <div class="product-text">
+            <h2 class="mb-3">Aur Products</h2>
+        </div>
+        <div class="services-grid">
+            <article class="service-card">
+                <div class="service-icon">
+                    <img id="tensile-3d-img" src="./assets/img3d.png" alt="Tensile 3D render">
+                </div>
+                <div class="service-body">
+                    <h5>Tensile Structure</h5>
+                    <ul class="service-list mb-3">
+                        <li>Conical Tensile Structure</li>
+                        <li>Single Pole Tensile Structure</li>
+                        <li>Half Round Tensile Structure</li>
+                        <li>2& More Conical Tensile Structure</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="service-card">
+                <div class="service-icon">
+                    <img id="tensile-3d-img" src="./assets/productImg-1.png" alt="Tensile 3D render">
+                </div>
+                <div class="service-body">
+                    <h5>Awing Shed</h5>
+                    <ul class="service-list mb-3">
+                        <li>Commercial Awning</li>
+                        <li>Residential Awning</li>
+                        <li>Sun Shade</li>
+                        <li>Motorised Awning</li>
+                        <li>Fabric Shade</li>
+                        <li>Folding Shade</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="service-card">
+                <div class="service-icon">
+                    <img id="tensile-3d-img" src="./assets/productImg-2.png" alt="Tensile 3D render">
+                </div>
+                <div class="service-body">
+                    <h5>Canopy Tensile</h5>
+                    <ul class="service-list mb-3">
+                        <li>Entrance Canopy</li>
+                        <li>Outdoor Canopy</li>
+                        <li>Gazebo</li>
+                        <li>Window Canopy</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="service-card">
+                <div class="service-icon">
+                    <img id="tensile-3d-img" src="./assets/productImg-3.png" alt="Tensile 3D render">
+                </div>
+                <div class="service-body">
+                    <h5>Car Parking Shed</h5>
+                    <ul class="service-list mb-3">
+                        <li>Car Parking</li>
+                        <li>FRP Parking Shed</li>
+                        <li>Tensile Car Parking Structure</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="service-card">
+                <div class="service-icon">
+                    <img id="tensile-3d-img" src="./assets/productImg-4.png" alt="Tensile 3D render">
+                </div>
+                <div class="service-body">
+                    <h5>Monsoon Shed </h5>
+                    <ul class="service-list mb-3">
+                        <li>Fix Frame Awning</li>
+                        <li>Retractable Awning</li>
+                        <li>ERetractable Hut Awning</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- <article class="service-card">
+                <div class="service-icon"><i class='bx bxs-duplicate'></i></div>
+                <div class="service-body">
+                    <h5>Tensile Structure</h5>
+                    <ul class="service-list mb-3">
+                        <li>Custom designs to match architecture</li>
+                        <li>High-strength, weather-resistant materials</li>
+                        <li>End-to-end project management & warranty</li>
+                    </ul>
+                </div>
+            </article> -->
+        </div>
+    </main>
+
+    <!-- short features strip -->
+    <div class="feature-strip mt-4">
+        <div class="feature-item">
+            <div class="num" style="color: black;">01</div>
+            <div>
+                <div class="label">End-to-end service</div>
+                <div class="small text-muted">From survey to installation</div>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <div class="num"style="color: black;">02</div>
+            <div>
+                <div class="label">Quality materials</div>
+                <div class="small text-muted">Industry-grade membranes & coatings</div>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <div class="num"style="color: black;">03</div>
+            <div>
+                <div class="label">Timely delivery</div>
+                <div class="small text-muted">Optimized manufacturing & logistics</div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ==========Gallery=========================================== -->
+
+    <div class="container">
+        <section class="gallery-section" aria-labelledby="galleryTitle">
+            <div class="gallery-header">
+                <div>
+                    <h2 id="galleryTitle" class="">Project Gallery</h2>
+                    <p class="gallery-sub">A selection of our recent tensile and awning installations. Click any image
+                        to enlarge.</p>
+                </div>
+                <div>
+                    <button class="view-all-btn" id="openFullGalleryBtn" aria-haspopup="dialog">View All</button>
+                </div>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Thumbnails injected by JS -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Lightbox (single image) -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="lightbox-inner fade-in" role="document">
+            <button class="lb-prev" id="lbPrev" aria-label="Previous image">‹</button>
+            <img id="lightboxImg" src="" alt="Enlarged photo">
+            <button class="lb-next" id="lbNext" aria-label="Next image">›</button>
+            <button class="lightbox-close lb-close" id="lbClose" aria-label="Close (Esc)">✕</button>
+        </div>
+    </div>
+
+    <!-- Full gallery modal -->
+    <div class="full-gallery-modal" id="fullGalleryModal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="full-gallery-content fade-in">
+            <div class="modal-top">
+                <div class="modal-title">All gallery images</div>
+                <div>
+                    <button class="modal-close" id="closeFullGalleryBtn">Close</button>
+                </div>
+            </div>
+
+            <div class="full-gallery-grid" id="fullGalleryGrid">
+                <!-- full gallery items injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT SECTION (no form) -->
+    <section id="contact-home" class="contact-home-section">
+        <div class="contact-inner container">
+            <div class="contact-left">
+                <div class="brand-row">
+                    <img class="brand-img" src="./assets/heroImg-1.png" alt="Shivkrupa visual" />
+                    <div class="brand-texts">
+                        <h3 class="company-name">Shivkrupa Enterprises</h3>
+                        <p class="tagline">Tensile structures, awnings & engineered shade solutions since 2011.</p>
+                    </div>
+                </div>
+
+                <p class="about-line">
+                    We design, manufacture and install custom tensile canopies, retractable awnings and parking sheds.
+                    Quality materials,
+                    precise engineering and timely installation are our top priorities.
+                </p>
+
+                <div class="contact-grid">
+                    <div class="info">
+                        <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 01.9-.27 11.36 11.36 0 003.56.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h2.5a1 1 0 011 1 11.36 11.36 0 00.57 3.56 1 1 0 01-.27.9l-2.18 2.33z" />
+                        </svg>
+                        <div>
+                            <div class="info-label">Phone</div>
+                            <a class="info-value" href="tel:+911234567890">+91 12345 67890</a>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5L4 8V6l8 5 8-5v2z" />
+                        </svg>
+                        <div>
+                            <div class="info-label">Email</div>
+                            <a class="info-value" href="mailto:info@shivkrupa.com">info@shivkrupa.com</a>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <svg class="info-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z" />
+                        </svg>
+                        <div>
+                            <div class="info-label">Address</div>
+                            <div class="info-value">S. No. 33, Near Yuraj Castel, Warje, Pune, Maharashtra</div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="contact-right" aria-hidden="true">
+                <img class="contact-visual" src="./assets/heroImg-1.png" alt="Tensile structure visual" />
+            </div>
+        </div>
+    </section>
+
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonial-wrapper">
+        <div class="test-header">
+            <p class="test-kicker">What our customers say</p>
+            <h2 class="test-title">Real stories from brands we pack for.</h2>
+            <p class="test-sub">D2C brands, small businesses and growing companies trust us for packaging that feels
+                premium and planet-friendly.</p>
+        </div>
+
+        <div class="testimonial-container">
+            <button class="test-arrow-btn" id="prevBtn" aria-label="Previous testimonials">‹</button>
+
+            <div class="testimonial-window" aria-live="polite">
+                <div class="testimonial-track" id="testimonialTrack">
+                    <!-- Testimonials will be injected by JS -->
+                </div>
+            </div>
+
+            <button class="test-arrow-btn" id="nextBtn" aria-label="Next testimonials">›</button>
+        </div>
+    </section>
+
+    <!-- ---------- FOOTER ---------- -->
+    <footer class="site-footer">
+        <div class="footer-inner container">
+            <!-- About / logo -->
+            <div class="footer-col footer-about">
+                <img src="/mnt/data/A_high-resolution_digital_photograph_captures_a_te.png" alt="Shivkrupa logo"
+                    class="footer-logo">
+                <p class="footer-desc">
+                    Shivkrupa Enterprises — designers & manufacturers of tensile structures, retractable awnings and
+                    car-park sheds.
+                    Quality materials, custom designs and timely installation since 2011.
+                </p>
+
+                <div class="footer-download">
+                    <a href="/mnt/data/e profile  SHIVKRUPA ENTERPRISES.pdf.pdf.pdf" download class="btn-download"
+                        aria-label="Download company profile">
+                        &#128229; Download Company Profile
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick links -->
+            <div class="footer-col footer-links" aria-labelledby="footer-links-heading">
+                <h4 id="footer-links-heading">Quick links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#about">About us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="footer-col footer-contact" aria-labelledby="footer-contact-heading">
+                <h4 id="footer-contact-heading">Contact</h4>
+                <address class="contact-meta">
+                    <div><strong>Phone:</strong> <a href="tel:+911234567890">+91 12345 67890</a></div>
+                    <div><strong>Email:</strong> <a href="mailto:info@shivkrupa.com">info@shivkrupa.com</a></div>
+                    <div><strong>Address:</strong> S. No. 33, Near Yuraj Castel, Warje, Pune, Maharashtra</div>
+                </address>
+
+                <div class="socials" aria-label="Social links">
+                    <a href="#" class="social" aria-label="Facebook" title="Facebook">f</a>
+                    <a href="#" class="social" aria-label="Instagram" title="Instagram">ig</a>
+                    <a href="#" class="social" aria-label="LinkedIn" title="LinkedIn">in</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- small print -->
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <div class="copyright">© <span id="footer-year"></span> Shivkrupa Enterprises. All rights reserved.
+                </div>
+                <div class="powered">Made with care • <a href="#" rel="noopener">Terms</a> • <a href="#"
+                        rel="noopener">Privacy</a></div>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+
+    <!-- include new JS -->
+    <script src="main.js"></script>
+</body>
+
+
+</html>
