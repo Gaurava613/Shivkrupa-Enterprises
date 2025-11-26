@@ -13,15 +13,15 @@ const navToggle = document.getElementById("navToggle");
 const mainNav = document.getElementById("mainNav");
 
 navToggle.addEventListener("click", () => {
-    const isOpen = mainNav.style.display === "flex";
+  const isOpen = mainNav.style.display === "flex";
 
-    if (isOpen) {
-        mainNav.style.display = "none";
-        document.body.style.overflow = "auto";
-    } else {
-        mainNav.style.display = "flex";
-        document.body.style.overflow = "hidden"; // stop scroll
-    }
+  if (isOpen) {
+    mainNav.style.display = "none";
+    document.body.style.overflow = "auto";
+  } else {
+    mainNav.style.display = "flex";
+    document.body.style.overflow = "hidden"; // stop scroll
+  }
 });
 
 
@@ -217,13 +217,128 @@ navToggle.addEventListener("click", () => {
 })();
 
 
-/**********************
-     * Clients track tweak *
-     **********************/
-// Pause animation when hovered
-const clientsTrack = document.getElementById('clientsTrack');
-clientsTrack.addEventListener('mouseenter', () => { clientsTrack.style.animationPlayState = 'paused'; });
-clientsTrack.addEventListener('mouseleave', () => { clientsTrack.style.animationPlayState = 'running'; });
+/* ===== Clients gallery (gallery-style like Projects) ===== */
+(function clientsGalleryInit() {
+  const CLIENT_LOGOS = [
+    './assets/client-1.png',
+    './assets/client-2.png',
+    './assets/client-3.png',
+    './assets/client-4.png',
+    './assets/client-5.png',
+    './assets/client-6.png'
+    // add / reorder your logos here
+  ];
+
+  const clientsGrid = document.getElementById('clientsGrid');
+  const clientsFullGrid = document.getElementById('clientsFullGrid');
+  const clientsLightbox = document.getElementById('clientsLightbox');
+  const clientsLbImg = document.getElementById('clientsLightboxImg');
+  const clientsLbClose = document.getElementById('clientsLbClose');
+  const clientsLbPrev = document.getElementById('clientsLbPrev');
+  const clientsLbNext = document.getElementById('clientsLbNext');
+
+  const openClientsFullBtn = document.getElementById('openClientsFullBtn');
+  const clientsFullModal = document.getElementById('clientsFullModal');
+  const closeClientsFullBtn = document.getElementById('closeClientsFullBtn');
+
+  if (!clientsGrid || !clientsFullGrid) return;
+
+  // build thumbnails
+  function buildClientsThumbs() {
+    clientsGrid.innerHTML = '';
+    CLIENT_LOGOS.forEach((src, i) => {
+      const div = document.createElement('button');
+      div.className = 'client-thumb';
+      div.setAttribute('type', 'button');
+      div.innerHTML = `<img loading="lazy" src="${src}" alt="Client ${i + 1}">`;
+      div.addEventListener('click', () => openClientLightbox(i));
+      clientsGrid.appendChild(div);
+    });
+  }
+
+  // build full grid
+  function buildClientsFullGrid() {
+    clientsFullGrid.innerHTML = '';
+    CLIENT_LOGOS.forEach((src, i) => {
+      const a = document.createElement('button');
+      a.className = 'full-client';
+      a.setAttribute('type', 'button');
+      a.innerHTML = `<img loading="lazy" src="${src}" alt="Client ${i + 1}">`;
+      a.addEventListener('click', () => { openClientLightbox(i); closeClientsFull(); });
+      clientsFullGrid.appendChild(a);
+    });
+  }
+
+  // lightbox controls
+  let currentIndex = 0;
+  function openClientLightbox(index) {
+    currentIndex = index;
+    clientsLbImg.src = CLIENT_LOGOS[currentIndex];
+    clientsLightbox.classList.add('active');
+    clientsLightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    clientsLbClose.focus();
+  }
+  function closeClientLightbox() {
+    clientsLightbox.classList.remove('active');
+    clientsLightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function showClientPrev() {
+    currentIndex = (currentIndex - 1 + CLIENT_LOGOS.length) % CLIENT_LOGOS.length;
+    clientsLbImg.src = CLIENT_LOGOS[currentIndex];
+  }
+  function showClientNext() {
+    currentIndex = (currentIndex + 1) % CLIENT_LOGOS.length;
+    clientsLbImg.src = CLIENT_LOGOS[currentIndex];
+  }
+
+  // full modal
+  function openClientsFull() {
+    clientsFullModal.classList.add('active');
+    clientsFullModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeClientsFullBtn.focus();
+  }
+  function closeClientsFull() {
+    clientsFullModal.classList.remove('active');
+    clientsFullModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // event listeners
+  clientsLbClose && clientsLbClose.addEventListener('click', closeClientLightbox);
+  clientsLbPrev && clientsLbPrev.addEventListener('click', showClientPrev);
+  clientsLbNext && clientsLbNext.addEventListener('click', showClientNext);
+
+  clientsLightbox && clientsLightbox.addEventListener('click', (e) => {
+    if (e.target === clientsLightbox) closeClientLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (clientsLightbox.classList.contains('active')) {
+      if (e.key === 'Escape') closeClientLightbox();
+      if (e.key === 'ArrowLeft') showClientPrev();
+      if (e.key === 'ArrowRight') showClientNext();
+    }
+    if (clientsFullModal.classList.contains('active') && e.key === 'Escape') {
+      closeClientsFull();
+    }
+  });
+
+  openClientsFullBtn && openClientsFullBtn.addEventListener('click', openClientsFull);
+  closeClientsFullBtn && closeClientsFullBtn.addEventListener('click', closeClientsFull);
+  clientsFullModal && clientsFullModal.addEventListener('click', (e) => {
+    if (e.target === clientsFullModal) closeClientsFull();
+  });
+
+  // init
+  buildClientsThumbs();
+  buildClientsFullGrid();
+
+  // optional debug
+  window._clients = { open: openClientLightbox, openAll: openClientsFull };
+})();
 
 /***************************
  * Testimonials (vanilla)  *
@@ -254,7 +369,7 @@ clientsTrack.addEventListener('mouseleave', () => { clientsTrack.style.animation
             <p class="testimonial-message">${escapeHtml(t.message)}</p>
             <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
               <div style="display:flex; align-items:center; gap:10px;">
-                <div class="test-avatar">${escapeHtml(t.name.charAt(0))}</div>
+                <div class="test-avatar"> <img src="./assets/user.png" style="height:40px; border-radius: 100px "/> </div>
                 <div style="text-align:left">
                   <div class="test-name">${escapeHtml(t.name)}</div>
                   <div class="test-role">${escapeHtml(t.role)}</div>
@@ -433,10 +548,71 @@ window._gallery = { open: openLightbox, openAll: openFullGallery };
 
 
 // ===========================Footer==========
-(function () { 
-  const y = new Date().getFullYear(); 
-  const el = document.getElementById('footer-year'); 
-  if (el) el.textContent = y; 
+(function () {
+  const y = new Date().getFullYear();
+  const el = document.getElementById('footer-year');
+  if (el) el.textContent = y;
 })();
+
+
+(function () {
+  const track = document.getElementById('featTrack');
+  const prevBtn = document.getElementById('featPrev');
+  const nextBtn = document.getElementById('featNext');
+
+  if (!track) return;
+
+  const cards = Array.from(track.children);
+  const visibleCount = 3; // how many visible at once on desktop
+  let index = 0;
+  let slideWidth = cards[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).gap || 36);
+
+  // recalc on resize
+  function refreshMetrics() {
+    slideWidth = cards[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(track).gap) || 36);
+    // keep transform in bounds
+    goTo(index);
+  }
+  window.addEventListener('resize', refreshMetrics);
+
+  function goTo(i) {
+    index = i;
+    // clamp index range so we can show smooth loop using duplicated slides
+    // because we duplicated slides in HTML, allow index up to cards.length - visibleCount
+    const maxIndex = cards.length - visibleCount;
+    if (index < 0) index = maxIndex;
+    if (index > maxIndex) index = 0;
+    const x = -index * slideWidth;
+    track.style.transform = `translate3d(${x}px,0,0)`;
+  }
+
+  // next / prev
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+
+  if (nextBtn) nextBtn.addEventListener('click', () => { next(); resetAuto(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { prev(); resetAuto(); });
+
+  // autoplay
+  let timer = null;
+  const INTERVAL = 1500; // 1.5s
+  function startAuto() { if (timer) return; timer = setInterval(next, INTERVAL); }
+  function stopAuto() { if (!timer) return; clearInterval(timer); timer = null; }
+  function resetAuto() { stopAuto(); startAuto(); }
+
+  // pause on hover
+  track.addEventListener('mouseenter', stopAuto);
+  track.addEventListener('mouseleave', startAuto);
+
+  // init
+  // small debounce to ensure images/layout measured
+  setTimeout(() => {
+    refreshMetrics();
+    startAuto();
+  }, 120);
+
+})();
+
+
 
 

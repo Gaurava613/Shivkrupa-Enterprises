@@ -58,12 +58,12 @@
                     <img class="slide-img" src="./assets/heroImg-1.png" alt="Tensile canopy - 1">
                     <figcaption class="slide-caption">
                         <div>
-                        <h1>Premium Tensile Structures &amp; Awnings</h1>
-                        <p>Custom-designed shade solutions — durable, stylish and engineered for every space.</p>
-                        <div class="cta">
-                            <a class="btn btn-primary btn-lg gradient-btn" href="#contact">Get a Quote</a>
-                            <a class="btn btn-primary" href="#products">Products</a>
-                        </div>
+                            <h1>Premium Tensile Structures &amp; Awnings</h1>
+                            <p>Custom-designed shade solutions — durable, stylish and engineered for every space.</p>
+                            <div class="cta">
+                                <a class="btn btn-primary btn-lg gradient-btn" href="#contact">Get a Quote</a>
+                                <a class="btn btn-primary" href="#products">Products</a>
+                            </div>
                         </div>
                     </figcaption>
                 </figure>
@@ -121,13 +121,13 @@
                         We focus on durable materials, precise engineering and timely installation.
                     </p>
 
-                    <p class="mb-3" style="color: #9c9b9b;">
+                    <!-- <p class="mb-3" style="color: #9c9b9b;">
                         Our team handles everything from initial site survey and custom design to manufacturing
                         and on-site installation — ensuring each solution is tailored to your space and budget.
-                    </p>
+                    </p> -->
 
                     <!-- stats -->
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
                         <div class="col-4">
                             <div class="stat">
                                 <div class="stat-num">12+</div>
@@ -146,14 +146,10 @@
                                 <div class="stat-label">Support</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- values / bullets -->
-                    <ul class="about-list mb-3">
-                        <li>Custom designs to match architecture</li>
-                        <li>High-strength, weather-resistant materials</li>
-                        <li>End-to-end project management & warranty</li>
-                    </ul>
+
 
                     <!-- CTAs -->
                     <div class="d-flex flex-wrap gap-2">
@@ -168,56 +164,63 @@
         </div>
     </section>
 
-    <!-- CLIENTS -->
-    <section class="clients-section">
-        <div class="clients-header">
-            <p class="clients-kicker">Trusted by brands</p>
-            <h2 class="clients-title">Boxes packed for these amazing clients</h2>
-            <p class="clients-sub">From boutique businesses to growing D2C brands, we help them deliver products in
-                eco-conscious, premium packaging.</p>
-        </div>
+    
 
-        <div class="clients-slider" aria-hidden="false" aria-label="Client logos">
-            <div class="clients-track" id="clientsTrack">
-                <!-- we will duplicate the logos list in JS to ensure smooth infinite scroll -->
-                <!-- using the uploaded local image as logo placeholder as requested -->
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-1.png" alt="Client 1"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-2.png" alt="Client 2"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-3.png" alt="Client 3"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-4.png" alt="Client 4"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-6.png" alt="Client 5"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-5.png" alt="Client 6"></div>
+    <!-- ---------- CLIENTS (gallery-style) ---------- -->
+<section class="clients-section">
+  <div class="clients-header">
+    <p class="clients-kicker">Trusted by brands</p>
+    <h2 class="clients-title">Boxes packed for these amazing clients</h2>
+    <p class="clients-sub">Brands we've partnered with — click any logo to enlarge.</p>
+  </div>
 
-                <!-- duplicate for seamless loop -->
-                <<div class="client-logo-wrap"><img
-                        src="./assets/client-1.png" alt="Client 1"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-2.png" alt="Client 2"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-3.png" alt="Client 3"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-4.png" alt="Client 4"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-6.png" alt="Client 5"></div>
-                <div class="client-logo-wrap"><img
-                        src="./assets/client-5.png" alt="Client 6"></div>
-            </div>
-        </div>
-    </section>
+  <div class="clients-gallery container">
+    <div class="clients-grid" id="clientsGrid">
+      <!-- thumbnails will be injected by JS -->
+      <!-- fallback static logos (optional) - kept empty for JS injection -->
+    </div>
+
+    <div style="text-align:center; margin-top:14px;">
+      <button class="view-all-btn" id="openClientsFullBtn" aria-haspopup="dialog">View All</button>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox (single logo) -->
+<div class="lightbox" id="clientsLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="lightbox-inner fade-in" role="document">
+    <button class="lb-prev" id="clientsLbPrev" aria-label="Previous logo">‹</button>
+    <img id="clientsLightboxImg" src="" alt="Enlarged logo">
+    <button class="lb-next" id="clientsLbNext" aria-label="Next logo">›</button>
+    <button class="lightbox-close lb-close" id="clientsLbClose" aria-label="Close (Esc)">✕</button>
+  </div>
+</div>
+
+<!-- Full clients modal -->
+<div class="full-gallery-modal" id="clientsFullModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="full-gallery-content fade-in">
+    <div class="modal-top">
+      <div class="modal-title">All clients</div>
+      <div>
+        <button class="modal-close" id="closeClientsFullBtn">Close</button>
+      </div>
+    </div>
+
+    <div class="full-gallery-grid" id="clientsFullGrid">
+      <!-- full clients logos will be injected by JS -->
+    </div>
+  </div>
+</div>
+
 
     <!-- Services grid--------------------------->
     <main class="services-wrap" id="services-list">
 
         <div class="product-text">
-            <h2 class="mb-3">Aur Products</h2>
+            <h2 class="mb-3">Our Products</h2>
         </div>
         <div class="services-grid">
+
             <article class="service-card">
                 <div class="service-icon">
                     <img id="tensile-3d-img" src="./assets/img3d.png" alt="Tensile 3D render">
@@ -293,19 +296,12 @@
                 </div>
             </article>
 
-            <!-- <article class="service-card">
-                <div class="service-icon"><i class='bx bxs-duplicate'></i></div>
-                <div class="service-body">
-                    <h5>Tensile Structure</h5>
-                    <ul class="service-list mb-3">
-                        <li>Custom designs to match architecture</li>
-                        <li>High-strength, weather-resistant materials</li>
-                        <li>End-to-end project management & warranty</li>
-                    </ul>
-                </div>
-            </article> -->
+
         </div>
     </main>
+
+    
+
 
     <!-- short features strip -->
     <div class="feature-strip mt-4">
@@ -318,7 +314,7 @@
         </div>
 
         <div class="feature-item">
-            <div class="num"style="color: black;">02</div>
+            <div class="num" style="color: black;">02</div>
             <div>
                 <div class="label">Quality materials</div>
                 <div class="small text-muted">Industry-grade membranes & coatings</div>
@@ -326,14 +322,13 @@
         </div>
 
         <div class="feature-item">
-            <div class="num"style="color: black;">03</div>
+            <div class="num" style="color: black;">03</div>
             <div>
                 <div class="label">Timely delivery</div>
                 <div class="small text-muted">Optimized manufacturing & logistics</div>
             </div>
         </div>
     </div>
-
 
 
     <!-- ==========Gallery=========================================== -->
@@ -384,7 +379,7 @@
     </div>
 
     <!-- CONTACT SECTION (no form) -->
-    <section id="contact-home" class="contact-home-section">
+    <!-- <section id="contact-home" class="contact-home-section">
         <div class="contact-inner container">
             <div class="contact-left">
                 <div class="brand-row">
@@ -443,6 +438,79 @@
                 <img class="contact-visual" src="./assets/heroImg-1.png" alt="Tensile structure visual" />
             </div>
         </div>
+    </section> -->
+
+    <section class="contact-hero-wrap" aria-labelledby="contactTitle">
+        <div class="contact-hero container-sm">
+            <!-- TOP: illustrations + heading -->
+            <div class="contact-top">
+                <div class="contact-ill contact-ill--left">
+                    <img src="./assets/contactImg-1.jpg" alt="Contact illustration left">
+                </div>
+
+                <div class="contact-center">
+                    <p class="work-kicker">Work With Us</p>
+                    <h2 id="contactTitle" class="contact-title">Contact Information</h2>
+                    <p class="contact-desc">
+                        We're Shivkrupa Enterprises — designers & manufacturers of tensile structures, awnings & shades.
+                        Reach out to transform your space with practical, engineered solutions.
+                    </p>
+                </div>
+
+                <div class="contact-ill contact-ill--right">
+                    <!-- reuse same image or another image/logo - replace path as needed -->
+                    <!-- <img src="/mnt/data/f751b842-86ff-4fc0-be11-6ed851e3e75e.png" > -->
+                </div>
+            </div>
+
+            <!-- divider -->
+            <div class="contact-divider" role="separator" aria-hidden="true"></div>
+
+            <!-- BOTTOM: 3 info columns -->
+            <div class="contact-info-grid">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <!-- headset icon SVG -->
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M12 3a9 9 0 00-9 9v3a4 4 0 004 4h1v-6H7v-1a5 5 0 0110 0v1h-1v6h1a4 4 0 004-4v-3a9 9 0 00-9-9z" />
+                        </svg>
+                    </div>
+                    <div class="info-body">
+                        <div class="info-kicker">Call Us For Query</div>
+                        <div class="info-main">+91 12345 67890</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <!-- mail icon SVG -->
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+                        </svg>
+                    </div>
+                    <div class="info-body">
+                        <div class="info-kicker">Email Us Anytime</div>
+                        <div class="info-main"><a href="mailto:info@shivkrupa.com">info@shivkrupa.com</a></div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <!-- map / location icon SVG -->
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2." />
+                        </svg>
+                    </div>
+                    <div class="info-body">
+                        <div class="info-kicker">Our Global Presence</div>
+                        <div class="info-main">India | USA | Netherlands | Vietnam</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
 
@@ -459,7 +527,7 @@
             <button class="test-arrow-btn" id="prevBtn" aria-label="Previous testimonials">‹</button>
 
             <div class="testimonial-window" aria-live="polite">
-                <div class="testimonial-track" id="testimonialTrack">
+                <div class="testimonial-track" id="testimonialTrack"  >
                     <!-- Testimonials will be injected by JS -->
                 </div>
             </div>
