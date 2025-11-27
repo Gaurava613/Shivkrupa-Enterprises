@@ -1,79 +1,55 @@
-// main.js - Clean combined script for hero slider + tensile scroll transform
-// NOTE: This file contains NO ES module imports. It should be included as:
-// <script src="main.js"></script> at the end of the body.
-
-// -----------------------------
-// Helper - safe console log
+// main.js - Combined file with guards and scroll-animations
 function info(...args) { if (window && window.console) console.log('[main.js]', ...args); }
 
-
-//--------------Navbar-------------------
-
+/* ---------------- NAV TOGGLE ---------------- */
 const navToggle = document.getElementById("navToggle");
 const mainNav = document.getElementById("mainNav");
+if (navToggle && mainNav) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = mainNav.style.display === "flex";
+    if (isOpen) {
+      mainNav.style.display = "none";
+      document.body.style.overflow = "auto";
+    } else {
+      mainNav.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+  });
+}
 
-navToggle.addEventListener("click", () => {
-  const isOpen = mainNav.style.display === "flex";
-
-  if (isOpen) {
-    mainNav.style.display = "none";
-    document.body.style.overflow = "auto";
-  } else {
-    mainNav.style.display = "flex";
-    document.body.style.overflow = "hidden"; // stop scroll
-  }
-});
-
-
-
-// ---------- HERO CROSSFADE SLIDER ----------
-
-
+/* ---------------- HERO SLIDER ---------------- */
 (function heroSliderInit() {
   const root = document.getElementById('hero-new');
-  if (!root) { info('hero: #hero-new not found — skipping hero slider init'); return; }
-
+  if (!root) { info('hero: skipped'); return; }
   const slides = Array.from(root.querySelectorAll('.slide'));
   const dotsWrap = root.querySelector('.dots');
-  if (!slides.length || !dotsWrap) { info('hero: slides or dots container not found'); return; }
+  if (!slides.length || !dotsWrap) { info('hero: slides or dots missing'); return; }
 
-  let current = 0;
-  let timer = null;
-  const AUTOPLAY = true;
-  const INTERVAL = 3500;
+  let current = 0, timer = null;
+  const AUTOPLAY = true, INTERVAL = 3500;
 
-  // preload images
-  const imgs = slides.map(s => s.querySelector('.slide-img')).filter(Boolean);
-  const urls = imgs.map(i => i.src).filter(Boolean);
-
-  function preload(url) {
-    return new Promise(resolve => {
-      if (!url) return resolve({ url, ok: false });
+  // preload
+  async function preloadAll(urls) {
+    const promises = urls.map(u => new Promise(r => {
+      if (!u) return r();
       const img = new Image();
-      img.onload = () => resolve({ url, ok: true });
-      img.onerror = () => resolve({ url, ok: false });
-      img.src = url;
-    });
+      img.onload = () => r();
+      img.onerror = () => r();
+      img.src = u;
+    }));
+    await Promise.all(promises);
   }
 
-  async function preloadAll(list) {
-    try {
-      const res = await Promise.all(list.map(preload));
-      info('hero: preload done', res);
-    } catch (e) {
-      info('hero: preload error', e);
-    }
-  }
+  const urls = slides.map(s => s.querySelector('.slide-img') && s.querySelector('.slide-img').src).filter(Boolean);
 
-  // build dots
   function buildDots() {
     dotsWrap.innerHTML = '';
     slides.forEach((_, i) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      if (i === 0) btn.classList.add('active');
-      btn.addEventListener('click', () => goTo(i));
-      dotsWrap.appendChild(btn);
+      const b = document.createElement('button');
+      b.type = 'button';
+      if (i === 0) b.classList.add('active');
+      b.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(b);
     });
   }
 
@@ -90,7 +66,6 @@ navToggle.addEventListener("click", () => {
     current = (current + 1) % slides.length;
     show(current);
   }
-
   function goTo(i) {
     if (i === current) return;
     slides[current].classList.add('is-leaving');
@@ -99,63 +74,35 @@ navToggle.addEventListener("click", () => {
     restart();
   }
 
-  function start() {
-    if (timer) return;
-    timer = setInterval(() => next(), INTERVAL);
-  }
+  function start() { if (timer) return; timer = setInterval(() => next(), INTERVAL); }
   function stop() { if (timer) { clearInterval(timer); timer = null; } }
   function restart() { stop(); start(); }
 
-  // pause on hover/focus
   root.addEventListener('mouseenter', () => stop());
   root.addEventListener('mouseleave', () => start());
   root.addEventListener('focusin', () => stop());
   root.addEventListener('focusout', () => start());
 
-  (async function init() {
-    await preloadAll(urls);
-    buildDots();
-    show(0);
-    setTimeout(() => { if (AUTOPLAY) start(); }, 300);
-    info('hero slider initialized');
-  })();
+  (async function init() { await preloadAll(urls); buildDots(); show(0); setTimeout(() => { if (AUTOPLAY) start(); }, 300); info('hero init'); })();
 })();
 
-// -----------------------------
-// About: Smooth scroll for in-page anchors (optional)
+/* ---------------- SMOOTH ANCHORS ---------------- */
 (function smoothAnchors() {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
       if (!href || href === '#') return;
       const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     });
   });
 })();
 
-// -----------------------------
-// TENSILE IMAGE - scroll-driven pseudo-3D transform
+/* ---------------- TENSILE 3D SCROLL TRANSFORM ---------------- */
 (function tensileScrollTransform() {
   const wrapper = document.querySelector('.tensile-3d-wrapper');
   const img = document.getElementById('tensile-3d-img');
-
-  if (!wrapper || !img) {
-    info('tensile: wrapper or img not found — skipping scroll transform. wrapper:', !!wrapper, 'img:', !!img);
-    return;
-  }
-
-  // config - tweak these to change behavior
-  const SCALE_MIN = 0.55;      // small
-  const SCALE_MAX = 1.18;      // large
-  const ROT_MIN = -40;         // degrees (start)
-  const ROT_MAX = 40;          // degrees (end)
-  const TRANSLATE_Y_MIN = 40;  // px (start)
-  const TRANSLATE_Y_MAX = -20; // px (end)
-  const OPACITY_MIN = 0.95;
+  if (!wrapper || !img) { info('tensile: skip'); return; }
 
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -165,7 +112,7 @@ navToggle.addEventListener("click", () => {
     const rect = wrapper.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const denom = vh + rect.height;
-    if (denom === 0) return 0;
+    if (!denom) return 0;
     let p = (vh - rect.top) / denom;
     return clamp(p, 0, 1);
   }
@@ -174,445 +121,549 @@ navToggle.addEventListener("click", () => {
   function update() {
     const p = sectionProgress();
     const e = easeInOutQuad(p);
-
-    const scale = lerp(SCALE_MIN, SCALE_MAX, e);
-    const rotY = lerp(ROT_MIN, ROT_MAX, e);
+    const scale = lerp(0.55, 1.18, e);
+    const rotY = lerp(-40, 40, e);
     const rotX = lerp(6, -2, e);
-    const ty = lerp(TRANSLATE_Y_MIN, TRANSLATE_Y_MAX, e);
-    const opacity = lerp(OPACITY_MIN, 1, e);
-
-    const transform = `translate3d(0px, ${ty}px, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${scale})`;
-    img.style.transform = transform;
+    const ty = lerp(40, -20, e);
+    const opacity = lerp(0.95, 1, e);
+    img.style.transform = `translate3d(0px, ${ty}px, 0px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${scale})`;
     img.style.opacity = opacity.toFixed(3);
-
     if (p > 0.02) wrapper.classList.add('is-active'); else wrapper.classList.remove('is-active');
-
     raf = null;
   }
+  function schedule() { if (raf === null) raf = requestAnimationFrame(update); }
 
-  function schedule() {
-    if (raf === null) raf = requestAnimationFrame(update);
-  }
-
-  // events
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', schedule);
   window.addEventListener('orientationchange', schedule);
-
-  // initial
   schedule();
-  info('tensile scroll transform initialized for', img.src);
+  info('tensile transform initialized for', img.src);
+})();
 
-  // expose debug helpers
-  window.__tensile3D = {
-    refresh: schedule,
-    setParams: (o) => Object.assign({}, o),
-    destroy: () => {
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
-      window.removeEventListener('orientationchange', schedule);
-      if (raf) cancelAnimationFrame(raf);
+/* ---------------- STATS ROTATOR ---------------- */
+(function statsRotator() {
+  const stats = document.querySelectorAll('.stat');
+  if (!stats.length) return;
+  const px = v => parseFloat(v) || 0;
+  function computeRadiusFor(stat) {
+    const rect = stat.getBoundingClientRect();
+    const width = Math.min(rect.width, rect.height);
+    const ringEl = stat.querySelector('.ring');
+    const ringWidth = px(getComputedStyle(ringEl).borderWidth) || 3;
+    const radius = (width / 2) - (ringWidth / 2);
+    return Math.max(6, Math.round(radius));
+  }
+  function angleFromCenter(stat, clientX, clientY) {
+    const rect = stat.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = clientX - cx;
+    const dy = clientY - cy;
+    const rad = Math.atan2(dy, dx);
+    return rad * (180 / Math.PI);
+  }
+  stats.forEach(stat => {
+    const rotator = stat.querySelector('.rotator');
+    const dot = stat.querySelector('.dot');
+    const defaultAngle = +(stat.getAttribute('data-default-angle') || 45);
+    let rafId = null; let lastTs = null;
+    stat.dataset.currentAngle = String(defaultAngle);
+    function applyAngle(angleDeg, animate = false) {
+      const r = computeRadiusFor(stat);
+      if (!animate) { rotator.style.transition = 'none'; dot.style.transition = 'none'; }
+      else { rotator.style.transition = ''; dot.style.transition = ''; }
+      rotator.style.transform = `translate(-50%,-50%) rotate(${angleDeg}deg)`;
+      dot.style.transform = `rotate(0deg) translate(0, ${-r}px)`;
+      stat.dataset.currentAngle = String(angleDeg);
     }
-  };
+    function tweenTo(angleStart, angleEnd, ms) {
+      const start = performance.now();
+      function step(t) {
+        const dt = (t - start) / ms;
+        const eased = Math.min(1, dt);
+        let a0 = ((angleStart % 360) + 360) % 360; let a1 = ((angleEnd % 360) + 360) % 360;
+        let diff = a1 - a0;
+        if (diff > 180) diff -= 360;
+        if (diff < -180) diff += 360;
+        const cur = a0 + diff * eased;
+        applyAngle(cur, true);
+        if (dt < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    const SPIN_SPEED_DEG_PER_SEC = 30;
+    function startSpin(initialAngle) {
+      stopSpin();
+      rotator.classList.add('spinning');
+      lastTs = null;
+      function spinStep(ts) {
+        if (!lastTs) lastTs = ts;
+        const delta = ts - lastTs; lastTs = ts;
+        const deltaDeg = (SPIN_SPEED_DEG_PER_SEC * (delta / 1000));
+        const curr = +(stat.dataset.currentAngle || initialAngle);
+        const next = curr + deltaDeg;
+        applyAngle(next, false);
+        rafId = requestAnimationFrame(spinStep);
+      }
+      rafId = requestAnimationFrame(spinStep);
+    }
+    function stopSpin() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } rotator.classList.remove('spinning'); lastTs = null; }
+    function handleEnter(e) {
+      const evt = (e.touches && e.touches[0]) ? e.touches[0] : e;
+      if (evt && typeof evt.clientX === 'number') {
+        const a = angleFromCenter(stat, evt.clientX, evt.clientY);
+        applyAngle(a, false);
+        stat.dataset.currentAngle = String(a);
+      }
+      startSpin(+(stat.dataset.currentAngle || defaultAngle));
+    }
+    function handleLeave() {
+      stopSpin();
+      const current = +(stat.dataset.currentAngle || defaultAngle);
+      tweenTo(current, defaultAngle, 600);
+    }
+    applyAngle(defaultAngle, false);
+    stat.addEventListener('mouseenter', handleEnter);
+    stat.addEventListener('mouseleave', handleLeave);
+    stat.addEventListener('touchstart', (ev) => { handleEnter(ev); }, { passive: true });
+    stat.addEventListener('touchend', handleLeave);
+    let resizeTimer = null;
+    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => { const cur = +(stat.dataset.currentAngle || defaultAngle); applyAngle(cur, false); }, 80); });
+  });
+})();
+
+/* ---------------- PRODUCT CAROUSEL (keeps clones for infinite) ---------------- */
+(function productCarousel() {
+  const track = document.querySelector('.carousel-track');
+  const viewport = document.querySelector('.carousel-viewport');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
+  if (!track) return;
+  let slides = Array.from(track.children);
+  let visibleCount = getVisibleCount();
+  const AUTOPLAY_INTERVAL = 1500;
+  const TRANSITION_MS = 600;
+  function setupClones() {
+    track.querySelectorAll('.clone').forEach(n => n.remove());
+    slides = Array.from(track.children);
+    const firstN = slides.slice(0, visibleCount).map(n => n.cloneNode(true));
+    const lastN = slides.slice(-visibleCount).map(n => n.cloneNode(true));
+    firstN.forEach(n => { n.classList.add('clone'); track.appendChild(n); });
+    lastN.reverse().forEach(n => { n.classList.add('clone'); track.insertBefore(n, track.firstChild); });
+    slides = Array.from(track.children);
+  }
+  function layout() {
+    visibleCount = getVisibleCount();
+    setupClones();
+    const slideWidth = slides[0].getBoundingClientRect().width + getGap();
+    index = visibleCount;
+    track.style.transition = 'none';
+    setTranslateX(-index * slideWidth);
+    void track.offsetHeight;
+    track.style.transition = `transform ${TRANSITION_MS}ms cubic-bezier(.22,.9,.35,1)`;
+  }
+  function getGap() { const cs = window.getComputedStyle(track); const gap = parseFloat(cs.gap || cs.columnGap || 20); return isNaN(gap) ? 20 : gap; }
+  function getVisibleCount() { const w = window.innerWidth; if (w <= 720) return 1; if (w <= 1100) return 2; return 3; }
+  function setTranslateX(x) { track.style.transform = `translateX(${x}px)`; }
+  function getSlideWidth() { const rect = slides[0].getBoundingClientRect(); const gap = getGap(); return rect.width + gap; }
+  let index = 0, isAnimating = false;
+  function goToIndex(i) {
+    if (isAnimating) return;
+    isAnimating = true;
+    const slideW = getSlideWidth();
+    track.style.transition = `transform ${TRANSITION_MS}ms cubic-bezier(.22,.9,.35,1)`;
+    setTranslateX(-i * slideW);
+    index = i;
+    setTimeout(() => {
+      const total = slides.length;
+      const realCount = total - visibleCount * 2;
+      if (index >= realCount + visibleCount) {
+        index = visibleCount;
+        track.style.transition = 'none';
+        setTranslateX(-index * slideW);
+        void track.offsetHeight;
+        track.style.transition = `transform ${TRANSITION_MS}ms cubic-bezier(.22,.9,.35,1)`;
+      } else if (index < visibleCount) {
+        index = index + realCount;
+        track.style.transition = 'none';
+        setTranslateX(-index * slideW);
+        void track.offsetHeight;
+        track.style.transition = `transform ${TRANSITION_MS}ms cubic-bezier(.22,.9,.35,1)`;
+      }
+      isAnimating = false;
+    }, TRANSITION_MS + 20);
+  }
+  function next() { goToIndex(index + 1); }
+  function prev() { goToIndex(index - 1); }
+
+  let autoplayTimer = null;
+  function startAutoplay() { stopAutoplay(); autoplayTimer = setInterval(() => next(), AUTOPLAY_INTERVAL); }
+  function stopAutoplay() { if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; } }
+  if (nextBtn) nextBtn.addEventListener('click', () => { stopAutoplay(); next(); startAutoplay(); });
+  if (prevBtn) prevBtn.addEventListener('click', () => { stopAutoplay(); prev(); startAutoplay(); });
+  const carousel = document.querySelector('.products-carousel');
+  if (carousel) { carousel.addEventListener('mouseenter', () => stopAutoplay()); carousel.addEventListener('mouseleave', () => startAutoplay()); carousel.addEventListener('focusin', () => stopAutoplay()); carousel.addEventListener('focusout', () => startAutoplay()); }
+  let resizeTimer = null;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => layout(), 120); });
+  layout(); startAutoplay();
+  window.__productCarousel = { next, prev, start: startAutoplay, stop: stopAutoplay };
 })();
 
 
-/* ===== Clients gallery (gallery-style like Projects) ===== */
-(function clientsGalleryInit() {
-  const CLIENT_LOGOS = [
+
+
+/* ---------------- CLIENTS SLIDER (replaced) ---------------- */
+(function clientsInit() {
+  const logos = [
     './assets/client-1.png',
     './assets/client-2.png',
     './assets/client-3.png',
-    './assets/client-4.png',
     './assets/client-5.png',
     './assets/client-6.png'
-    // add / reorder your logos here
   ];
+  const track = document.getElementById('clientsTrack');
+  const slider = document.getElementById('clientsSlider');
 
-  const clientsGrid = document.getElementById('clientsGrid');
-  const clientsFullGrid = document.getElementById('clientsFullGrid');
-  const clientsLightbox = document.getElementById('clientsLightbox');
-  const clientsLbImg = document.getElementById('clientsLightboxImg');
-  const clientsLbClose = document.getElementById('clientsLbClose');
-  const clientsLbPrev = document.getElementById('clientsLbPrev');
-  const clientsLbNext = document.getElementById('clientsLbNext');
+  if (!track || !slider) return;
 
-  const openClientsFullBtn = document.getElementById('openClientsFullBtn');
-  const clientsFullModal = document.getElementById('clientsFullModal');
-  const closeClientsFullBtn = document.getElementById('closeClientsFullBtn');
+  // create nodes function
+  function createLogoNode(src, idx) {
+    const wrap = document.createElement('div');
+    wrap.className = 'client-logo-wrap';
+    wrap.setAttribute('role', 'listitem');
+    const img = document.createElement('img');
+    img.alt = `Client logo ${idx + 1}`;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.src = src;
+    wrap.appendChild(img);
+    return wrap;
+  }
 
-  if (!clientsGrid || !clientsFullGrid) return;
+  // clear first
+  track.innerHTML = '';
 
-  // build thumbnails
-  function buildClientsThumbs() {
-    clientsGrid.innerHTML = '';
-    CLIENT_LOGOS.forEach((src, i) => {
-      const div = document.createElement('button');
-      div.className = 'client-thumb';
-      div.setAttribute('type', 'button');
-      div.innerHTML = `<img loading="lazy" src="${src}" alt="Client ${i + 1}">`;
-      div.addEventListener('click', () => openClientLightbox(i));
-      clientsGrid.appendChild(div);
+  // append original set twice (for smooth looping)
+  logos.forEach((src, i) => track.appendChild(createLogoNode(src, i)));
+  logos.forEach((src, i) => track.appendChild(createLogoNode(src, i + logos.length)));
+
+  // compute animation (marquee) duration from track width
+  function computeMarquee() {
+    // allow a short timeout for images to render
+    requestAnimationFrame(() => {
+      const children = Array.from(track.children);
+      if (!children.length) return;
+      // measure the real width of one set (first half)
+      const halfCount = Math.floor(children.length / 2);
+      let width = 0;
+      for (let i = 0; i < halfCount; i++) {
+        const r = children[i].getBoundingClientRect();
+        width += r.width + parseFloat(getComputedStyle(track).gap || 28);
+      }
+      // avoid zero
+      width = Math.max(360, width);
+      // speed px per second — tweak this to make it faster/slower
+      const pxPerSec = 120; // 120px per second
+      const duration = Math.max(8, Math.round(width / pxPerSec));
+      // inject a keyframes rule dynamically (unique name)
+      const name = 'clientsScroll';
+      // remove previous if exists
+      const existing = document.getElementById('clientsScrollKeyframes');
+      if (existing) existing.remove();
+      // create rules
+      const style = document.createElement('style');
+      style.id = 'clientsScrollKeyframes';
+      style.textContent = `
+        @keyframes ${name} {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-${width}px); }
+        }
+      `;
+      document.head.appendChild(style);
+      // apply animation to the track
+      track.style.animationName = name;
+      track.style.animationDuration = duration + 's';
+      track.style.animationTimingFunction = 'linear';
+      track.style.animationIterationCount = 'infinite';
+      // make sure paused state class works
+      track.classList.remove('pause');
     });
   }
 
-  // build full grid
-  function buildClientsFullGrid() {
-    clientsFullGrid.innerHTML = '';
-    CLIENT_LOGOS.forEach((src, i) => {
-      const a = document.createElement('button');
-      a.className = 'full-client';
-      a.setAttribute('type', 'button');
-      a.innerHTML = `<img loading="lazy" src="${src}" alt="Client ${i + 1}">`;
-      a.addEventListener('click', () => { openClientLightbox(i); closeClientsFull(); });
-      clientsFullGrid.appendChild(a);
-    });
-  }
+  // pause/resume handlers
+  function pauseTrack() { track.classList.add('pause'); track.style.animationPlayState = 'paused'; }
+  function resumeTrack() { track.classList.remove('pause'); track.style.animationPlayState = 'running'; }
 
-  // lightbox controls
-  let currentIndex = 0;
-  function openClientLightbox(index) {
-    currentIndex = index;
-    clientsLbImg.src = CLIENT_LOGOS[currentIndex];
-    clientsLightbox.classList.add('active');
-    clientsLightbox.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    clientsLbClose.focus();
-  }
-  function closeClientLightbox() {
-    clientsLightbox.classList.remove('active');
-    clientsLightbox.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-  function showClientPrev() {
-    currentIndex = (currentIndex - 1 + CLIENT_LOGOS.length) % CLIENT_LOGOS.length;
-    clientsLbImg.src = CLIENT_LOGOS[currentIndex];
-  }
-  function showClientNext() {
-    currentIndex = (currentIndex + 1) % CLIENT_LOGOS.length;
-    clientsLbImg.src = CLIENT_LOGOS[currentIndex];
-  }
+  slider.addEventListener('mouseenter', pauseTrack);
+  slider.addEventListener('mouseleave', resumeTrack);
+  slider.addEventListener('focusin', pauseTrack);
+  slider.addEventListener('focusout', resumeTrack);
+  // recompute on resize/orientationchange
+  let resizeTimer = null;
+  window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(computeMarquee, 150); });
+  window.addEventListener('orientationchange', () => { setTimeout(computeMarquee, 220); });
 
-  // full modal
-  function openClientsFull() {
-    clientsFullModal.classList.add('active');
-    clientsFullModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    closeClientsFullBtn.focus();
-  }
-  function closeClientsFull() {
-    clientsFullModal.classList.remove('active');
-    clientsFullModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  // event listeners
-  clientsLbClose && clientsLbClose.addEventListener('click', closeClientLightbox);
-  clientsLbPrev && clientsLbPrev.addEventListener('click', showClientPrev);
-  clientsLbNext && clientsLbNext.addEventListener('click', showClientNext);
-
-  clientsLightbox && clientsLightbox.addEventListener('click', (e) => {
-    if (e.target === clientsLightbox) closeClientLightbox();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (clientsLightbox.classList.contains('active')) {
-      if (e.key === 'Escape') closeClientLightbox();
-      if (e.key === 'ArrowLeft') showClientPrev();
-      if (e.key === 'ArrowRight') showClientNext();
-    }
-    if (clientsFullModal.classList.contains('active') && e.key === 'Escape') {
-      closeClientsFull();
-    }
-  });
-
-  openClientsFullBtn && openClientsFullBtn.addEventListener('click', openClientsFull);
-  closeClientsFullBtn && closeClientsFullBtn.addEventListener('click', closeClientsFull);
-  clientsFullModal && clientsFullModal.addEventListener('click', (e) => {
-    if (e.target === clientsFullModal) closeClientsFull();
-  });
-
-  // init
-  buildClientsThumbs();
-  buildClientsFullGrid();
-
-  // optional debug
-  window._clients = { open: openClientLightbox, openAll: openClientsFull };
-})();
-
-/***************************
- * Testimonials (vanilla)  *
- ***************************/
-(function () {
-  const testimonials = [
-    { name: "Aarav Mehta", role: "Founder, GreenLeaf Organics", message: "The custom eco-friendly boxes have completely elevated our unboxing experience. The quality, print and finish are all top-notch." },
-    { name: "Neha Sharma", role: "Brand Manager, Aura Skincare", message: "We needed premium packaging that was also sustainable. The team understood our brief perfectly and delivered right on time." },
-    { name: "Rahul Verma", role: "Owner, BrewBox Coffee", message: "Sturdy, stylish and on-brand. Our customers constantly compliment the packaging. It really helps us stand out on the shelf." },
-    { name: "Simran Kaur", role: "CEO, NatureDrops", message: "From samples to final delivery, everything was handled smoothly. The team gave great suggestions for materials and finishes." },
-    { name: "David Roy", role: "Founder, BoldBrew", message: "Our subscription boxes look so much more premium now. The packaging matches our brand perfectly and is eco-conscious too." }
-  ];
-
-  const VISIBLE = 3;
-  let start = 0;
-  const container = document.getElementById('testimonialTrack');
-
-  function render() {
-    container.innerHTML = '';
-    for (let i = 0; i < VISIBLE; i++) {
-      const idx = (start + i) % testimonials.length;
-      const t = testimonials[idx];
-
-      const card = document.createElement('article');
-      card.className = 'testimonial-card';
-      card.innerHTML = `
-            <div class="test-quote-mark">“</div>
-            <p class="testimonial-message">${escapeHtml(t.message)}</p>
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <div class="test-avatar"> <img src="./assets/user.png" style="height:40px; border-radius: 100px "/> </div>
-                <div style="text-align:left">
-                  <div class="test-name">${escapeHtml(t.name)}</div>
-                  <div class="test-role">${escapeHtml(t.role)}</div>
-                </div>
-              </div>
-              <div class="test-stars">★★★★★</div>
-            </div>
-          `;
-      container.appendChild(card);
-    }
-  }
-
-  function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
-  }
-
-  function next() {
-    start = (start + 1) % testimonials.length;
-    render();
-  }
-  function prev() {
-    start = (start - 1 + testimonials.length) % testimonials.length;
-    render();
-  }
-
-  // buttons
-  document.getElementById('nextBtn').addEventListener('click', () => { next(); });
-  document.getElementById('prevBtn').addEventListener('click', () => { prev(); });
-
-  // keyboard support
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') next();
-    if (e.key === 'ArrowLeft') prev();
-  });
-
-  // init
-  render();
+  computeMarquee();
 })();
 
 
-// Demo image array (replace with your actual image URLs)
+/* ---------------- GALLERY & LIGHTBOX (guarded) ---------------- */
 const IMAGES = [
-  './assets/heroImg-1.png',
-  './assets/heroImg-2.png',
-  './assets/heroImg-3.png',
-  './assets/heroImg-4.png',
-  './assets/heroImg-5.png',
-  './assets/heroImg-1.png',
-  './assets/productImg-1.png',
-  './assets/productImg-2.png',
-  './assets/productImg-3.png',
-  './assets/productImg-4.png',
-  './assets/heroImg-1.png',
-  './assets/heroImg-2.png',
-  './assets/heroImg-3.png',
-  './assets/heroImg-4.png',
-  './assets/heroImg-5.png',
-  './assets/heroImg-1.png',
-  './assets/productImg-1.png',
-  './assets/productImg-2.png',
-  './assets/productImg-3.png',
-  './assets/productImg-4.png'
+  './assets/heroImg-1.png', './assets/heroImg-2.png', './assets/heroImg-3.png',
+  './assets/heroImg-4.png', './assets/heroImg-5.png', './assets/productImg-1.png',
+  './assets/productImg-2.png', './assets/productImg-3.png', './assets/productImg-4.png'
 ];
 
-const galleryGrid = document.getElementById('galleryGrid');
-const fullGalleryGrid = document.getElementById('fullGalleryGrid');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-const lbClose = document.getElementById('lbClose');
-const lbPrev = document.getElementById('lbPrev');
-const lbNext = document.getElementById('lbNext');
-const openFullGalleryBtn = document.getElementById('openFullGalleryBtn');
-const fullGalleryModal = document.getElementById('fullGalleryModal');
-const closeFullGalleryBtn = document.getElementById('closeFullGalleryBtn');
+(function initGalleryIfNeeded() {
+  const galleryGrid = document.getElementById('galleryGrid');
+  const fullGalleryGrid = document.getElementById('fullGalleryGrid');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lbClose = document.getElementById('lbClose');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+  const openFullGalleryBtn = document.getElementById('openFullGalleryBtn');
+  const fullGalleryModal = document.getElementById('fullGalleryModal');
+  const closeFullGalleryBtn = document.getElementById('closeFullGalleryBtn');
 
-// Build thumbnails (show first 6)
-function buildThumbs() {
-  galleryGrid.innerHTML = '';
-  const thumbs = IMAGES.slice(0, 6);
-  thumbs.forEach((src, i) => {
-    const div = document.createElement('div');
-    div.className = 'thumb';
-    div.innerHTML = `<img loading="lazy" src="${src}" alt="Project image ${i + 1}">`;
-    div.addEventListener('click', () => openLightbox(i));
-    galleryGrid.appendChild(div);
-  });
-}
+  if (!galleryGrid || !fullGalleryGrid || !lightbox || !lightboxImg || !lbClose) {
+    info('gallery: elements missing — skip');
+    return;
+  }
 
-// Build full gallery grid
-function buildFullGrid() {
-  fullGalleryGrid.innerHTML = '';
-  IMAGES.forEach((src, i) => {
-    const a = document.createElement('button');
-    a.className = 'full-thumb';
-    a.innerHTML = `<img loading="lazy" src="${src}" alt="Project image ${i + 1}">`;
-    a.addEventListener('click', () => {
-      openLightbox(i);
-      closeFullGallery();
+  function buildThumbs() {
+    galleryGrid.innerHTML = '';
+    const thumbs = IMAGES.slice(0, 6);
+    thumbs.forEach((src, i) => {
+      const div = document.createElement('div');
+      div.className = 'thumb';
+      div.innerHTML = `<img loading="lazy" src="${src}" alt="Project image ${i + 1}">`;
+      div.addEventListener('click', () => openLightbox(i));
+      galleryGrid.appendChild(div);
     });
-    fullGalleryGrid.appendChild(a);
+  }
+
+  function buildFullGrid() {
+    fullGalleryGrid.innerHTML = '';
+    IMAGES.forEach((src, i) => {
+      const a = document.createElement('button');
+      a.className = 'full-thumb';
+      a.innerHTML = `<img loading="lazy" src="${src}" alt="Project image ${i + 1}">`;
+      a.addEventListener('click', () => {
+        openLightbox(i);
+        closeFullGallery();
+      });
+      fullGalleryGrid.appendChild(a);
+    });
+  }
+
+  let currentIndex = 0;
+  function openLightbox(index) {
+    currentIndex = index;
+    lightboxImg.src = IMAGES[currentIndex];
+    lightbox.setAttribute('aria-hidden', 'false');
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + IMAGES.length) % IMAGES.length;
+    lightboxImg.src = IMAGES[currentIndex];
+  }
+  function showNext() {
+    currentIndex = (currentIndex + 1) % IMAGES.length;
+    lightboxImg.src = IMAGES[currentIndex];
+  }
+
+  function openFullGallery() {
+    if (!fullGalleryModal) return;
+    fullGalleryModal.classList.add('active');
+    fullGalleryModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeFullGalleryBtn && closeFullGalleryBtn.focus();
+  }
+  function closeFullGallery() {
+    fullGalleryModal.classList.remove('active');
+    fullGalleryModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', showPrev);
+  lbNext.addEventListener('click', showNext);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.classList.contains('active')) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') showPrev();
+      if (e.key === 'ArrowRight') showNext();
+    }
+    if (fullGalleryModal && fullGalleryModal.classList.contains('active') && e.key === 'Escape') {
+      closeFullGallery();
+    }
   });
-}
 
-// Lightbox controls
-let currentIndex = 0;
-function openLightbox(index) {
-  currentIndex = index;
-  lightboxImg.src = IMAGES[currentIndex];
-  lightbox.setAttribute('aria-hidden', 'false');
-  lightbox.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  // focus for keyboard
-  lbClose.focus();
-}
-function closeLightbox() {
-  lightbox.classList.remove('active');
-  lightbox.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-}
-function showPrev() {
-  currentIndex = (currentIndex - 1 + IMAGES.length) % IMAGES.length;
-  lightboxImg.src = IMAGES[currentIndex];
-}
-function showNext() {
-  currentIndex = (currentIndex + 1) % IMAGES.length;
-  lightboxImg.src = IMAGES[currentIndex];
-}
+  if (openFullGalleryBtn) openFullGalleryBtn.addEventListener('click', openFullGallery);
+  if (closeFullGalleryBtn) closeFullGalleryBtn.addEventListener('click', closeFullGallery);
+  if (fullGalleryModal) fullGalleryModal.addEventListener('click', (e) => { if (e.target === fullGalleryModal) closeFullGallery(); });
 
-// Full gallery modal
-function openFullGallery() {
-  fullGalleryModal.classList.add('active');
-  fullGalleryModal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-  closeFullGalleryBtn.focus();
-}
-function closeFullGallery() {
-  fullGalleryModal.classList.remove('active');
-  fullGalleryModal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-}
-
-// event listeners
-lbClose.addEventListener('click', closeLightbox);
-lbPrev.addEventListener('click', showPrev);
-lbNext.addEventListener('click', showNext);
-
-lightbox.addEventListener('click', (e) => {
-  if (e.target === lightbox) closeLightbox(); // click outside to close
-});
-
-// keyboard
-document.addEventListener('keydown', (e) => {
-  if (lightbox.classList.contains('active')) {
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') showPrev();
-    if (e.key === 'ArrowRight') showNext();
-  }
-  if (fullGalleryModal.classList.contains('active') && e.key === 'Escape') {
-    closeFullGallery();
-  }
-});
-
-// full gallery buttons
-openFullGalleryBtn.addEventListener('click', openFullGallery);
-closeFullGalleryBtn.addEventListener('click', closeFullGallery);
-fullGalleryModal.addEventListener('click', (e) => {
-  if (e.target === fullGalleryModal) closeFullGallery();
-});
-
-// init
-buildThumbs();
-buildFullGrid();
-
-// Expose helpers for dev console (optional)
-window._gallery = { open: openLightbox, openAll: openFullGallery };
-
-
-// ===========================Footer==========
-(function () {
-  const y = new Date().getFullYear();
-  const el = document.getElementById('footer-year');
-  if (el) el.textContent = y;
+  buildThumbs(); buildFullGrid();
+  window._gallery = { open: openLightbox, openAll: openFullGallery };
 })();
 
+/* ---------------- TESTIMONIALS (guarded) ---------------- */
+if (document.getElementById('testimonialTrack')) {
+  (function () {
+    const testimonials = [
+      { name: "Nikhil Agarwal", role: "Founder", message: "Nirvista transformed our payments infrastructure with a seamless UPI + Wallet system. Their fintech expertise helped us go live 3 weeks ahead of schedule.", avatar: "./assets/user1.jpg" },
+      { name: "Aarav Mehta", role: "Founder, GreenLeaf Organics", message: "The custom eco-friendly boxes have completely elevated our unboxing experience. The quality, print and finish are all top-notch.", avatar: "./assets/user2.jpg" },
+      { name: "Sarah Mitchell", role: "CTO", message: "Their AI team built us a scalable prediction system that improved appointment forecasting — reduced no-shows and increased utilization.", avatar: "./assets/user3.jpg" },
+      { name: "Rahul Verma", role: "Owner, BrewBox Coffee", message: "Sturdy, stylish and on-brand. Our customers constantly compliment the packaging. It really helps us stand out on the shelf.", avatar: "./assets/user4.jpg" },
+      { name: "Simran Kaur", role: "CEO, NatureDrops", message: "From samples to final delivery, everything was handled smoothly. The team gave great suggestions for materials and finishes.", avatar: "./assets/user5.jpg" }
+    ];
 
-(function () {
-  const track = document.getElementById('featTrack');
-  const prevBtn = document.getElementById('featPrev');
-  const nextBtn = document.getElementById('featNext');
+    const VISIBLE = 3;
+    let index = 0;
+    const track = document.getElementById('testimonialTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsWrap = document.getElementById('testDots');
+    const autoplay = true;
+    const AUTOPLAY_MS = 4000;
+    let autoplayTimer = null;
 
-  if (!track) return;
+    function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]); }
 
-  const cards = Array.from(track.children);
-  const visibleCount = 3; // how many visible at once on desktop
-  let index = 0;
-  let slideWidth = cards[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).gap || 36);
+    function renderCards() {
+      track.innerHTML = '';
+      testimonials.forEach((t, i) => {
+        const card = document.createElement('article');
+        card.className = 'testimonial-card';
+        card.dataset.idx = i;
+        card.innerHTML = `
+          <div class="test-quote-mark">“</div>
+          <div class="test-footer">
+            <div class="test-meta" style="display:flex; flex-direction:row; gap:30px"; alignment-items:center; justify-content:space-between>
+              <div class="test-avatar" style="height:40px; width:40px; border-radius:100%; backbroud-color:red">
+              <img src="./assets/user.png" alt="${escapeHtml(t.name)}" style="height:30px"; border-radius:100%>
+              </div>
+              <div style="text-align:left">
+                <div class="test-name">${escapeHtml(t.name)}</div>
+                <div class="test-role" style="font-size:14px; color:gray">${escapeHtml(t.role)}</div>
+              </div>
+                          <div class="test-stars" style="color:#d2c91a">★★★★★</div>
 
-  // recalc on resize
-  function refreshMetrics() {
-    slideWidth = cards[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(track).gap) || 36);
-    // keep transform in bounds
-    goTo(index);
+            </div>
+          </div>
+          <p class="testimonial-message">${escapeHtml(t.message)}</p>
+          
+          <div class="score-badge" aria-hidden="true">
+          <img src="./assets/quote.png" style="height:30px" />
+          </div>
+        `;
+        track.appendChild(card);
+      });
+      renderDots();
+      updateLayout();
+    }
+
+    function renderDots() {
+      dotsWrap.innerHTML = '';
+      for (let i = 0; i < testimonials.length; i++) {
+        const d = document.createElement('button');
+        d.className = 'dot';
+        d.type = 'button';
+        d.dataset.idx = i;
+        d.addEventListener('click', () => { goTo(i); restartAutoplay(); });
+        dotsWrap.appendChild(d);
+      }
+    }
+
+    function getCardWidth() {
+      const card = track.querySelector('.testimonial-card');
+      if (!card) return 360;
+      return card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).gap || 28);
+    }
+
+    function updateLayout() {
+      const cards = Array.from(track.children);
+      if (!cards.length) return;
+      const total = cards.length;
+      const activeIndex = index + Math.floor(VISIBLE / 2);
+      const safeActive = ((activeIndex % total) + total) % total;
+
+      const viewport = document.querySelector('.testimonial-window');
+      const viewportWidth = viewport.getBoundingClientRect().width;
+      const cardWidth = track.children[0].getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(track).gap) || 28;
+      const itemTotal = cardWidth + gap;
+
+      const translateX = (viewportWidth / 2) - (itemTotal * safeActive) - (cardWidth / 2);
+      track.style.transform = `translateX(${translateX}px)`;
+
+      cards.forEach((c, i) => {
+        c.classList.remove('active', 'side');
+        if (i === safeActive) c.classList.add('active');
+        else if (i === safeActive - 1 || i === safeActive + 1) c.classList.add('side');
+      });
+
+      cards.forEach(c => {
+        const badge = c.querySelector('.score-badge');
+        if (!badge) return;
+        if (c.classList.contains('active')) badge.style.display = 'flex';
+        else badge.style.display = 'none';
+      });
+
+      Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('active', i === safeActive));
+    }
+
+    function next() { index = (index + 1) % testimonials.length; updateLayout(); }
+    function prev() { index = (index - 1 + testimonials.length) % testimonials.length; updateLayout(); }
+    function goTo(i) { index = (i - Math.floor(VISIBLE / 2) + testimonials.length) % testimonials.length; updateLayout(); }
+
+    function startAutoplay() { if (!autoplay) return; stopAutoplay(); autoplayTimer = setInterval(() => next(), AUTOPLAY_MS); }
+    function stopAutoplay() { if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; } }
+    function restartAutoplay() { stopAutoplay(); startAutoplay(); }
+
+    prevBtn && prevBtn.addEventListener('click', () => { prev(); restartAutoplay(); });
+    nextBtn && nextBtn.addEventListener('click', () => { next(); restartAutoplay(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') prev(); if (e.key === 'ArrowRight') next(); });
+
+    let resizeTimer = null;
+    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(updateLayout, 90); });
+
+    renderCards();
+    goTo(0);
+    startAutoplay();
+  })();
+}
+
+/* ---------------- ANIMATE ON SCROLL (IntersectionObserver) ---------------- */
+(function scrollAnimateInit() {
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(ent => {
+        if (ent.isIntersecting) {
+          ent.target.classList.add('in-view');
+          observer.unobserve(ent.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.animate-on-scroll').forEach(n => observer.observe(n));
+  } else {
+    document.querySelectorAll('.animate-on-scroll').forEach(n => n.classList.add('in-view'));
   }
-  window.addEventListener('resize', refreshMetrics);
-
-  function goTo(i) {
-    index = i;
-    // clamp index range so we can show smooth loop using duplicated slides
-    // because we duplicated slides in HTML, allow index up to cards.length - visibleCount
-    const maxIndex = cards.length - visibleCount;
-    if (index < 0) index = maxIndex;
-    if (index > maxIndex) index = 0;
-    const x = -index * slideWidth;
-    track.style.transform = `translate3d(${x}px,0,0)`;
-  }
-
-  // next / prev
-  function next() { goTo(index + 1); }
-  function prev() { goTo(index - 1); }
-
-  if (nextBtn) nextBtn.addEventListener('click', () => { next(); resetAuto(); });
-  if (prevBtn) prevBtn.addEventListener('click', () => { prev(); resetAuto(); });
-
-  // autoplay
-  let timer = null;
-  const INTERVAL = 1500; // 1.5s
-  function startAuto() { if (timer) return; timer = setInterval(next, INTERVAL); }
-  function stopAuto() { if (!timer) return; clearInterval(timer); timer = null; }
-  function resetAuto() { stopAuto(); startAuto(); }
-
-  // pause on hover
-  track.addEventListener('mouseenter', stopAuto);
-  track.addEventListener('mouseleave', startAuto);
-
-  // init
-  // small debounce to ensure images/layout measured
-  setTimeout(() => {
-    refreshMetrics();
-    startAuto();
-  }, 120);
-
 })();
 
+/* ---------------- FOOTER YEAR ---------------- */
+(function setYear() { const y = new Date().getFullYear(); const el = document.getElementById('footer-year'); if (el) el.textContent = y; })();
 
+info('main.js loaded');
 
 
