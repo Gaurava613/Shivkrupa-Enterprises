@@ -1,0 +1,288 @@
+<!-- pages/gallery.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shivkrupa — Gallery (Masonry)</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gap: 18px;
+      --accent: #5a2ee8;
+      --card-radius: 14px;
+      --overlay: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.48));
+    }
+    html,body{height:100%;font-family:"Poppins",system-ui,Arial; margin:0; color:#0b1b2b;}
+    .page-wrap{max-width:1280px; margin:28px auto; padding:0 18px;}
+    .gallery-header{text-align:center; margin-bottom:22px;}
+    .gallery-header .clients-kicker{color:var(--accent); font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:6px;}
+    .gallery-header h1{font-family:"Merriweather",serif; font-size:2rem; margin:0 0 8px;}
+    .filters{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:20px;}
+    .filters button{border-radius:999px; border:1px solid rgba(11,18,40,0.06); padding:8px 14px; background:white; cursor:pointer; font-weight:600;}
+    .filters button.active{background:var(--accent); color:#fff; box-shadow:0 6px 20px rgba(90,46,232,0.12);}
+
+    /* Masonry column layout */
+    .masonry {
+      column-gap: var(--gap);
+      column-fill: balance;
+      /* number of columns changes with width */
+      column-count: 5;
+      width:100%;
+    }
+    @media (max-width:1200px){ .masonry{ column-count:4; } }
+    @media (max-width:992px){ .masonry{ column-count:3; } }
+    @media (max-width:720px){ .masonry{ column-count:2; } }
+    @media (max-width:420px){ .masonry{ column-count:1; } }
+
+    .masonry-item{
+      display:inline-block; /* important for columns */
+      width:100%;
+      margin:0 0 var(--gap);
+      border-radius:var(--card-radius);
+      overflow:hidden;
+      background:#f3f3f1;
+      box-shadow:0 12px 30px rgba(2,8,20,0.04);
+      position:relative;
+      transform-origin:center;
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+    .masonry-item:hover{ transform: translateY(-6px); box-shadow:0 26px 60px rgba(2,8,20,0.08); }
+
+    .masonry-item img{
+      display:block;
+      width:100%;
+      height:auto;
+      object-fit:cover;
+      vertical-align:middle;
+      /* smooth reveal */
+      transition: transform .35s ease;
+      will-change: transform;
+    }
+    .masonry-item:hover img{ transform: scale(1.03); }
+
+    /* overlay caption */
+    .tile-caption {
+      position:absolute;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      padding:10px 12px;
+      border-radius:10px;
+      background: rgba(0,0,0,0.36);
+      color:#fff;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.24);
+    }
+    .tile-caption .meta{ font-size:0.95rem; opacity:0.95; }
+    .tile-badge{
+      background:rgba(255,255,255,0.95);
+      color:#111;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:0.78rem;
+      font-weight:700;
+      box-shadow:0 6px 18px rgba(11,27,40,0.06);
+    }
+
+    /* tall / wide variants so items look mixed */
+    .h-lg img{ height:420px; }   /* tall */
+    .h-md img{ height:300px; }   /* medium */
+    .h-sm img{ height:200px; }   /* small */
+    .w-wide{ /* mimic wide tile by forcing inline-block width less than 100% of column */
+      display:inline-block;
+      width:100%;
+    }
+
+    /* lightbox modal (simple) */
+    .lb-backdrop{
+      position:fixed; inset:0; background: rgba(3,10,20,0.7); display:none; align-items:center; justify-content:center; z-index:1200;
+    }
+    .lb-backdrop.active{ display:flex; }
+    .lb-inner{ max-width:95%; max-height:92%; border-radius:12px; overflow:hidden; background:#fff; box-shadow: 0 40px 120px rgba(2,8,20,0.6); display:flex; gap:10px; align-items:center; justify-content:center; position:relative; }
+    .lb-inner img{ max-width:100%; max-height:100%; display:block; object-fit:contain; }
+    .lb-close{ position:absolute; right:12px; top:12px; border:none; background:rgba(0,0,0,0.6); color:#fff; width:42px; height:42px; border-radius:8px; cursor:pointer; }
+    .lb-nav{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:#fff; width:48px; height:48px; border-radius:10px; border:none; cursor:pointer; }
+    .lb-prev{ left:10px; } .lb-next{ right:10px; }
+
+    /* accessibility focus */
+    .masonry-item:focus-within{ outline:4px solid rgba(90,46,232,0.12); outline-offset:6px; }
+  </style>
+      <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+
+   <!-- Minimal nav for testing -->
+    <nav class="clean-navbar">
+        <div class="nav-container">
+
+            <!-- Logo -->
+            <div class="nav-left">
+                <a href="index.html"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+            </div>
+
+            <!-- Toggle Button (Mobile) -->
+            <button class="nav-toggle" id="navToggle" aria-label="Open Menu">
+                ☰
+            </button>
+
+            <!-- Center Menu -->
+            <ul class="nav-menu" id="mainNav">
+                <li><a href="/index.html" class="active">Home</a></li>
+                <li><a href="./about.html">About Us</a></li>
+                <li><a href="./product.html">Product</a></li>
+                <li><a href="./gallery.html">Gallery</a></li>
+            </ul>
+
+            <!-- Right Gradient Section -->
+            <div class="nav-right">
+                <a href="./contact.html" class="signin-btn">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+  <div class="page-wrap">
+    <header class="gallery-header">
+      <p class="clients-kicker">Our Work</p>
+      <h1>Project Gallery</h1>
+      <p class="gallery-sub text-muted">Beautiful installations — click any tile to view full size.</p>
+    </header>
+
+    <div class="filters" role="tablist" aria-label="Gallery filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="tensile">Tensile</button>
+      <button class="filter-btn" data-filter="awning">Awnings</button>
+      <button class="filter-btn" data-filter="parking">Car Parks</button>
+      <button class="filter-btn" data-filter="installation">Installation</button>
+    </div>
+
+    <main class="masonry" id="masonry"></main>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lb-backdrop" id="lbBackdrop" aria-hidden="true">
+    <div class="lb-inner" role="dialog" aria-modal="true">
+      <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+      <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+      <img id="lbImg" src="" alt="Expanded image">
+      <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+    </div>
+  </div>
+
+  <script>
+    // images array - update filenames & captions to match your ./assets
+    const ITEMS = [
+      {src: '../assets/heroImg-1.png', title: 'Car Park Canopy', tag: 'parking', size: 'h-lg'},
+      {src: '../assets/heroImg-2.png', title: 'Retractable Awning', tag: 'awning', size: 'h-md'},
+      {src: '../assets/productImg-1.png', title: 'Entrance Tensile', tag: 'tensile', size: 'h-lg'},
+      {src: '../assets/productImg-2.png', title: 'Shade Structure', tag: 'tensile', size: 'h-sm'},
+      {src: '../assets/heroImg-3.png', title: 'FRP Car Shed', tag: 'parking', size: 'h-md'},
+      {src: '../assets/productImg-3.png', title: 'Motorized Awning', tag: 'awning', size: 'h-md'},
+      {src: '../assets/heroImg-4.png', title: 'Installation Team', tag: 'installation', size: 'h-lg'},
+      {src: '../assets/heroImg-5.png', title: 'Project Finish', tag: 'installation', size: 'h-sm'},
+      {src: '../assets/heroImg-1.png', title: 'Car Park Canopy', tag: 'parking', size: 'h-lg'},
+      {src: '../assets/heroImg-2.png', title: 'Retractable Awning', tag: 'awning', size: 'h-md'},
+      {src: '../assets/productImg-1.png', title: 'Entrance Tensile', tag: 'tensile', size: 'h-lg'},
+      {src: '../assets/productImg-2.png', title: 'Shade Structure', tag: 'tensile', size: 'h-sm'},
+      {src: '../assets/heroImg-3.png', title: 'FRP Car Shed', tag: 'parking', size: 'h-md'},
+      {src: '../assets/productImg-3.png', title: 'Motorized Awning', tag: 'awning', size: 'h-md'},
+      {src: '../assets/heroImg-4.png', title: 'Installation Team', tag: 'installation', size: 'h-lg'},
+      {src: '../assets/heroImg-5.png', title: 'Project Finish', tag: 'installation', size: 'h-sm'},
+      {src: '../assets/productImg-4.png', title: 'Gazebo Tensile', tag: 'tensile', size: 'h-md'}
+    ];
+
+    const masonry = document.getElementById('masonry');
+
+    // helper to create tile nodes
+    function createTile(item, idx){
+      const el = document.createElement('article');
+      el.className = `masonry-item ${item.size}`;
+      el.tabIndex = 0;
+      el.dataset.tag = item.tag;
+      el.dataset.idx = idx;
+
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.title;
+      img.loading = 'lazy';
+      el.appendChild(img);
+
+      const caption = document.createElement('div');
+      caption.className = 'tile-caption';
+      caption.innerHTML = `<div class="meta">${item.title}</div><div class="tile-badge">${item.tag}</div>`;
+      el.appendChild(caption);
+
+      // open lightbox when clicked
+      el.addEventListener('click', () => openLightbox(idx));
+      // also open on Enter key for keyboard users
+      el.addEventListener('keydown', (e) => { if (e.key === 'Enter') openLightbox(idx); });
+
+      return el;
+    }
+
+    // render all
+    function render(items){
+      masonry.innerHTML = '';
+      items.forEach((it,i) => masonry.appendChild(createTile(it,i)));
+      // small delay to help images flow nicely
+      setTimeout(()=>window.dispatchEvent(new Event('resize')), 60);
+    }
+
+    render(ITEMS);
+
+    // filtering
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        if (f === 'all') render(ITEMS);
+        else render(ITEMS.filter(it => it.tag === f));
+      });
+    });
+
+    // LIGHTBOX
+    const lbBackdrop = document.getElementById('lbBackdrop');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    let current = 0;
+    function openLightbox(i){
+      current = i;
+      lbImg.src = ITEMS[current].src;
+      lbBackdrop.classList.add('active');
+      lbBackdrop.setAttribute('aria-hidden','false');
+      lbClose.focus();
+    }
+    function closeLightbox(){
+      lbBackdrop.classList.remove('active');
+      lbBackdrop.setAttribute('aria-hidden','true');
+    }
+    function showPrev(){ current = (current - 1 + ITEMS.length) % ITEMS.length; lbImg.src = ITEMS[current].src; }
+    function showNext(){ current = (current + 1) % ITEMS.length; lbImg.src = ITEMS[current].src; }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', showPrev);
+    lbNext.addEventListener('click', showNext);
+    lbBackdrop.addEventListener('click', (e) => { if (e.target === lbBackdrop) closeLightbox(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (lbBackdrop.classList.contains('active')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      }
+    });
+  </script>
+</body>
+</html>

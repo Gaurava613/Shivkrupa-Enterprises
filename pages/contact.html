@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Shivkrupa — Contact (Refined + Map)</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+<style>
+  :root{
+    --logo:#0a1e33;
+    --accent:#1166a3;
+    --muted:#6b7280;
+    --card:#ffffff;
+    --bg:#f6f9fb;
+    --radius:14px;
+    --glass: rgba(255,255,255,0.85);
+    --shadow: 0 12px 28px rgba(10,20,40,0.07);
+    --focus: 0 0 0 4px rgba(10,30,60,0.08);
+    font-family: "Poppins", system-ui, Arial;
+  }
+
+  html,body{ height:100%; margin:0; background:var(--bg); color:#0b1b2b; -webkit-font-smoothing:antialiased; }
+  a{ color:var(--logo); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  /* NAVBAR (shared) */
+  .clean-navbar { position: sticky; top: 0; width: 100%; z-index: 9999; background: rgba(255,255,255,0.9); box-shadow: 0 6px 18px rgba(10,20,40,0.04); }
+  
+ 
+  /* page container */
+  .contact-wrap{ max-width:1180px; margin:26px auto; padding:24px; box-sizing:border-box; }
+
+  /* grid */
+  .contact-grid{ display:grid; grid-template-columns: 1.1fr 420px; gap:28px; align-items:start; }
+  @media (max-width:980px){ .contact-grid{ grid-template-columns: 1fr; } }
+
+  /* left col */
+  .contact-left{ padding:28px 26px; background:linear-gradient(180deg,var(--glass),rgba(255,255,255,0.98)); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .kicker{ text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:700; font-size:0.78rem; margin-bottom:8px; }
+  h1.contact-title{ font-family:"Merriweather", serif; font-size:2.2rem; margin:6px 0 12px; color:var(--logo); }
+  .lead{ color:var(--muted); line-height:1.6; margin-bottom:18px; }
+
+  .meta-pills{ display:flex; gap:16px; flex-wrap:wrap; margin:18px 0; }
+  .pill{ background:transparent; border-radius:10px; padding:8px 12px; font-weight:600; color:var(--logo); border:1px solid rgba(10,30,50,0.06); font-size:0.95rem; }
+
+  .info-row{ display:flex; gap:18px; margin-top:16px; flex-wrap:wrap; }
+  .info-card{ background:var(--card); border-radius:12px; padding:18px; flex:1 1 210px; box-shadow: 0 10px 30px rgba(8,18,32,0.04); display:flex; gap:14px; align-items:center; min-width:210px; transition:transform .18s ease; }
+  .info-card:hover{ transform: translateY(-6px); box-shadow: 0 22px 50px rgba(8,18,32,0.08); }
+  .info-icon{ width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,var(--logo),var(--accent)); color:white; font-size:20px; }
+  .info-body{ flex:1; }
+  .info-small{ color:var(--muted); font-size:0.86rem; margin-bottom:6px; }
+  .info-main{ font-weight:700; color:var(--logo); font-size:1.02rem; }
+
+  .left-ctas{ margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; }
+  .btn-primary-brand{ background: linear-gradient(180deg,var(--logo),var(--accent)); color:white; border:0; padding:10px 18px; border-radius:10px; font-weight:600; box-shadow: 0 12px 28px rgba(10,30,60,0.12); }
+  .btn-ghost{ border:1px solid rgba(10,30,60,0.08); background:transparent; color:var(--logo); padding:10px 16px; border-radius:10px; font-weight:600; }
+
+  /* right col / form */
+  .contact-card{ background:var(--card); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); position:sticky; top:22px; }
+  @media (max-width:980px){ .contact-card{ position:relative; top:auto; } }
+
+  .form-title{ font-size:1.7rem; margin:0 0 8px; color:var(--logo); font-weight:700; font-family:"Merriweather", serif; }
+  .form-sub{ color:var(--muted); font-size:0.95rem; margin-bottom:14px; }
+
+  .form-control{ border-radius:10px; border:1px solid rgba(10,20,30,0.08); padding:12px 14px; box-shadow:none; }
+  .form-control:focus{ outline:none; box-shadow:var(--focus); border-color:var(--accent); }
+
+  .btn-send{ background:linear-gradient(90deg,var(--logo),var(--accent)); color:white; border:0; padding:10px 16px; border-radius:10px; font-weight:700; box-shadow: 0 12px 30px rgba(10,30,60,0.12); }
+
+  .secondary-cta{ background:transparent; border:1px solid rgba(10,30,60,0.08); color:var(--logo); padding:10px 14px; border-radius:10px; font-weight:600; }
+
+  /* map area */
+  .map-wrap{ margin-top:14px; border-radius:10px; overflow:hidden; border:1px solid rgba(10,30,60,0.04); box-shadow: 0 8px 20px rgba(9,20,30,0.04); }
+  .map-iframe{ min-height:220px; width:100%; border:0; display:block; }
+
+  .muted-small{ color:var(--muted); font-size:0.92rem; margin-top:10px; }
+
+  /* small screens tweaks */
+  @media (max-width:520px){
+    .contact-wrap{ padding:18px; margin:18px; }
+    .contact-left{ padding:18px; }
+    .contact-grid{ gap:18px; }
+    .info-row{ flex-direction:column; }
+  }
+
+  .fade-up{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-up.in-view{ opacity:1; transform:none; }
+</style>
+</head>
+<body>
+
+ <!-- Minimal nav for testing -->
+    <nav class="clean-navbar">
+        <div class="nav-container">
+
+            <!-- Logo -->
+            <div class="nav-left">
+                <a href="index.html"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+            </div>
+
+            <!-- Toggle Button (Mobile) -->
+            <button class="nav-toggle" id="navToggle" aria-label="Open Menu">
+                ☰
+            </button>
+
+            <!-- Center Menu -->
+            <ul class="nav-menu" id="mainNav">
+                <li><a href="/index.html" class="active">Home</a></li>
+                <li><a href="./about.html">About Us</a></li>
+                <li><a href="./product.html">Product</a></li>
+                <li><a href="./gallery.html">Gallery</a></li>
+            </ul>
+
+            <!-- Right Gradient Section -->
+            <div class="nav-right">
+                <a href="./contact.html" class="signin-btn">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+<!-- Page content -->
+<div class="contact-wrap">
+  <div class="contact-grid">
+
+    <!-- LEFT -->
+    <div class="contact-left fade-up" id="leftCol">
+      <div class="kicker">Work with us</div>
+      <h1 class="contact-title">Contact Information</h1>
+      <p class="lead">We're Shivkrupa Enterprises — designers & manufacturers of tensile structures, awnings & shades. Get in touch for a free site survey and estimate. We typically respond within 24 hours.</p>
+
+      <div class="meta-pills" aria-hidden="true">
+        <div class="pill">Since 2011</div>
+        <div class="pill">Pune, Maharashtra</div>
+        <div class="pill">ISO Certified</div>
+      </div>
+
+      <div class="info-row" aria-label="Contact cards">
+        <div class="info-card" role="group" aria-label="phone">
+          <div class="info-icon" aria-hidden>📞</div>
+          <div class="info-body">
+            <div class="info-small">Call Us For Query</div>
+            <div class="info-main"><a href="tel:+911234567890">+91 12345 67890</a></div>
+          </div>
+        </div>
+
+        <div class="info-card" role="group" aria-label="email">
+          <div class="info-icon" aria-hidden>✉️</div>
+          <div class="info-body">
+            <div class="info-small">Email Us Anytime</div>
+            <div class="info-main"><a href="mailto:info@shivkrupa.com">info@shivkrupa.com</a></div>
+          </div>
+        </div>
+
+        <div class="info-card" role="group" aria-label="visit">
+          <div class="info-icon" aria-hidden>📍</div>
+          <div class="info-body">
+            <div class="info-small">Visit Our Office</div>
+            <div class="info-main">S. No. 33, Near Yuraj Castel, Warje, Pune</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="left-ctas">
+        <button class="btn-primary-brand" onclick="document.getElementById('name').focus()">Request Site Visit</button>
+        <a class="btn-ghost" href="/pages/gallery.html">See Gallery</a>
+      </div>
+
+      <p class="muted-small">Prefer WhatsApp? There's a green chat button at the bottom-right for quick messages.</p>
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="contact-card fade-up" id="rightCard" aria-labelledby="formTitle">
+      <div>
+        <div id="formTitle" class="form-title">Send a Message</div>
+        <div class="form-sub">Quick enquiry — we'll call or email to schedule a site visit</div>
+      </div>
+
+      <form id="contactForm" onsubmit="return onSubmit(event)" autocomplete="on" novalidate>
+        <div class="mb-3">
+          <label class="form-label small">Your name</label>
+          <input id="name" class="form-control" placeholder="e.g. Rajesh Patel" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small">Phone or Email</label>
+          <input id="contact" class="form-control" placeholder="Phone or email" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small">Project details</label>
+          <textarea id="message" class="form-control" rows="4" placeholder="Tell us what you need (site size, type of shade, budget)"></textarea>
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button type="submit" class="btn-send" aria-label="Send enquiry">Send Enquiry</button>
+          <button type="button" class="secondary-cta" onclick="requestCallback()">Request Callback</button>
+        </div>
+
+        <!-- MAP -->
+        <div class="map-wrap" aria-hidden="false" aria-label="Office location map">
+          <!--
+            Replace the iframe src below with the exact embed link from Google Maps for precise pin location:
+            1) Open Google Maps
+            2) Search address (e.g. "S. No. 33, Near Yuraj Castel, Warje, Pune")
+            3) Click Share -> Embed a map -> Copy HTML -> paste iframe src here
+          -->
+          <iframe
+            class="map-iframe"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=S.+No.+33,+Near+Yuraj+Castel,+Warje,+Pune,+India&output=embed">
+          </iframe>
+        </div>
+
+        <div class="muted-small">By sending you agree to our <a href="#">privacy policy</a> — we'll only use this to reply.</div>
+      </form>
+    </aside>
+
+  </div>
+</div>
+
+<script>
+  // navbar toggle (mobile)
+  (function(){
+    const navToggle = document.getElementById('navToggle');
+    const mainNav = document.getElementById('mainNav');
+    if (!navToggle || !mainNav) return;
+    navToggle.addEventListener('click', () => {
+      const open = mainNav.style.display === 'flex';
+      mainNav.style.display = open ? 'none' : 'flex';
+      mainNav.style.flexDirection = 'column';
+      navToggle.setAttribute('aria-expanded', String(!open));
+      document.body.style.overflow = open ? '' : 'hidden';
+    });
+    // close nav when clicking a link (mobile)
+    mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      if (window.innerWidth <= 992) { mainNav.style.display = 'none'; navToggle.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; }
+    }));
+  })();
+
+  // entrance animation for sections
+  document.addEventListener('DOMContentLoaded', () => {
+    requestAnimationFrame(()=> {
+      document.querySelectorAll('.fade-up').forEach((el, i) => {
+        setTimeout(()=> el.classList.add('in-view'), 80 * i);
+      });
+    });
+  });
+
+  function onSubmit(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const contact = document.getElementById('contact').value.trim();
+    if(!name || !contact){ alert('Please enter your name and a phone or email.'); return false; }
+    // TODO: submit to backend. For now demo:
+    alert('Thanks! Your enquiry has been captured. (demo)');
+    e.target.reset();
+    return false;
+  }
+
+  function requestCallback(){
+    const contact = document.getElementById('contact').value.trim();
+    if(!contact){ alert('Please provide phone or email for callback.'); return; }
+    alert('Callback requested. We will contact you shortly. (demo)');
+  }
+</script>
+
+</body>
+</html>

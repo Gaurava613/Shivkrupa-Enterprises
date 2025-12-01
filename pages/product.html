@@ -1,0 +1,552 @@
+<!-- pages/products.html (fixed layout for search / sort / filter controls) -->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shivkrupa — Products</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        :root {
+            --accent: #5a2ee8;
+            --muted: #6b7280;
+            --card-radius: 12px;
+        }
+
+        body {
+            font-family: "Poppins", system-ui, Arial;
+            margin: 0;
+            color: #071028;
+            background: #fff;
+        }
+
+        .container-lg {
+            max-width: 1200px;
+        }
+
+        .page-wrap {
+            padding: 28px 18px;
+        }
+
+        .kicker {
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            font-size: 0.78rem;
+        }
+
+        h1 {
+            font-family: "Merriweather", serif;
+            font-size: 1.6rem;
+            margin: 4px 0 6px;
+        }
+
+        /* ---------- Header / Controls layout (fixed) ---------- */
+        /* wrapper for header row */
+        .page-wrap>.d-flex.header-row {
+            display: flex;
+            align-items: center;
+            /* keep title & controls vertically centered */
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            /* allow wrap on small screens */
+        }
+
+        .search-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: flex-end;
+            /* keep controls at right on wide screens */
+            min-width: 260px;
+        }
+
+        .search {
+            min-width: 260px;
+            max-width: 420px;
+            width: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border-radius: 999px;
+            padding: 6px 10px;
+            box-shadow: 0 6px 18px rgba(9, 20, 30, 0.04);
+        }
+
+        .search svg {
+            flex: 0 0 auto;
+            opacity: .8;
+        }
+
+        .search input {
+            border: 0;
+            outline: none;
+            flex: 1;
+            padding: 6px 6px;
+            min-width: 0;
+            /* important for flexbox shrink */
+            font-size: 0.95rem;
+            background: transparent;
+        }
+
+        .chip {
+            background: #fff;
+            border-radius: 999px;
+            padding: 8px 12px;
+            border: 1px solid rgba(11, 18, 40, 0.06);
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: transform .14s ease, box-shadow .14s ease;
+        }
+
+        .chip:hover {
+            transform: translateY(-2px);
+        }
+
+        .chip.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(90, 46, 232, 0.12);
+        }
+
+        /* Bootstrap card tweaks for consistent cards */
+        .product-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border-radius: var(--card-radius);
+            overflow: hidden;
+            box-shadow: 0 12px 36px rgba(7, 12, 32, 0.06);
+            transition: transform .18s ease, box-shadow .18s ease;
+            background: #fff;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 70px rgba(7, 12, 32, 0.10);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 14px;
+        }
+
+        .card-title {
+            font-weight: 700;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .card-text {
+            color: var(--muted);
+            font-size: 0.92rem;
+            margin: 0;
+            flex: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 12px 14px;
+            background: transparent;
+            border-top: 1px solid rgba(11, 18, 40, 0.04);
+        }
+
+        .price {
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .btn-sm-primary {
+            background: var(--accent);
+            color: #fff;
+            border: 0;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        /* responsive spacing */
+        .filters-row {
+            margin: 16px 0 8px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 48px 12px;
+            color: var(--muted);
+        }
+
+        /* Quick view modal */
+        .pv-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .modal-content {
+            border-radius: 12px;
+        }
+
+        /* ---------- Responsive adjustments ---------- */
+        @media (max-width: 768px) {
+            .page-wrap>.d-flex.header-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .search-controls {
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+            }
+
+            /* Move search to the top in the controls block and make full width */
+            .search {
+                order: -1;
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            .search-controls .chip {
+                flex: 0 0 auto;
+            }
+
+            .btn-sm-primary,
+            .chip {
+                padding: 7px 10px;
+                font-size: 0.92rem;
+            }
+
+            .product-img {
+                height: 160px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .product-img {
+                height: 150px;
+            }
+
+            .card-title {
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Minimal nav for testing -->
+    <nav class="clean-navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Open Menu">☰</button>
+
+            <ul class="nav-menu" id="mainNav">
+                <li><a href="/index.html" class="active">Home</a></li>
+                <li><a href="./about.html">About Us</a></li>
+                <li><a href="./product.html">Product</a></li>
+                <li><a href="./gallery.html">Gallery</a></li>
+            </ul>
+
+            <div class="nav-right">
+                <a href="./pages/contact.html" class="signin-btn">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container-lg page-wrap">
+        <div class="d-flex header-row align-items-start justify-content-between mb-2">
+            <div>
+                <p class="kicker">Products</p>
+                <h1>Premium Tensile & Awning Products</h1>
+                <p class="text-muted mb-0">Browse our catalogue — click Quick View for details.</p>
+            </div>
+            <div class="search-controls" role="toolbar" aria-label="Product controls">
+                <div class="search" role="search" aria-label="Search products">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                        <path d="M21 21l-4.35-4.35" stroke="#9aa5c3" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <input id="searchInput" placeholder="Search products, e.g. 'awning'">
+                </div>
+                <div class="chip" id="sortBtn" role="button" aria-pressed="false">Sort: Popular</div>
+                <div class="chip" id="filterToggle" role="button" aria-pressed="false">Toggle Filters</div>
+            </div>
+
+        </div>
+
+        <div id="filtersRow" class="filters-row" aria-label="Product categories">
+            <button class="chip active filter" data-filter="all">All</button>
+            <button class="chip filter" data-filter="tensile">Tensile</button>
+            <button class="chip filter" data-filter="awning">Awnings</button>
+            <button class="chip filter" data-filter="parking">Parking</button>
+            <button class="chip filter" data-filter="frp">FRP</button>
+        </div>
+
+        <!-- Normal Bootstrap grid: 4 columns desktop, 3 tablet, 2 small, 1 xs -->
+        <section id="prodGrid" class="row g-4" aria-live="polite"></section>
+
+        <div id="emptyMsg" class="empty" style="display:none;">No products match your search/filter.</div>
+    </div>
+
+    <!-- Quick view modal (Bootstrap modal) -->
+    <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body p-3">
+                    <div class="row g-3">
+                        <div class="col-md-6 pv-media" id="pvMediaContainer" style="min-height:260px;">
+                            <img id="pvImg" src="" alt="Product image"
+                                style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="pvTitle" class="mb-1"></h5>
+                            <div class="text-muted mb-2" id="pvTag"></div>
+                            <p id="pvDesc" class="text-muted"></p>
+                            <div class="d-flex align-items-center gap-3 mt-3">
+                                <div class="h5 mb-0 price" id="pvPrice"></div>
+                                <div class="badge bg-light text-dark">Warranty 2 yrs</div>
+                            </div>
+                            <div class="mt-4 d-flex gap-2">
+                                <button class="btn btn-primary btn-sm" id="pvEnquire">Enquire</button>
+                                <button class="btn btn-outline-secondary btn-sm" id="pvCompare">Compare</button>
+                                <button class="btn btn-outline-secondary btn-sm" id="pvSpec">Download Spec</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer py-2 border-0">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+         <!-- FOOTER (Bootstrap + your styles) -->
+    <footer class="site-footer mt-4">
+        <div class="footer-inner container d-grid" style="grid-template-columns:1.2fr 1fr 1fr;">
+            <div class="footer-col footer-about">
+                <img src="/assets/logo.png" alt="Shivkrupa logo" class="footer-logo">
+                <p class="footer-desc">Shivkrupa Enterprises — designers & manufacturers of tensile structures,
+                    retractable awnings and car-park sheds. Quality materials, custom designs and timely installation
+                    since 2011.</p>
+                <div class="footer-download">
+                    <a href="/mnt/data/e profile  SHIVKRUPA ENTERPRISES.pdf.pdf.pdf" download class="btn-download"
+                        aria-label="Download company profile">&#128229; Download Company Profile</a>
+                </div>
+            </div>
+
+            <div class="footer-col footer-links" aria-labelledby="footer-links-heading">
+                <h4 id="footer-links-heading">Quick links</h4>
+                <ul class="list-unstyled mb-0">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#about">About us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col footer-contact" aria-labelledby="footer-contact-heading">
+                <h4 id="footer-contact-heading">Contact</h4>
+                <address class="contact-meta mb-0">
+                    <div><strong>Phone:</strong> <a href="tel:+911234567890">+91 12345 67890</a></div>
+                    <div><strong>Email:</strong> <a href="mailto:info@shivkrupa.com">info@shivkrupa.com</a></div>
+                    <div><strong>Address:</strong> S. No. 33, Near Yuraj Castel, Warje, Pune, Maharashtra</div>
+                </address>
+
+                <div class="socials mt-2" aria-label="Social links">
+                    <a href="#" class="social" aria-label="Facebook" title="Facebook">f</a>
+                    <a href="#" class="social" aria-label="Instagram" title="Instagram">ig</a>
+                    <a href="#" class="social" aria-label="LinkedIn" title="LinkedIn">in</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom mt-3">
+            <div
+                class="container footer-bottom-inner d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <div class="copyright">© <span id="footer-year"></span> Shivkrupa Enterprises. All rights reserved.
+                </div>
+                <div class="powered">Made with care • <a href="#" rel="noopener">Terms</a> • <a href="#"
+                        rel="noopener">Privacy</a></div>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+    <!-- Bootstrap + JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // sample product data - replace img paths with your assets
+        const PRODUCTS = [
+            { id: 1, title: 'Conical Tensile Structure', tag: 'tensile', price: 42000, rating: 4.8, img: '../assets/productImg-1.png', desc: 'Elegant conical tensile solution, ideal for entrances and plazas.' },
+            { id: 2, title: 'Motorized Awning', tag: 'awning', price: 18500, rating: 4.6, img: '../assets/productImg-3.png', desc: 'Retractable motorized awnings with remote control and sensor options.' },
+            { id: 3, title: 'FRP Car Parking Shed', tag: 'parking', price: 72000, rating: 4.9, img: '../assets/productImg-4.png', desc: 'Durable FRP canopies for residential and commercial parking.' },
+            { id: 4, title: 'Single-pole Tensile', tag: 'tensile', price: 36000, rating: 4.5, img: '../assets/productImg-2.png', desc: 'Minimal single-pole tensile shade suitable for compact spaces.' },
+            { id: 5, title: 'Manual Awning', tag: 'awning', price: 9500, rating: 4.2, img: '../assets/heroImg-2.png', desc: 'Simple manual awning for balconies and windows.' },
+            { id: 6, title: 'PVC Tensile Fabric', tag: 'frp', price: 4200, rating: 4.1, img: '../assets/heroImg-3.png', desc: 'High-quality membrane fabric for tensile projects.' },
+            { id: 7, title: 'Covered Gazebo', tag: 'tensile', price: 33000, rating: 4.4, img: '../assets/heroImg-1.png', desc: 'Decorative gazebo tensile structure for gardens and cafés.' },
+            { id: 8, title: 'Commercial Car Shelter', tag: 'parking', price: 128000, rating: 4.7, img: '../assets/heroImg-4.png', desc: 'Heavy-duty car shelter for fleet parking with long-span frames.' }
+        ];
+
+        const prodGrid = document.getElementById('prodGrid');
+        const emptyMsg = document.getElementById('emptyMsg');
+
+        // create a normal bootstrap card column
+        function createCardCol(p) {
+            const col = document.createElement('div');
+            col.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
+
+            const card = document.createElement('div');
+            card.className = 'product-card';
+
+            card.innerHTML = `
+        <img src="${p.img}" alt="${escapeHtml(p.title)}" class="product-img">
+        <div class="card-body">
+          <div class="card-title">${escapeHtml(p.title)}</div>
+          <p class="card-text">${escapeHtml(p.desc)}</p>
+        </div>
+        <div class="card-footer">
+          <div>
+            <div class="price">₹ ${p.price.toLocaleString()}</div>
+            <div class="text-muted" style="font-size:0.85rem;">${escapeHtml(p.tag)}</div>
+          </div>
+          <div class="d-flex flex-column align-items-end gap-2">
+            <button class="btn btn-sm-primary" data-action="view" data-id="${p.id}">Quick View</button>
+            <button class="btn btn-outline-secondary btn-sm" data-action="compare" data-id="${p.id}">Compare</button>
+          </div>
+        </div>
+      `;
+
+            // keyboard accessibility
+            card.tabIndex = 0;
+            card.addEventListener('keydown', (e) => { if (e.key === 'Enter') openQuickView(p.id); });
+
+            // buttons
+            card.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const act = btn.dataset.action;
+                    if (act === 'view') openQuickView(p.id);
+                    if (act === 'compare') alert('Added to compare: ' + p.title);
+                });
+            });
+
+            col.appendChild(card);
+            return col;
+        }
+
+        function renderProducts(list) {
+            prodGrid.innerHTML = '';
+            if (!list.length) { emptyMsg.style.display = 'block'; return; } else emptyMsg.style.display = 'none';
+            list.forEach(p => prodGrid.appendChild(createCardCol(p)));
+        }
+
+        // basic XSS helper
+        function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]); }
+
+        renderProducts(PRODUCTS);
+
+        // filters
+        document.querySelectorAll('.filter').forEach(f => f.addEventListener('click', () => {
+            document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+            f.classList.add('active');
+            const tag = f.dataset.filter;
+            const q = document.getElementById('searchInput').value.trim().toLowerCase();
+            applyFilters(tag, q);
+        }));
+
+        // search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const q = e.target.value.trim().toLowerCase();
+            const active = document.querySelector('.filter.active')?.dataset.filter || 'all';
+            applyFilters(active, q);
+        });
+
+        function applyFilters(tag, q) {
+            let res = PRODUCTS.slice();
+            if (tag && tag !== 'all') res = res.filter(p => p.tag === tag);
+            if (q) res = res.filter(p => (p.title + ' ' + p.desc + ' ' + p.tag).toLowerCase().includes(q));
+            renderProducts(res);
+        }
+
+        // quick view modal logic using Bootstrap modal
+        const quickViewModalEl = document.getElementById('quickViewModal');
+        const bootstrapModal = new bootstrap.Modal(quickViewModalEl);
+        const pvImg = document.getElementById('pvImg');
+        const pvTitle = document.getElementById('pvTitle');
+        const pvTag = document.getElementById('pvTag');
+        const pvDesc = document.getElementById('pvDesc');
+        const pvPrice = document.getElementById('pvPrice');
+
+        function openQuickView(id) {
+            const p = PRODUCTS.find(x => x.id === +id);
+            if (!p) return;
+            pvImg.src = p.img;
+            pvTitle.textContent = p.title;
+            pvTag.textContent = p.tag + ' • ' + ('★'.repeat(Math.round(p.rating || 0)));
+            pvDesc.textContent = p.desc;
+            pvPrice.textContent = '₹ ' + p.price.toLocaleString();
+            bootstrapModal.show();
+        }
+
+        // sort button
+        const sortBtn = document.getElementById('sortBtn');
+        let sortMode = 0;
+        sortBtn.addEventListener('click', () => {
+            sortMode = (sortMode + 1) % 3;
+            if (sortMode === 0) { sortBtn.textContent = 'Sort: Popular'; renderProducts(PRODUCTS); sortBtn.setAttribute('aria-pressed', 'false'); }
+            if (sortMode === 1) { sortBtn.textContent = 'Sort: Price ↑'; renderProducts(PRODUCTS.slice().sort((a, b) => a.price - b.price)); sortBtn.setAttribute('aria-pressed', 'true'); }
+            if (sortMode === 2) { sortBtn.textContent = 'Sort: Price ↓'; renderProducts(PRODUCTS.slice().sort((a, b) => b.price - a.price)); sortBtn.setAttribute('aria-pressed', 'true'); }
+        });
+
+        // toggle filters panel
+        document.getElementById('filterToggle').addEventListener('click', () => {
+            const el = document.getElementById('filtersRow');
+            const isHidden = el.style.display === 'none';
+            el.style.display = isHidden ? 'flex' : 'none';
+            document.getElementById('filterToggle').setAttribute('aria-pressed', String(isHidden));
+        });
+    </script>
+</body>
+
+</html>

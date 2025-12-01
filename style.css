@@ -1,10 +1,5 @@
-/* ---------- START style.css ---------- */
-/* (This is your CSS with additions: animate-on-scroll, pulseIn, magazine offsets) */
-
-/* REMIXICON import for wc-icon */
 @import url("https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css");
 
-/* root */
 :root {
     --hero-h: 76vh;
     --overlay: rgba(6, 12, 24, 0.45);
@@ -16,7 +11,6 @@
     --accent: #5a2ee8;
 }
 
-/* base */
 html,
 body {
     background: #ffffff;
@@ -24,16 +18,14 @@ body {
     font-family: var(--font-sans);
 }
 
-/* headings tint */
 h2,
 h3,
 h4 {
-    color: #6403ae;
+    color: #1181b0;
     font-weight: 600;
     font-family: var(--font-serif);
 }
 
-/* NAVBAR */
 .clean-navbar {
     position: sticky;
     top: 0;
@@ -49,8 +41,9 @@ h4 {
     align-items: center;
     padding: 0 40px;
     height: 70px;
-    /* background: linear-gradient(135deg, #dcdff4, #d5b8e6); */
-    background-color: #fbfbfb;
+    background-color: #dddfdf;
+    /* background: linear-gradient(135deg, #fffbe9, #ecda64); */
+    /* background: linear-gradient(135deg, #e9efff, #70b3f0); */
     box-sizing: border-box;
 }
 
@@ -63,7 +56,7 @@ h4 {
 .logo {
     height: 60px;
     object-fit: contain;
-    background-color: white;
+    /* background-color: white; */
 }
 
 .nav-menu {
@@ -86,7 +79,7 @@ h4 {
     transition: 0.2s;
 }
 
-.nav-menu a:hover{
+.nav-menu a:hover {
     background-color: #0d6aac;
     color: white;
 }
@@ -98,13 +91,13 @@ h4 {
     align-items: center;
     height: 100%;
     padding-right: 50px;
-    background: linear-gradient(135deg, #947be5, #ff00ea);
+    /* background: linear-gradient(135deg, #947be5, #ff00ea); */
     clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
     box-sizing: border-box;
 }
 
 .signin-btn {
-    background: #fff;
+    background: linear-gradient(135deg, #7b8ee5, #007bff);
     border: none;
     padding: 10px 28px;
     border-radius: 30px;
@@ -114,6 +107,7 @@ h4 {
     transition: 0.18s;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     text-decoration: none;
+    color: white;
 }
 
 .signin-btn:hover {
@@ -134,7 +128,6 @@ h4 {
     cursor: pointer;
 }
 
-/* responsive navbar */
 @media (max-width:992px) {
     .nav-menu {
         display: none;
@@ -181,7 +174,6 @@ h4 {
     }
 }
 
-/* HERO */
 .hero-sec {
     margin-top: 0;
     padding-top: 0;
@@ -203,7 +195,7 @@ h4 {
     display: block;
 }
 
-.hero-text-btn{
+.hero-text-btn {
     background: linear-gradient(135deg, #947be5, #ff00ea);
     border: none;
     height: 50px;
@@ -281,7 +273,6 @@ h4 {
     font-weight: 500;
 }
 
-/* DOTS */
 .controls {
     position: absolute;
     left: 50%;
@@ -311,7 +302,6 @@ h4 {
     transform: scale(1.25);
 }
 
-/* MOBILE FIXES */
 @media (max-width:992px) {
     .slide {
         display: block;
@@ -346,8 +336,6 @@ h4 {
     }
 }
 
-
-/* ABOUT SECTION */
 .about-section {
     background: #fff;
     color: #000;
@@ -362,7 +350,6 @@ h4 {
     display: block;
 }
 
-/* TENSILE 3D */
 #tensile-3d-section {
     padding: 80px 0;
 }
@@ -392,182 +379,214 @@ h4 {
     pointer-events: none;
 }
 
-
-/* ---------- PRODUCTS / CAROUSEL (fixed & responsive) ---------- */
-
-/* page container */
 .products-wrap {
-  --max-width: 1200px;
-  max-width: var(--max-width);
-  margin: 60px auto;
-  padding: 40px 20px 72px;
-  box-sizing: border-box;
-  position: relative;
+    --max-width: 1200px;
+    max-width: var(--max-width);
+    margin: 60px auto;
+    padding: 40px 20px 72px;
+    box-sizing: border-box;
+    position: relative;
 }
 
-/* heading */
 .product-text {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin-bottom:24px;
-  text-align:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+    text-align: center;
 }
 
-/* carousel shell */
 .products-carousel {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-/* viewport hides overflow */
 .carousel-viewport {
-  overflow: hidden;
-  width: 100%;
-  /* add a small horizontal padding so the first/last card isn't stuck to the edge */
-  padding: 6px 0;
-  box-sizing: content-box;
+    overflow: hidden;
+    width: 100%;
+    padding: 6px 0;
+    box-sizing: content-box;
 }
 
-/* track is flex row — JS clones and translates this */
 .carousel-track {
-  display:flex;
-  gap:20px; /* keep gap consistent with JS getGap() */
-  align-items: stretch;
-  transition: transform 600ms cubic-bezier(.22,.9,.35,1);
-  will-change: transform;
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    transition: transform 600ms cubic-bezier(.22, .9, .35, 1);
+    will-change: transform;
 }
 
-/* ensure children don't grow unexpectedly; JS measures widths from these */
-.carousel-track > * {
-  flex: 0 0 auto;
-  box-sizing: border-box;
+.carousel-track>* {
+    flex: 0 0 auto;
+    box-sizing: border-box;
 }
 
-/* product card appearance */
 .products-carousel .product-card {
-  background: rgba(229, 229, 229, 0.98);
-  border-radius: 18px;
-  box-shadow: 0 12px 30px rgba(9,20,30,0.06);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  gap: 12px;
-  transition: transform .28s ease, box-shadow .28s ease;
-  overflow: hidden;
-  padding: 18px;
-  min-height: 320px;   /* slightly reduced */
-  font-size: 14px;
-  /* important: card width defaults; JS will measure the actual width */
-  /* min-width: 260px;
-  max-width: 360px; */
+    background: rgba(243, 243, 243, 0.98);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    transition: transform .28s ease;
+    overflow: hidden;
+    padding: 18px;
+    min-height: 320px;
+    font-size: 14px;
     width: 330px;
 }
 
-/* product image container (fixed box) */
 .product-icon {
-  width: 100%;
-  /* make image area consistent across cards */
-  max-width: 320px;
-  height: 180px;
-  border-radius: 12px;
-  overflow: hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: #fff;
-  box-shadow: 0 8px 22px rgba(2,8,20,0.04);
+    width: 100%;
+    max-width: 320px;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(2, 8, 20, 0.04);
 }
 
-/* product images: make them cover the box but not overflow the card.
-   Use object-fit:cover so visuals remain consistent. */
 .product-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display:block;
-  transform-origin: center;
-  transition: transform .35s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform-origin: center;
+    transition: transform .35s ease;
 }
 
-/* subtle hover zoom on image */
 .product-card:hover .product-icon img {
-  transform: scale(1.04);
+    transform: scale(1.04);
 }
 
-/* product body spacing */
-.product-body { width:100%; padding: 6px 8px 0; box-sizing: border-box; }
-.product-body h5 { margin: 6px 0 8px; font-size: 1.05rem; color: #0b2340; font-weight:700; }
-.product-list { margin: 0; padding: 0; list-style: none; color: #3a4856; font-size: 0.95rem; line-height:1.45; text-align:left; }
+.product-body {
+    width: 100%;
+    padding: 6px 8px 0;
+    box-sizing: border-box;
+}
 
-/* smaller list spacing so content fits nicely inside card */
-.product-list li { margin-bottom:6px; }
+.product-body h5 {
+    margin: 6px 0 8px;
+    font-size: 1.05rem;
+    color: #0b2340;
+    font-weight: 700;
+}
 
-/* carousel controls */
+.product-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #3a4856;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    text-align: left;
+}
+
+.product-list li {
+    margin-bottom: 6px;
+}
+
 .carousel-btn {
-  background: rgba(10,16,30,0.06);
-  border: none;
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(2,8,20,0.06);
+    background: rgba(10, 16, 30, 0.06);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(2, 8, 20, 0.06);
 }
-.carousel-btn:hover { transform: translateY(-3px); }
 
-/* tablet: show 2 items roughly, reduce card sizes */
+.carousel-btn:hover {
+    transform: translateY(-3px);
+}
+
 @media (max-width: 1100px) {
-  .products-carousel .product-card { min-width: 220px; max-width: 320px; min-height: 300px; }
-  .product-icon { height: 160px; max-width: 280px; }
+    .products-carousel .product-card {
+        min-width: 220px;
+        max-width: 320px;
+        min-height: 300px;
+    }
+
+    .product-icon {
+        height: 160px;
+        max-width: 280px;
+    }
 }
 
-/* mobile: single card, full width, increase image area height */
 @media (max-width: 720px) {
-    .product-card{
+    .product-card {
         width: 240px !important;
     }
-  .products-carousel { gap: 8px; }
-  .carousel-viewport { padding: 0; }
-  .carousel-track { gap: 12px; }
-  .products-carousel .product-card {
-    min-width: calc(100% - 40px); /* leave some breathing room */
-    max-width: calc(100% - 40px);
-    min-height: auto;
-    padding: 14px;
-    border-radius: 14px;
-  }
-  .product-icon {
-    width: 100%;
-    height: 240px; /* taller image on mobile for better visual */
-    max-width: 100%;
-    border-radius: 12px;
-  }
-  .product-body { padding: 8px 4px 12px; }
-  .product-list { font-size: 0.98rem; text-align: left; }
-  .carousel-btn { width:44px; height:44px; font-size: 22px; }
+
+    .products-carousel {
+        gap: 8px;
+    }
+
+    .carousel-viewport {
+        padding: 0;
+    }
+
+    .carousel-track {
+        gap: 12px;
+    }
+
+    .products-carousel .product-card {
+        min-width: calc(100% - 40px);
+        max-width: calc(100% - 40px);
+        min-height: auto;
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .product-icon {
+        width: 100%;
+        height: 240px;
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    .product-body {
+        padding: 8px 4px 12px;
+    }
+
+    .product-list {
+        font-size: 0.98rem;
+        text-align: left;
+    }
+
+    .carousel-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+    }
 }
 
-/* accessibility focus */
 .products-carousel .product-card:focus-within,
 .products-carousel .product-card:focus {
-  outline: 3px solid rgba(168,90,214,0.12);
-  outline-offset: 4px;
+    outline: 3px solid rgba(168, 90, 214, 0.12);
+    outline-offset: 4px;
 }
 
-/* small animation for cards coming into view (optional compliment to your animate-on-scroll) */
-.products-carousel .product-card.animate-on-scroll { opacity: 0; transform: translateY(12px) scale(.995); transition: opacity 520ms ease, transform 520ms ease; }
-.products-carousel .product-card.animate-on-scroll.in-view { opacity: 1; transform: translateY(0) scale(1); }
+.products-carousel .product-card.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(12px) scale(.995);
+    transition: opacity 520ms ease, transform 520ms ease;
+}
 
-/* End product carousel CSS */
+.products-carousel .product-card.animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
 
-
-/* small responsive adjustments----------------------- */
 @media (max-width: 900px) {
     .client-logo-wrap {
         min-width: 96px;
@@ -585,7 +604,6 @@ h4 {
     }
 }
 
-/* clients --------------------------------------------*/
 .clients-section {
     background: radial-gradient(circle at top left, #f4fdf4 0%, #ffffff 40%, #cfecf9 100%);
     overflow: hidden;
@@ -603,8 +621,14 @@ h4 {
     margin-bottom: 22px;
 }
 
-/* ---------- CLIENTS: layout, sizing & auto-scroll ---------- */
-/* ensure clients track is horizontal and logos are constrained */
+.clients-kicker{
+    color: var(--wc-accent-2);
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
 .clients-slider {
     overflow: hidden;
     position: relative;
@@ -616,13 +640,11 @@ h4 {
     align-items: center;
     will-change: transform;
     padding: 12px 4px;
-    /* the animation will be set via JS with a computed duration */
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-name: none;
 }
 
-/* each logo wrapper */
 .client-logo-wrap {
     flex: 0 0 auto;
     display: flex;
@@ -637,7 +659,6 @@ h4 {
     height: 72px;
 }
 
-/* internal img sizing */
 .client-logo-wrap img {
     max-width: 100%;
     max-height: 56px;
@@ -647,19 +668,15 @@ h4 {
     display: block;
 }
 
-/* allow pausing via class (JS toggles .pause) */
 .clients-track.pause {
     animation-play-state: paused !important;
     transition: none;
 }
 
-/* if track duplicates are used the visual loop will be seamless,
-   but keep pointer-events none so hover triggers pass to parent if desired */
 .clients-track img {
     pointer-events: none;
 }
 
-/* ========simplified testimonial card styles (kept from your CSS earlier) ================*/
 .testimonial-wrapper {
     padding: 48px 20px;
     max-width: 1200px;
@@ -691,7 +708,14 @@ h4 {
     padding-bottom: 40px;
 }
 
-/* base testimonial card */
+.test-kicker{
+    color: var(--wc-accent-2);
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
 .testimonial-card {
     background: #e3e6fb;
     width: 360px;
@@ -729,7 +753,6 @@ h4 {
     pointer-events: none;
 }
 
-/* score badge */
 .score-badge {
     position: absolute;
     left: 50%;
@@ -751,90 +774,86 @@ h4 {
 }
 
 .test-arrow-btn {
-  background: rgba(10,16,30,0.06);
-  border: none;
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(2,8,20,0.06);
+    background: rgba(10, 16, 30, 0.06);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(2, 8, 20, 0.06);
 }
 
-/* -------- Mobile-friendly testimonial tweaks -------- */
 @media (max-width: 780px) {
-  .testimonial-container {
-    /* stack layout on phone */
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    height: auto; /* allow auto height */
-    padding: 0 12px;
-  }
+    .testimonial-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        height: auto;
+        padding: 0 12px;
+    }
 
-  .testimonial-window {
-    width: 100% !important;
-    max-width: 100% !important;
-    /* overflow: visible;  */
-  }
+    .testimonial-window {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
 
-  .testimonial-card {
-    /* full-width cards for mobile */
-    width: 100% !important;
-    min-width: 100% !important;
-    margin: 0 auto 12px;
-    transform: none !important; /* don't offset via transforms on stacked cards */
-  }
+    .testimonial-card {
+        width: 100% !important;
+        min-width: 100% !important;
+        margin: 0 auto 12px;
+        transform: none !important;
+    }
 
-  .testimonial-card.active,
-  .testimonial-card.side {
-    transform: none !important;
-    opacity: 1 !important;
-  }
+    .testimonial-card.active,
+    .testimonial-card.side {
+        transform: none !important;
+        opacity: 1 !important;
+    }
 
-  /* move score-badge to normal flow when stacked */
-  .score-badge {
-    position: relative;
-    left: auto;
-    transform: none;
-    bottom: auto;
-    margin: 12px auto 0;
-    width: 64px;
-    height: 64px;
-    border-width: 5px;
-    font-size: 1rem;
-  }
+    .score-badge {
+        position: relative;
+        left: auto;
+        transform: none;
+        bottom: auto;
+        margin: 12px auto 0;
+        width: 64px;
+        height: 64px;
+        border-width: 5px;
+        font-size: 1rem;
+    }
 
-  /* hide the arrow buttons on phone — use swipe or drag instead */
-  .test-arrow-btn {
-    display: none;
-  }
+    .test-arrow-btn {
+        display: none;
+    }
 
-  /* reduce giant quote mark size on small screens */
-  .test-quote-mark {
-    font-size: 2.2rem;
-    left: 12px;
-    top: -6px;
-  }
+    .test-quote-mark {
+        font-size: 2.2rem;
+        left: 12px;
+        top: -6px;
+    }
 
-  /* make testimonial-message easier to read on small screens */
-  .testimonial-message {
-    font-size: 0.98rem;
-    line-height: 1.6;
-    margin-bottom: 8px;
-  }
+    .testimonial-message {
+        font-size: 0.98rem;
+        line-height: 1.6;
+        margin-bottom: 8px;
+    }
 }
 
-/* tiny improvement for very small phones */
 @media (max-width: 420px) {
-  .testimonial-card { padding: 18px; }
-  .score-badge { width: 56px; height: 56px; font-size: 0.95rem; }
+    .testimonial-card {
+        padding: 18px;
+    }
+
+    .score-badge {
+        width: 56px;
+        height: 56px;
+        font-size: 0.95rem;
+    }
 }
 
-
-/* WHY CHOOSE US SECTION (kept and extended)-=============== */
 :root {
     --wc-bg-1: linear-gradient(135deg, #f9f6ff 0%, #f3faff 100%);
     --wc-accent-1: #6f3cff;
@@ -847,7 +866,6 @@ h4 {
 
 .why-section {
     position: relative;
-    /* padding: 56px 18px; */
     background: var(--wc-bg-1);
     overflow: visible;
     color: var(--wc-ink);
@@ -886,12 +904,11 @@ h4 {
 
 .why-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr) 360px;
+    grid-template-columns: repeat(2, 1fr) 360px;
     gap: var(--wc-gap);
     align-items: stretch;
 }
 
-/* cards */
 .why-card,
 .why-highlight {
     border-radius: var(--wc-radius);
@@ -914,8 +931,8 @@ h4 {
 }
 
 .icon-wrap {
-    width: 56px;
-    height: 56px;
+    width: 100%;
+    height: 156px;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -924,6 +941,7 @@ h4 {
     color: var(--wc-accent-1);
     flex-shrink: 0;
     box-shadow: inset 0 -6px 14px rgba(111, 60, 255, 0.03);
+    font-size: 5rem;
 }
 
 .why-card h3 {
@@ -979,7 +997,6 @@ h4 {
     flex-wrap: wrap;
 }
 
-/* magazine stagger offsets for desktop */
 @media (min-width: 1101px) {
     .why-grid .why-card:nth-child(1) {
         transform: translateY(30px);
@@ -1008,7 +1025,6 @@ h4 {
     }
 }
 
-/* responsive */
 @media (max-width:1100px) {
     .why-grid {
         grid-template-columns: 1fr 1fr;
@@ -1031,8 +1047,8 @@ h4 {
     }
 
     .icon-wrap {
-        width: 48px;
-        height: 48px;
+        width: 100%;
+        height: 100px;
     }
 
     .why-card {
@@ -1049,7 +1065,6 @@ h4 {
     }
 }
 
-/* fade-card small helper (kept) */
 .fade-card {
     opacity: 0;
     transform: translateY(20px);
@@ -1079,7 +1094,6 @@ h4 {
     }
 }
 
-/* animate-on-scroll helper classes */
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(18px);
@@ -1092,7 +1106,6 @@ h4 {
     transform: translateY(0);
 }
 
-/* subtle pulse enter */
 .pulse-in {
     transform-origin: center;
     animation: pulseIn .9s ease both;
@@ -1122,7 +1135,6 @@ h4 {
     }
 }
 
-/* stats ring/dot */
 :root {
     --card-size: 300px;
     --inner-size: 200px;
@@ -1236,7 +1248,6 @@ h4 {
     transition: transform .22s ease;
 }
 
-/* small responsive adjustments */
 @media (max-width:992px) {
     :root {
         --card-size: 240px;
@@ -1261,7 +1272,6 @@ h4 {
     }
 }
 
-/* gallery thumbs and lightbox */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1377,186 +1387,210 @@ h4 {
     top: 14px;
 }
 
-/* ================= FOOTER (responsive + clean links) ================= */
-
 .site-footer {
-  background: #0a1e33;
-  color: rgba(255,255,255,0.95);
-  padding-top: 40px;
-  padding-bottom: 18px;
-  font-family: "Poppins", sans-serif;
-  line-height: 1.45;
+    background: #0a1e33;
+    color: rgba(255, 255, 255, 0.95);
+    padding-top: 40px;
+    padding-bottom: 18px;
+    font-family: "Poppins", sans-serif;
+    line-height: 1.45;
 }
 
-/* grid layout for desktop/tablet */
 .footer-inner {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 28px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  box-sizing: border-box;
-  align-items: start;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    align-items: start;
 }
 
-/* logo block */
 .footer-about .footer-logo {
-  width: 140px;
-  max-width: 100%;
-  border-radius: 8px;
-  background: white;
-  padding: 8px;
-  display: block;
-  object-fit: contain;
+    width: 140px;
+    max-width: 100%;
+    border-radius: 8px;
+    background: white;
+    padding: 8px;
+    display: block;
+    object-fit: contain;
 }
 
-/* description */
 .footer-desc {
-  margin-top: 12px;
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.6;
-  max-width: 44ch;
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    max-width: 44ch;
 }
 
-/* download button */
 .btn-download {
-  display: inline-block;
-  margin-top: 12px;
-  background: #a85ad6;
-  padding: 10px 14px;
-  color: #fff;
-  border-radius: 8px;
-  text-decoration: none; /* ensure no underline */
-  font-weight: 600;
-  box-shadow: 0 4px 14px rgba(168,90,214,0.28);
+    display: inline-block;
+    margin-top: 12px;
+    background: #a85ad6;
+    padding: 10px 14px;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(168, 90, 214, 0.28);
 }
 
-/* -------- quick links & contact -------- */
 .footer-col h4 {
-  color: #ffffff;
-  font-size: 1.03rem;
-  margin-bottom: 12px;
+    color: #ffffff;
+    font-size: 1.03rem;
+    margin-bottom: 12px;
 }
 
-/* remove default link underlines, keep readable color */
 .footer-links a,
 .footer-contact a,
 .footer-bottom a {
-  color: rgba(255,255,255,0.92);
-  text-decoration: none;  /* <- remove underline */
-  transition: color .16s ease;
+    color: rgba(255, 255, 255, 0.92);
+    text-decoration: none;
+    transition: color .16s ease;
 }
 
-/* subtle hover */
 .footer-links a:hover,
 .footer-contact a:hover,
 .footer-bottom a:hover {
-  color: #a85ad6;
-  text-decoration: none;
+    color: #a85ad6;
+    text-decoration: none;
 }
 
-/* quick links list */
 .footer-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
+
 .footer-links li {
-  margin-bottom: 10px;
-  font-size: 0.96rem;
-  color: rgba(255,255,255,0.88);
+    margin-bottom: 10px;
+    font-size: 0.96rem;
+    color: rgba(255, 255, 255, 0.88);
 }
 
-/* contact meta */
 .contact-meta div {
-  margin-bottom: 10px;
-  color: rgba(255,255,255,0.9);
-  font-size: 0.95rem;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
 }
 
-/* socials (row) */
 .socials {
-  margin-top: 10px;
-  display:flex;
-  gap:10px;
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
 }
-.social {
-  width: 38px;
-  height: 38px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: rgba(255,255,255,0.06);
-  border-radius:8px;
-  color:#fff;
-  text-decoration:none;
-}
-.social:hover { background:#a85ad6; transform: translateY(-4px); }
 
-/* bottom bar */
+.social {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.social:hover {
+    background: #a85ad6;
+    transform: translateY(-4px);
+}
+
 .footer-bottom {
-  margin-top: 26px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding-top: 12px;
+    margin-top: 26px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 12px;
 }
 
 .footer-bottom-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  color: rgba(255,255,255,0.78);
-  font-size: 0.92rem;
-  box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.92rem;
+    box-sizing: border-box;
 }
 
-/* Make copyright and powered area break on small screens */
 .copyright {
-  white-space: nowrap;
-}
-.powered {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
-/* ================== Responsive rules ================== */
+.powered {
+    white-space: nowrap;
+}
+
 @media (max-width: 900px) {
-  .footer-inner {
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-  .footer-about .footer-logo { width: 120px; }
-  .footer-desc { max-width: 48ch; font-size: 0.94rem; }
-  .footer-bottom-inner { flex-direction: column; align-items: flex-start; row-gap: 8px; }
-  .copyright, .powered { width: 100%; text-align: left; }
+    .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .footer-about .footer-logo {
+        width: 120px;
+    }
+
+    .footer-desc {
+        max-width: 48ch;
+        font-size: 0.94rem;
+    }
+
+    .footer-bottom-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 8px;
+    }
+
+    .copyright,
+    .powered {
+        width: 100%;
+        text-align: left;
+    }
 }
 
 @media (max-width: 560px) {
-  .footer-inner {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 0 14px;
-  }
-  .footer-about .footer-logo { width: 110px; }
-  .footer-desc { font-size: 0.92rem; max-width: 100%; }
-  /* center the bottom content on very small screens */
-  .footer-bottom-inner { align-items: center; text-align: center; }
-  .copyright, .powered { width: 100%; text-align: center; }
-  .socials { justify-content: center; }
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 0 14px;
+    }
+
+    .footer-about .footer-logo {
+        width: 110px;
+    }
+
+    .footer-desc {
+        font-size: 0.92rem;
+        max-width: 100%;
+    }
+
+    .footer-bottom-inner {
+        align-items: center;
+        text-align: center;
+    }
+
+    .copyright,
+    .powered {
+        width: 100%;
+        text-align: center;
+    }
+
+    .socials {
+        justify-content: center;
+    }
 }
 
-/* Accessibility: clear focus outlines for keyboard */
 .footer-links a:focus,
 .footer-contact a:focus,
 .btn-download:focus,
 .social:focus {
-  outline: 3px solid rgba(168,90,214,0.16);
-  outline-offset: 3px;
-  border-radius: 8px;
+    outline: 3px solid rgba(168, 90, 214, 0.16);
+    outline-offset: 3px;
+    border-radius: 8px;
 }
-
-/* END style.css */
