@@ -1,529 +1,349 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Shivkrupa — Contact (Refined + Map)</title>
+  <title>Shivkrupa — Contact</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Poppins:wght@300;500;600&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+
   <style>
-    :root {
-      --logo: #0a1e33;
-      --accent: #1166a3;
-      --muted: #6b7280;
-      --card: #ffffff;
+    :root{
       --bg: #f6f9fb;
+      --card-bg: #fff;
+      --accent: #0d47a1; /* deep blue */
+      --accent-2: #0d3ba1;
+      --gold: #f2b300;
+      --muted: #6b7280;
       --radius: 14px;
-      --glass: rgba(255, 255, 255, 0.85);
-      --shadow: 0 12px 28px rgba(10, 20, 40, 0.07);
-      --focus: 0 0 0 4px rgba(10, 30, 60, 0.08);
-      font-family: "Poppins", system-ui, Arial;
+      --shadow-lg: 0 16px 48px rgba(10,20,40,0.10);
+      --shadow-sm: 0 8px 18px rgba(10,20,40,0.06);
     }
 
-    html,
-    body {
+    html,body {
       height: 100%;
-      margin: 0;
-      background: var(--bg);
-      color: #0b1b2b;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      color: var(--logo);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* NAVBAR (shared) */
-    .clean-navbar {
-      position: sticky;
-      top: 0;
       width: 100%;
-      z-index: 9999;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 6px 18px rgba(10, 20, 40, 0.04);
+      margin: 0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: var(--bg);
+      color: #062033;
+      -webkit-font-smoothing:antialiased;
     }
 
+    
+    /* HERO */
+    .mini-hero{
+      padding: 28px 0 8px;
+      background: transparent;
+      text-align:center;
+    }
+    .mini-hero__title{ font-family:"Merriweather", serif; font-size:2rem; margin:6px 0;  }
 
     /* page container */
-    .contact-wrap {
-      max-width: 1180px;
-      margin: 26px auto;
-      padding: 24px;
-      box-sizing: border-box;
+    .contact-wrap{ max-width:1200px; margin:24px auto; padding: 0 16px 36px; box-sizing:border-box; }
+
+    /* grid layout */
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .contact-grid{ grid-template-columns: 1fr; }
     }
 
-    /* grid */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 420px;
-      gap: 28px;
-      align-items: start;
-    }
-
-    @media (max-width:980px) {
-      .contact-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* left col */
-    .contact-left {
-      padding: 28px 26px;
-      background: linear-gradient(180deg, var(--glass), rgba(255, 255, 255, 0.98));
+    /* LEFT: form container */
+    .contact-left{
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.99));
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      padding:28px;
+      box-shadow: var(--shadow-lg);
+    }
+    .kicker{ text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:700; font-size:.78rem; margin-bottom:8px; }
+    .contact-title{ font-family:"Merriweather", serif; font-size:1.6rem; margin:6px 0 12px; color:var(--accent-2); }
+    .lead{ color:var(--muted); margin-bottom:16px; line-height:1.6; }
+
+    .meta-pills{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+    .pill{ background:transparent; border:1px solid rgba(10,20,40,0.04); padding:8px 12px; border-radius:10px; font-weight:700; color:var(--accent-2); }
+
+    /* form layout */
+    form .row.g-3 > .col-6 { display: block; }
+    .form-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:14px; }
+    @media (max-width:720px){ .form-grid{ grid-template-columns: 1fr; } }
+
+    .form-control{
+      border-radius:10px;
+      border:1px solid rgba(10,20,30,0.08);
+      padding:12px 14px;
+      box-shadow:none;
+      font-size:0.96rem;
+    }
+    .form-control:focus{ outline:none; box-shadow: 0 0 0 5px rgba(13,71,161,0.08); border-color:var(--accent-2); }
+
+    .btn-send{
+      background: linear-gradient(90deg,var(--accent-2), var(--accent));
+      color:#fff; border:0; padding:12px 18px; border-radius:10px; font-weight:800; box-shadow: 0 18px 48px rgba(13,71,161,0.12);
+      cursor:pointer;
+    }
+    .btn-send:hover{ transform: translateY(-3px); }
+
+    .btn-ghost{
+      background:transparent; border:1px solid rgba(10,20,40,0.06); color:var(--accent-2); padding:10px 14px; border-radius:10px; font-weight:700;
+      cursor:pointer;
     }
 
-    .kicker {
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 0.78rem;
-      margin-bottom: 8px;
+    /* RIGHT: big blue info card */
+    .contact-card{
+      background: linear-gradient(180deg,#0d47a1 0%, #0b3a9a 100%);
+      color:white;
+      border-radius:16px;
+      padding:28px;
+      box-shadow: var(--shadow-lg);
+      position:sticky;
+      top:20px;
+      height: max-content;
     }
+    @media (max-width:980px){ .contact-card{ position: static; } }
 
-    h1.contact-title {
-      font-family: "Merriweather", serif;
-      font-size: 2.2rem;
-      margin: 6px 0 12px;
-      color: var(--logo);
+    .card-kicker{ color: rgba(255,255,255,0.9); font-weight:700; text-decoration:underline; margin-bottom:12px; display:inline-block; }
+    .contact-item{ display:flex; gap:14px; align-items:flex-start; margin-bottom:18px; }
+    .contact-icon{
+      width:56px; height:56px; border-radius:50%; background: rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:center; font-size:22px;
+      box-shadow: 0 8px 22px rgba(3,8,28,0.14);
+      flex-shrink:0;
     }
+    .contact-item h5{ margin:0 0 6px; font-size:0.98rem; color:#fff; }
+    .contact-item p{ margin:0; color: rgba(255,255,255,0.92); font-weight:600; line-height:1.5; }
 
-    .lead {
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
+    .contact-small{ color: rgba(255,255,255,0.85); font-size:0.95rem; }
 
-    .meta-pills {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin: 18px 0;
-    }
+    /* map below */
+    .map-wrap{ margin-top:32px; border-radius:12px; overflow:hidden; box-shadow: var(--shadow-sm); border:1px solid rgba(10,20,40,0.04); }
+    .map-iframe{ width:100%; min-height:360px; border:0; display:block; }
 
-    .pill {
-      background: transparent;
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-weight: 600;
-      color: var(--logo);
-      border: 1px solid rgba(10, 30, 50, 0.06);
-      font-size: 0.95rem;
-    }
+    /* responsive smaller map on mobile */
+    @media (max-width:520px){ .map-iframe{ min-height:260px; } }
 
-    .info-row {
-      display: flex;
-      gap: 18px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
+    /* animations */
+    .fade-up{ opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.in-view{ opacity:1; transform:none; }
 
-    .info-card {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 18px;
-      flex: 1 1 210px;
-      box-shadow: 0 10px 30px rgba(8, 18, 32, 0.04);
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      min-width: 210px;
-      transition: transform .18s ease;
-    }
+    /* focus outlines */
+    button:focus, a:focus, input:focus, textarea:focus { outline: 3px solid rgba(15,120,210,0.10); outline-offset:4px; border-radius:10px; }
 
-    .info-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 22px 50px rgba(8, 18, 32, 0.08);
-    }
+    /* small helper */
+    .muted-small{ color:var(--muted); font-size:0.95rem; margin-top:12px; }
 
-    .info-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(180deg, var(--logo), var(--accent));
-      color: white;
-      font-size: 20px;
-    }
-
-    .info-body {
-      flex: 1;
-    }
-
-    .info-small {
-      color: var(--muted);
-      font-size: 0.86rem;
-      margin-bottom: 6px;
-    }
-
-    .info-main {
-      font-weight: 700;
-      color: var(--logo);
-      font-size: 1.02rem;
-    }
-
-    .left-ctas {
-      margin-top: 18px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary-brand {
-      background: linear-gradient(180deg, var(--logo), var(--accent));
-      color: white;
-      border: 0;
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-weight: 600;
-      box-shadow: 0 12px 28px rgba(10, 30, 60, 0.12);
-    }
-
-    .btn-ghost {
-      border: 1px solid rgba(10, 30, 60, 0.08);
-      background: transparent;
-      color: var(--logo);
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: 600;
-    }
-
-    /* right col / form */
-    .contact-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: var(--shadow);
-      position: sticky;
-      top: 22px;
-    }
-
-    @media (max-width:980px) {
-      .contact-card {
-        position: relative;
-        top: auto;
-      }
-    }
-
-    .form-title {
-      font-size: 1.7rem;
-      margin: 0 0 8px;
-      color: var(--logo);
-      font-weight: 700;
-      font-family: "Merriweather", serif;
-    }
-
-    .form-sub {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 14px;
-    }
-
-    .form-control {
-      border-radius: 10px;
-      border: 1px solid rgba(10, 20, 30, 0.08);
-      padding: 12px 14px;
-      box-shadow: none;
-    }
-
-    .form-control:focus {
-      outline: none;
-      box-shadow: var(--focus);
-      border-color: var(--accent);
-    }
-
-    .btn-send {
-      background: linear-gradient(90deg, var(--logo), var(--accent));
-      color: white;
-      border: 0;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: 700;
-      box-shadow: 0 12px 30px rgba(10, 30, 60, 0.12);
-    }
-
-    .secondary-cta {
-      background: transparent;
-      border: 1px solid rgba(10, 30, 60, 0.08);
-      color: var(--logo);
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-weight: 600;
-    }
-
-    /* map area */
-    .map-wrap {
-      margin-top: 14px;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid rgba(10, 30, 60, 0.04);
-      box-shadow: 0 8px 20px rgba(9, 20, 30, 0.04);
-    }
-
-    .map-iframe {
-      min-height: 220px;
-      width: 100%;
-      border: 0;
-      display: block;
-    }
-
-    .muted-small {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-top: 10px;
-    }
-
-    /* small screens tweaks */
-    @media (max-width:520px) {
-      .contact-wrap {
-        padding: 18px;
-        margin: 18px;
-      }
-
-      .contact-left {
-        padding: 18px;
-      }
-
-      .contact-grid {
-        gap: 18px;
-      }
-
-      .info-row {
-        flex-direction: column;
-      }
-    }
-
-    .fade-up {
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-
-    .fade-up.in-view {
-      opacity: 1;
-      transform: none;
-    }
   </style>
 </head>
-
 <body>
 
-  <!-- Minimal nav for testing -->
-  <nav class="clean-navbar">
-    <div class="nav-container">
+   <nav class="clean-navbar">
+        <div class="nav-container">
 
-      <!-- Logo -->
-      <div class="nav-left">
-        <a href="index.html"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
-      </div>
+            <!-- Logo -->
+            <div class="nav-left">
+                <a href="/index.html"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+            </div>
 
-      <!-- Toggle Button (Mobile) -->
-      <button class="nav-toggle" id="navToggle" aria-label="Open Menu">
-        ☰
-      </button>
+            <!-- Toggle Button (Mobile) -->
+            <button class="nav-toggle" id="navToggle" aria-label="Open Menu">
+                ☰
+            </button>
 
-      <!-- Center Menu -->
-      <ul class="nav-menu" id="mainNav">
-        <li><a href="/index.html" class="active">Home</a></li>
-        <li><a href="./about.html">About Us</a></li>
-        <li><a href="./product.html">Product</a></li>
-        <li><a href="./gallery.html">Gallery</a></li>
-      </ul>
+            <!-- Center Menu -->
+            <ul class="nav-menu" id="mainNav">
+                <li><a href="/index.html" class="active">Home</a></li>
+                <li><a href="./about.html">About Us</a></li>
+                <li><a href="./product.html">Product</a></li>
+                <li><a href="./gallery.html">Gallery</a></li>
+            </ul>
 
-      <!-- Right Gradient Section -->
-      <div class="nav-right">
-        <a href="./contact.html" class="signin-btn">Contact</a>
-      </div>
-    </div>
-  </nav>
+            <!-- Right Gradient Section -->
+            <div class="nav-right">
+                <a href="contact.html" class="signin-btn">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-  <!-- small hero for About page -->
-  <section class="mini-hero mini-hero--about" aria-labelledby="about-hero-title" role="banner">
-    <div class="mini-hero__bg" aria-hidden="true"></div>
+    <!-- small hero for About page -->
+    <section class="mini-hero mini-hero--about" aria-labelledby="about-hero-title" role="banner">
+        <div class="mini-hero__bg" aria-hidden="true">        </div>
 
-    <div class="mini-hero__inner container">
-      <h1 id="about-hero-title" class="mini-hero__title">About Shivkrupa</h1>
+        <div class="mini-hero__inner container">
+            <h1 id="about-hero-title" class="mini-hero__title">About Shivkrupa</h1>
+        </div>
+    </section>
 
-      <div class="mini-hero__crumb-wrap" aria-hidden="false">
-        <a class="mini-hero__crumb" href="index.html" title="Home">Home</a>
-        <span class="mini-hero__sep">//</span>
-        <span class="mini-hero__crumb-current" aria-current="page">Contact</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Page content -->
+  <!-- PAGE -->
   <div class="contact-wrap">
     <div class="contact-grid">
 
-      <!-- LEFT -->
-      <div class="contact-left fade-up" id="leftCol">
-        <div class="kicker">Work with us</div>
-        <h1 class="contact-title">Contact Information</h1>
-        <p class="lead">We're Shivkrupa Enterprises — designers & manufacturers of tensile structures, awnings & shades.
-          Get in touch for a free site survey and estimate. We typically respond within 24 hours.</p>
+      <!-- LEFT: form + info -->
+      <section class="contact-left fade-up" id="leftCol" aria-labelledby="leftTitle">
+        <div class="kicker">Get a free site visit</div>
+        <h2 id="leftTitle" class="contact-title">Send us your project details</h2>
+        <p class="lead">Tell us about the project — site size, type of shade and any images. We’ll respond within 24 hours.</p>
 
         <div class="meta-pills" aria-hidden="true">
           <div class="pill">Since 2011</div>
           <div class="pill">Pune, Maharashtra</div>
-          <div class="pill">ISO Certified</div>
+          <div class="pill">Quality Assured</div>
         </div>
 
-        <div class="info-row" aria-label="Contact cards">
-          <div class="info-card" role="group" aria-label="phone">
-            <div class="info-icon" aria-hidden>📞</div>
-            <div class="info-body">
-              <div class="info-small">Call Us For Query</div>
-              <div class="info-main"><a href="tel:+911234567890">+91 12345 67890</a></div>
+        <!-- Form -->
+        <form id="contactForm" onsubmit="return submitForm(event)" novalidate>
+          <div class="form-grid" role="group" aria-label="Contact form">
+            <div>
+              <label for="firstName" class="form-label small">First name</label>
+              <input id="firstName" name="firstName" class="form-control" type="text" placeholder="First Name" required>
+            </div>
+
+            <div>
+              <label for="lastName" class="form-label small">Last name</label>
+              <input id="lastName" name="lastName" class="form-control" type="text" placeholder="Last Name">
+            </div>
+
+            <div>
+              <label for="email" class="form-label small">Email address</label>
+              <input id="email" name="email" class="form-control" type="email" placeholder="email@example.com" required>
+            </div>
+
+            <div>
+              <label for="phone" class="form-label small">Phone</label>
+              <input id="phone" name="phone" class="form-control" type="tel" placeholder="+91 98xxxxxxx" required>
             </div>
           </div>
 
-          <div class="info-card" role="group" aria-label="email">
-            <div class="info-icon" aria-hidden>✉️</div>
-            <div class="info-body">
-              <div class="info-small">Email Us Anytime</div>
-              <div class="info-main"><a href="mailto:info@shivkrupa.com">info@shivkrupa.com</a></div>
-            </div>
+          <div style="margin-top:14px;">
+            <label for="subject" class="form-label small">Subject</label>
+            <input id="subject" name="subject" class="form-control" placeholder="e.g. Car parking shade for society">
           </div>
 
-          <div class="info-card" role="group" aria-label="visit">
-            <div class="info-icon" aria-hidden>📍</div>
-            <div class="info-body">
-              <div class="info-small">Visit Our Office</div>
-              <div class="info-main">S. No. 33, Near Yuraj Castel, Warje, Pune</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="left-ctas">
-          <button class="btn-primary-brand" onclick="document.getElementById('name').focus()">Request Site
-            Visit</button>
-          <a class="btn-ghost" href="/pages/gallery.html">See Gallery</a>
-        </div>
-
-        <p class="muted-small">Prefer WhatsApp? There's a green chat button at the bottom-right for quick messages.</p>
-      </div>
-
-      <!-- RIGHT -->
-      <aside class="contact-card fade-up" id="rightCard" aria-labelledby="formTitle">
-        <div>
-          <div id="formTitle" class="form-title">Send a Message</div>
-          <div class="form-sub">Quick enquiry — we'll call or email to schedule a site visit</div>
-        </div>
-
-        <form id="contactForm" onsubmit="return onSubmit(event)" autocomplete="on" novalidate>
-          <div class="mb-3">
-            <label class="form-label small">Your name</label>
-            <input id="name" class="form-control" placeholder="e.g. Rajesh Patel" required>
+          <div style="margin-top:14px;">
+            <label for="message" class="form-label small">Message</label>
+            <textarea id="message" name="message" class="form-control" rows="6" placeholder="Write a message... (site size, pictures, timeline)"></textarea>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label small">Email</label>
-            <input id="contact" class="form-control" placeholder="mail@" required>
+          <div style="display:flex; gap:12px; margin-top:18px; align-items:center;">
+            <button type="submit" class="btn-send" aria-label="Send message">Send Message</button>
+            <button type="button" class="btn-ghost" onclick="requestCallback()" aria-label="Request callback">Request Callback</button>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label small">Phone</label>
-            <input id="contact" class="form-control" placeholder="phone" required>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label small">Subject</label>
-            <input id="contact" class="form-control" placeholder="subject" required>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label small">Project details</label>
-            <textarea id="message" class="form-control" rows="4"
-              placeholder="Tell us what you need (site size, type of shade, budget)"></textarea>
-          </div>
-
-          <div style="display:flex; gap:10px; align-items:center;">
-            <button type="submit" class="btn-send" aria-label="Send enquiry">Send Enquiry</button>
-            <button type="button" class="secondary-cta" onclick="requestCallback()">Request Callback</button>
-          </div>
-
-          <!-- MAP -->
-          <div class="map-wrap" aria-hidden="false" aria-label="Office location map">
-            <!--
-            Replace the iframe src below with the exact embed link from Google Maps for precise pin location:
-            1) Open Google Maps
-            2) Search address (e.g. "S. No. 33, Near Yuraj Castel, Warje, Pune")
-            3) Click Share -> Embed a map -> Copy HTML -> paste iframe src here
-          -->
-            <iframe class="map-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps?q=S.+No.+33,+Near+Yuraj+Castel,+Warje,+Pune,+India&output=embed">
-            </iframe>
-          </div>
-
-          <div class="muted-small">By sending you agree to our <a href="#">privacy policy</a> — we'll only use this to
-            reply.</div>
+          <div class="muted-small">By sending you agree to our <a href="#" style="color:var(--accent-2);">privacy policy</a>.</div>
         </form>
+
+      </section>
+
+      <!-- RIGHT: contact info card -->
+      <aside class="contact-card fade-up" aria-labelledby="contactCardTitle">
+        <div>
+          <div id="contactCardTitle" class="card-kicker">Hours:</div>
+          <div class="contact-item" style="margin-top:6px;">
+            <div class="contact-icon" aria-hidden>⏰</div>
+            <div>
+              <h5 class="contact-small">Working hours</h5>
+              <p>Monday – Friday: <strong>8 AM – 5:30 PM</strong><br>Saturday – Sunday: <strong>Closed</strong></p>
+            </div>
+          </div>
+
+          <div style="height:8px;"></div>
+
+          <div class="card-kicker">Call Us:</div>
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden>📞</div>
+            <div>
+              <h5 class="contact-small">Phone</h5>
+              <p><a href="tel:+911234567890" style="color:inherit; text-decoration:underline;">+91 12345 67890</a><br>+91 98765 43210</p>
+            </div>
+          </div>
+
+          <div style="height:8px;"></div>
+
+          <div class="card-kicker">Location:</div>
+          <div class="contact-item">
+            <div class="contact-icon" aria-hidden>📍</div>
+            <div>
+              <h5 class="contact-small">Address</h5>
+              <p>S. No. 33, Near Yuraj Castel, Warje, Pune, Maharashtra</p>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <a class="btn-send" href="/contact.html#map" style="display:inline-block; text-decoration:none;">Get Directions</a>
+            <button class="btn-ghost" style="margin-left:10px;" onclick="startWhatsApp()">WhatsApp</button>
+          </div>
+        </div>
       </aside>
 
     </div>
+
+    <!-- MAP -->
+    <div class="map-wrap fade-up" id="map" style="margin-top:28px;">
+      <!-- Replace the src with your Google Maps 'Embed a map' iframe src for exact pin -->
+      <iframe class="map-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=S.+No.+33,+Near+Yuraj+Castel,+Warje,+Pune,+India&output=embed">
+      </iframe>
+    </div>
+
   </div>
 
   <script>
-    // navbar toggle (mobile)
-    (function () {
-      const navToggle = document.getElementById('navToggle');
-      const mainNav = document.getElementById('mainNav');
-      if (!navToggle || !mainNav) return;
-      navToggle.addEventListener('click', () => {
-        const open = mainNav.style.display === 'flex';
-        mainNav.style.display = open ? 'none' : 'flex';
-        mainNav.style.flexDirection = 'column';
-        navToggle.setAttribute('aria-expanded', String(!open));
-        document.body.style.overflow = open ? '' : 'hidden';
-      });
-      // close nav when clicking a link (mobile)
-      mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-        if (window.innerWidth <= 992) { mainNav.style.display = 'none'; navToggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }
-      }));
-    })();
-
-    // entrance animation for sections
+    // entrance animation
     document.addEventListener('DOMContentLoaded', () => {
-      requestAnimationFrame(() => {
-        document.querySelectorAll('.fade-up').forEach((el, i) => {
-          setTimeout(() => el.classList.add('in-view'), 80 * i);
-        });
+      document.querySelectorAll('.fade-up').forEach((el, i) => {
+        setTimeout(() => el.classList.add('in-view'), 90 * i);
       });
     });
 
-    function onSubmit(e) {
+    // simple nav toggle (mobile)
+    (function(){
+      const navToggle = document.getElementById('navToggle');
+      navToggle?.addEventListener('click', () => {
+        const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', String(!expanded));
+        alert('Menu toggle (demo). Replace with real nav behavior.');
+      });
+    })();
+
+    // simple demo submission (replace with real backend)
+    function submitForm(e){
       e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const contact = document.getElementById('contact').value.trim();
-      if (!name || !contact) { alert('Please enter your name and a phone or email.'); return false; }
-      // TODO: submit to backend. For now demo:
-      alert('Thanks! Your enquiry has been captured. (demo)');
-      e.target.reset();
+      const form = e.target;
+      const firstName = document.getElementById('firstName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if(!firstName || (!email && !phone)){
+        alert('Please add your name and at least one contact (email or phone).');
+        return false;
+      }
+
+      // demo: you should POST to your backend endpoint here
+      alert('Thanks — your enquiry has been received. We will contact you shortly. (demo)');
+      form.reset();
       return false;
     }
 
-    function requestCallback() {
-      const contact = document.getElementById('contact').value.trim();
-      if (!contact) { alert('Please provide phone or email for callback.'); return; }
-      alert('Callback requested. We will contact you shortly. (demo)');
+    function requestCallback(){
+      const phone = document.getElementById('phone').value.trim();
+      if(!phone){
+        alert('Please provide your phone number for callback.');
+        return;
+      }
+      alert('Callback request received. We will contact you soon. (demo)');
+    }
+
+    function startWhatsApp(){
+      // open whatsapp web with prefilled message (update number)
+      const num = '+919876543210';
+      const text = encodeURIComponent('Hello Shivkrupa, I am interested in a shade project. Please contact me.');
+      window.open(`https://wa.me/${num.replace(/\D/g,'')}?text=${text}`, '_blank');
     }
   </script>
 
 </body>
-
 </html>
