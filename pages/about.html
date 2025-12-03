@@ -20,8 +20,293 @@
     <!-- site CSS (your main styles) -->
     <link rel="stylesheet" href="/style.css">
 
-    <!-- small page-specific CSS to better integrate Bootstrap + your styles -->
+    <style>
+        :root {
+            --who-bg: linear-gradient(180deg, #f6fbff 0%, #ffffff 100%);
+            --accent-1: #1166a3;
+            /* deep blue */
+            --accent-2: #5a2ee8;
+            /* purple */
+            --muted-ink: #46535e;
+            --card-radius: 18px;
+        }
 
+        /* Section shell */
+        .who-creative {
+            background: var(--who-bg);
+            padding-top: 54px;
+            padding-bottom: 56px;
+        }
+
+        /* header */
+        .who-creative-header h2 {
+            font-family: "Merriweather", serif;
+            font-size: 2rem;
+            color: var(--accent-1);
+            margin-bottom: 6px;
+        }
+
+        .who-creative-header p {
+            color: var(--muted-ink);
+        }
+
+        /* Grid layout
+   DOM order: mission then vision
+   Visual: mission -> right, vision -> left using grid placement
+*/
+        .who-creative-grid {
+            /* display: grid;
+            grid-template-columns: 1fr 1fr; */
+            display: flex;
+            gap: 28px;
+            align-items: stretch;
+            margin-top: 18px;
+        }
+
+        /* Place mission (first in DOM) visually on the right */
+        .mission-card {
+            grid-column: 2 / 3;
+        }
+
+        .vision-card {
+            grid-column: 1 / 2;
+        }
+
+        /* Card base */
+        .card-creative {
+            position: relative;
+            display: flex;
+            gap: 20px;
+            background: linear-gradient(180deg, #ffffff, #fbfdff);
+            border-radius: 300px 10px 300px 300px;
+            padding: 26px;
+            box-shadow: 0 18px 50px rgba(8, 12, 24, 0.06);
+            overflow: visible;
+            align-items: center;
+            transition: transform .28s cubic-bezier(.2, .9, .2, 1), box-shadow .28s ease;
+            height: 340px;
+        }
+
+        .card-creative-1 {
+            border-radius: 300px 300px 300px 10px;
+        }
+
+        .card-creative:focus-within,
+        .card-creative:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 85px rgba(10, 20, 40, 0.10);
+        }
+
+        /* Large circular visual containers (floating circles) */
+        .card-circle {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transform: translateY(0);
+            transition: transform .6s cubic-bezier(.2, .95, .2, 1), box-shadow .28s;
+            z-index: 2;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.75));
+            box-shadow: inset 0 -10px 30px rgba(90, 46, 232, 0.02);
+        }
+
+        /* position modifiers */
+        .circle-right {
+            margin-left: auto;
+            margin-right: 6px;
+        }
+
+        /* places circle visually to right side inside card */
+        .circle-left {
+            margin-right: auto;
+            margin-left: 6px;
+        }
+
+        /* big badge inside circle and animated ring */
+        .badge-big {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-2);
+            background: linear-gradient(180deg, rgba(90, 46, 232, 0.08), rgba(17, 102, 163, 0.02));
+            position: relative;
+            box-shadow: 0 12px 36px rgba(10, 20, 40, 0.06), inset 0 -6px 18px rgba(90, 46, 232, 0.02);
+            transition: transform .45s cubic-bezier(.2, .9, .2, 1);
+        }
+
+        /* decorative outer ring */
+        .badge-big::before {
+            content: "";
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 3px solid rgba(90, 46, 232, 0.06);
+            box-shadow: 0 8px 22px rgba(90, 46, 232, 0.06);
+            transform: scale(.98);
+            transition: transform .45s cubic-bezier(.2, .9, .2, 1), opacity .36s;
+            opacity: .95;
+        }
+
+        /* icon size inside svg */
+        .badge-big svg {
+            width: 48px;
+            height: 48px;
+            color: var(--accent-2);
+        }
+
+        /* body */
+        .card-body-creative {
+            flex: 1 1 auto;
+            min-width: 0;
+            padding: 6px 8px;
+        }
+
+        .card-body-creative h3 {
+            margin: 0;
+            font-size: 1.18rem;
+            font-family: "Merriweather", serif;
+            color: #082036;
+        }
+
+        .card-body-creative .short {
+            margin: 10px 0 12px;
+            color: var(--muted-ink);
+            font-size: 0.98rem;
+        }
+
+        /* creative mini list */
+        .creative-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .creative-list li {
+            background: linear-gradient(90deg, rgba(13, 110, 253, 0.04), rgba(90, 46, 232, 0.02));
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-weight: 700;
+            color: #1b2d3f;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 0.92rem;
+        }
+
+        .creative-list li i {
+            font-size: 1.05rem;
+            color: var(--accent-1);
+            line-height: 1;
+        }
+
+        /* CTA */
+        .who-creative-cta .btn-cta {
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            color: #fff;
+            border: 0;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: 0 12px 36px rgba(10, 30, 80, 0.12);
+        }
+
+        /* hover micro-animation */
+        .card-creative:hover .badge-big {
+            transform: scale(1.06) rotate(-6deg);
+        }
+
+        .card-creative:focus-within .badge-big {
+            transform: scale(1.04) rotate(0deg);
+        }
+
+        /* reveal animation initial state */
+        .animate-reveal {
+            opacity: 0;
+            transform: translateY(14px) scale(.996);
+            transition: opacity .9s ease, transform .9s cubic-bezier(.18, .9, .32, 1);
+        }
+
+        .animate-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* small screens: stack and keep mission first */
+        @media (max-width:900px) {
+            .who-creative-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .mission-card,
+            .vision-card {
+                grid-column: auto;
+            }
+
+            .card-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .badge-big {
+                width: 92px;
+                height: 92px;
+            }
+
+            .badge-big svg {
+                width: 36px;
+                height: 36px;
+            }
+
+            .card-creative {
+                padding: 18px;
+                gap: 12px;
+                align-items: flex-start;
+                border-radius: 10px;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .circle-right,
+            .circle-left {
+                margin: 0 6px 0 0;
+            }
+
+            .card-circle {
+                order: -1;
+            }
+
+            /* show circle above text on small view for a compact stacked look */
+            /* ensure mission appears first on mobile */
+            #mission {
+                order: 0;
+            }
+
+            #vision {
+                order: 1;
+            }
+        }
+
+        /* small accessibility focus */
+        .card-creative:focus-within {
+            outline: 3px solid rgba(90, 46, 232, 0.08);
+            outline-offset: 6px;
+            border-radius: var(--card-radius);
+        }
+    </style>
 </head>
 
 <body>
@@ -32,7 +317,7 @@
 
             <!-- Logo -->
             <div class="nav-left">
-                <a href="index.html"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
+                <a href="/index.html"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
             </div>
 
             <!-- Toggle Button (Mobile) -->
@@ -54,6 +339,16 @@
             </div>
         </div>
     </nav>
+
+    <!-- small hero for About page -->
+    <section class="mini-hero mini-hero--about" aria-labelledby="about-hero-title" role="banner">
+        <div class="mini-hero__bg" aria-hidden="true">        </div>
+
+        <div class="mini-hero__inner container">
+            <h1 id="about-hero-title" class="mini-hero__title">About Shivkrupa</h1>
+        </div>
+    </section>
+
 
     <!-- ABOUT SECTION -->
     <section id="about" class="about-section py-5">
@@ -77,96 +372,85 @@
                         We focus on durable materials, precise engineering and timely installation.
                     </p>
 
-                    <!-- CTAs -->
-                    <div class="d-flex flex-wrap gap-2">
-                        <a href="contact.html" class="btn btn-primary btn-lg gradient-btn">View More</a>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- WHO WE ARE / MISSION (Bootstrap grid + your classes) -->
-    <section id="who-we-are" class="py-5 bg-white">
+    <!-- ===================== CREATIVE WHO WE ARE (Mission on right, Vision on left) ===================== -->
+    <section id="who-we-are" class="py-5 who-creative" aria-labelledby="who-title">
         <div class="container">
-            <div class="row g-4 align-items-center">
-                <div class="col-lg-6">
-                    <h2>Who we are</h2>
-                    <p class="lead text-muted">Shivkrupa Enterprises is a Pune-based manufacturer and installer of
-                        tensile membranes, awnings and car parking sheds. We combine modern design with structural
-                        engineering to deliver solutions for homes, offices, retail and public spaces.</p>
+            <header class="who-creative-header text-center mb-4">
+                <h2 id="who-title">Who we are</h2>
+                <p class="small text-muted mx-auto" style="max-width:70ch;">
+                    Pune-based specialists in tensile membranes, retractable awnings and car-park sheds —
+                    engineering-led, quality-first.
+                </p>
+            </header>
 
-                    <div class="row">
-                        <div class="col-6">
-                            <h5>Our Mission</h5>
-                            <p class="small text-muted">Provide long-lasting, safe and attractive shade structures that
-                                enhance outdoor spaces while ensuring value and reliability.</p>
+            <div class="who-creative-grid">
+                <!-- Mission (DOM-first but placed visually on right) -->
+                <article class="card-creative card-creative-1 mission-card animate-reveal" id="mission"
+                    aria-labelledby="mission-title" role="region">
+                    <div class="card-circle circle-right" aria-hidden="true">
+                        <div class="badge-big" aria-hidden="true">
+                            <!-- mission icon (target-like) -->
+                            <svg viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
+                                <circle cx="24" cy="24" r="10" stroke="currentColor" stroke-width="2" fill="none">
+                                </circle>
+                                <circle cx="24" cy="24" r="4" fill="currentColor"></circle>
+                            </svg>
                         </div>
-                        <div class="col-6">
-                            <h5>Our Vision</h5>
-                            <p class="small text-muted">To be the most trusted tensile solutions partner across India —
-                                known for quality, innovation and on-time delivery.</p>
+                    </div>
+
+                    <div class="card-body-creative">
+                        <h3 id="mission-title">Our Mission</h3>
+                        <p class="lead short">Deliver robust, beautiful shade solutions that last — from survey to
+                            installation.</p>
+
+                        <ul class="mini-list creative-list">
+                            <li><i class="ri-pencil-ruler-2-line"></i> Design (site-fit)</li>
+                            <li><i class="ri-hammer-line"></i> Durable materials</li>
+                            <li><i class="ri-truck-line"></i> Timely installation</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- Vision (DOM-second but visually on left) -->
+                <article class="card-creative vision-card animate-reveal" id="vision" aria-labelledby="vision-title"
+                    role="region">
+                    <div class="card-circle circle-left" aria-hidden="true">
+                        <div class="badge-big" aria-hidden="true">
+                            <!-- vision icon (eye-like) -->
+                            <svg viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
+                                <path d="M4 24s8-12 20-12 20 12 20 12-8 12-20 12S4 24 4 24z" stroke="currentColor"
+                                    stroke-width="1.6" fill="none"></path>
+                                <circle cx="24" cy="24" r="4" fill="currentColor"></circle>
+                            </svg>
                         </div>
                     </div>
 
-                    <div class="mt-3">
-                        <a href="contact.html" class="btn btn-primary me-2">Get a Quote</a>
-                        <a href="gallery.html" class="btn btn-outline-primary">See our work</a>
-                    </div>
-                </div>
+                    <div class="card-body-creative">
+                        <h3 id="vision-title">Our Vision</h3>
+                        <p class="lead short">Be India's most trusted tensile partner — quality, innovation, timely
+                            delivery.</p>
 
-                <div class="col-lg-6 text-center">
-                    <div class="tensile-3d-wrapper mx-auto"
-                        style="max-width:420px; height:320px; display:flex; align-items:center; justify-content:center;">
-                        <img id="tensile-3d-img" src="/assets/heroImg-2.png" alt="Tensile 3D render"
-                            class="img-fluid rounded" style="max-height:100%; object-fit:contain;">
+                        <ul class="mini-list creative-list">
+                            <li><i class="ri-scope-line"></i> Responsible scale</li>
+                            <li><i class="ri-hand-heart-line"></i> Transparent process</li>
+                            <li><i class="ri-wrench-line"></i> Reliable aftercare</li>
+                        </ul>
                     </div>
-                </div>
+                </article>
+            </div>
+
+            <div class="who-creative-cta text-center mt-4">
+                <a href="contact.html" class="btn btn-cta">Get a quote</a>
             </div>
         </div>
     </section>
 
-    <!-- CORE VALUES / QUICK STATS (Bootstrap cards) -->
-    <section class="py-4">
-        <div class="container">
-            <div class="row g-3 text-center">
-                <div class="col-sm-6 col-md-3">
-                    <div class="card shadow-sm why-card p-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Quality Materials</h5>
-                            <p class="card-text small text-muted">Corrosion-resistant frames and weather-rated
-                                membranes.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card shadow-sm why-card p-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Engineering</h5>
-                            <p class="card-text small text-muted">Designs validated for wind and load conditions.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card shadow-sm why-card p-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Installation</h5>
-                            <p class="card-text small text-muted">Professional installation with safety-first approach.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card shadow-sm why-card p-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Support</h5>
-                            <p class="card-text small text-muted">After-sales service and warranty assistance.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- WHY CHOOSE US SECTION -->
     <section class="why-section" aria-labelledby="why-title">
@@ -215,61 +499,11 @@
                     <span class="tag">Nationwide Delivery</span>
                 </article>
 
-                <!-- Card 4 -->
-                <!-- <article class="why-card animate-on-scroll" tabindex="0">
-                    <div class="icon-wrap">
-                        <i class="wc-icon ri-shake-hands-line"></i>
-                    </div>
-                    <h3>Trusted By Thousands</h3>
-                    <p>
-                        Years of consistent product excellence have made us a preferred and reliable brand across the
-                        nation.
-                    </p>
-                    <span class="tag">Our Reputation</span>
-                </article> -->
-            </div>
-        </div>
-
-
-    </section>
-
-    <!-- TEAM (small add) - uses bootstrap cards -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h3 class="mb-4">Meet the Team</h3>
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <div class="card shadow-sm text-center p-3 animate-on-scroll">
-                        <img src="/assets/user.png" alt="Founder" class="team-photo mx-auto" style="height:100px; border-radius:100%">
-                        <div class="card-body">
-                            <h5 class="mb-0">Mr. R. Patel</h5>
-                            <p class="small text-muted mb-0">Founder & CEO</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card shadow-sm text-center p-3 animate-on-scroll">
-                        <img src="/assets/user.png" alt="Head of OPS" class="team-photo mx-auto" style="height:100px; border-radius:100%">
-                        <div class="card-body">
-                            <h5 class="mb-0">Mrs. S. Desai</h5>
-                            <p class="small text-muted mb-0">Head of Operations</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card shadow-sm text-center p-3 animate-on-scroll">
-                        <img src="/assets/user.png" alt="Project Lead" class="team-photo mx-auto" style="height:100px; border-radius:100%">
-                        
-
-                        <div class="card-body">
-                            <h5 class="mb-0">Mr. A. Kulkarni</h5>
-                            <p class="small text-muted mb-0">Project Lead</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
+
+
 
     <!-- FOOTER (Bootstrap + your styles) -->
     <footer class="site-footer mt-4">
@@ -337,6 +571,24 @@
             }, { threshold: 0.12 });
             document.querySelectorAll('.animate-on-scroll').forEach(n => obs.observe(n));
         } else { document.querySelectorAll('.animate-on-scroll').forEach(n => n.classList.add('in-view')); }
+
+
+        (function () {
+            const els = document.querySelectorAll('.animate-reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(e => e.classList.add('revealed'));
+                return;
+            }
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(ent => {
+                    if (ent.isIntersecting) {
+                        ent.target.classList.add('revealed');
+                        obs.unobserve(ent.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            els.forEach(el => io.observe(el));
+        })();
     </script>
 </body>
 

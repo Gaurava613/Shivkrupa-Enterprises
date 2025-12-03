@@ -21,9 +21,13 @@ body {
 h2,
 h3,
 h4 {
-    color: #1181b0;
+    color: #115bb0;
     font-weight: 600;
     font-family: var(--font-serif);
+}
+
+h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2.6rem);
 }
 
 .clean-navbar {
@@ -605,7 +609,7 @@ h4 {
 }
 
 .clients-section {
-    background: radial-gradient(circle at top left, #f4fdf4 0%, #ffffff 40%, #cfecf9 100%);
+    background-color: #eaeff5;
     overflow: hidden;
     padding: 44px 18px;
 }
@@ -621,7 +625,7 @@ h4 {
     margin-bottom: 22px;
 }
 
-.clients-kicker{
+.clients-kicker {
     color: var(--wc-accent-2);
     font-weight: 700;
     letter-spacing: .12em;
@@ -708,7 +712,7 @@ h4 {
     padding-bottom: 40px;
 }
 
-.test-kicker{
+.test-kicker {
     color: var(--wc-accent-2);
     font-weight: 700;
     letter-spacing: .12em;
@@ -898,8 +902,6 @@ h4 {
 .why-header h2 {
     font-size: clamp(1.5rem, 2.6vw, 2.6rem);
     margin: 0 0 8px;
-    color: #231a3a;
-    font-weight: 700;
 }
 
 .why-grid {
@@ -1593,4 +1595,139 @@ h4 {
     outline: 3px solid rgba(168, 90, 214, 0.16);
     outline-offset: 3px;
     border-radius: 8px;
+}
+
+
+/* =======================MINI HERO SECTION====================== */
+
+/* compact hero for about page */
+.mini-hero {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    --hero-height: 320px;
+    /* tweak to make smaller/larger */
+    height: var(--hero-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    margin-bottom: 8px;
+}
+
+/* background image layer (uses your hero image path) */
+.mini-hero__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/assets/heroImg-1.png');
+    /* replace with your image path */
+    background-size: cover;
+    background-position: center center;
+    filter: contrast(.95) saturate(.9) brightness(.55);
+    transform-origin: center;
+    z-index: 0;
+}
+
+/* darker gradient overlay for legibility */
+.mini-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(6, 12, 24, 0.42) 0%, rgba(6, 12, 24, 0.22) 60%);
+    z-index: 1;
+}
+
+/* content area */
+.mini-hero__inner {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    box-sizing: border-box;
+}
+
+/* title */
+.mini-hero__title {
+    margin: 0;
+    font-family: "Merriweather", serif;
+    color: #ffffff;
+    font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+    letter-spacing: .02em;
+    font-weight: 700;
+    text-transform: none;
+    text-shadow: 0 8px 24px rgba(3, 10, 25, 0.45);
+}
+
+/* breadcrumb pill */
+.mini-hero__crumb-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    background: transparent;
+}
+
+.mini-hero__crumb,
+.mini-hero__crumb-current {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.mini-hero__crumb {
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.94);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background .18s, transform .12s;
+}
+
+.mini-hero__crumb:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+}
+
+.mini-hero__sep {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 700;
+    margin: 0 6px;
+}
+
+/* current crumb style (highlight pill) */
+.mini-hero__crumb-current {
+    background: linear-gradient(90deg, #0d4fe8, #5a2ee8);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(10, 30, 80, 0.18);
+}
+
+/* responsiveness: smaller hero on small screens */
+@media (max-width: 780px) {
+    .mini-hero {
+        --hero-height: 160px;
+    }
+
+    .mini-hero__title {
+        font-size: clamp(1.2rem, 4.6vw, 1.6rem);
+    }
+
+    .mini-hero__crumb,
+    .mini-hero__crumb-current {
+        padding: 8px 12px;
+        font-size: 0.88rem;
+    }
+}
+
+/* Accessibility: focus states */
+.mini-hero__crumb:focus {
+    outline: 3px solid rgba(90, 46, 232, 0.16);
+    outline-offset: 4px;
+    border-radius: 10px;
 }
