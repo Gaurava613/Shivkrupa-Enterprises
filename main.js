@@ -17,6 +17,41 @@ if (navToggle && mainNav) {
   });
 }
 
+// ======================== NEW HERO SECTION ==========================
+
+ (function () {
+        const shots = Array.from(document.querySelectorAll(".hero-shot"));
+        const labelEl = document.getElementById("heroStepLabel");
+
+        if (!shots.length || !labelEl) return;
+
+        const labels = [
+            "Concept model from your idea",
+            "3D vision – how it will look"
+        ];
+
+        let index = 0;
+
+        function showSlide(i) {
+            shots.forEach((img, idx) => {
+                img.classList.toggle("is-active", idx === i);
+            });
+            labelEl.textContent = labels[i] || "";
+        }
+
+        // initial
+        showSlide(index);
+
+        // change every ~2.2s
+        setInterval(() => {
+            index = (index + 1) % shots.length;
+            showSlide(index);
+        }, 2200);
+    })();
+
+    
+
+
 /* ---------------- HERO SLIDER ---------------- */
 (function heroSliderInit() {
   const root = document.getElementById('hero-new');

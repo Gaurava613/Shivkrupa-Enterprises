@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* ===== TENSILE HERO SECTION ===== */
+
+    .tensile-hero {
+        padding: 100px 30px 80px 40px;
+        background: radial-gradient(circle at top left, #fff7ea 0, #ffffff 40%, #f7f8ff 100%);
+        position: relative;
+        overflow: hidden;
+        /* height: 80vh; */
+
+        background-image: url('/assets/hero-img/hero-bg-img.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    /* little doodle background similar to travel hero */
+    .tensile-hero::before {
+        content: "";
+        position: absolute;
+        inset: -120px;
+        background-image: radial-gradient(circle at 10% 20%, #fbd38d 0, transparent 55%),
+            radial-gradient(circle at 85% 10%, #c4b5fd 0, transparent 60%),
+            radial-gradient(circle at 70% 85%, #a5f3fc 0, transparent 60%);
+        opacity: 0.15;
+        z-index: -1;
+    }
+
+    .tensile-hero-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 42px;
+    }
+
+    /* LEFT SIDE */
+    .tensile-hero-copy {
+        flex: 1 1 50%;
+        max-width: 520px;
+    }
+
+    .hero-kicker {
+        color: #ec6c28;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-size: 0.78rem;
+        margin-bottom: 8px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    .hero-heading {
+        font-family: "Merriweather", serif;
+        font-size: clamp(2rem, 3.4vw, 2.8rem);
+        line-height: 1.1;
+        margin-bottom: 16px;
+        color: #ffffff;
+    }
+
+    .hero-lead {
+        font-size: 0.98rem;
+        color: #e9e9e9;
+        max-width: 460px;
+        line-height: 1.7;
+        margin-bottom: 22px;
+    }
+
+    .hero-cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 18px;
+        font-style: none;
+
+    }
+
+    .hero-cta-row a {
+        font-style: none;
+        text-decoration: none;
+    }
+
+    .hero-primary-btn {
+        background: #0d3ca3;
+        color: #fff;
+        padding: 10px 22px;
+        border-radius: 10px;
+        font-weight: 600;
+        border: none;
+    }
+
+    .hero-primary-btn:hover {
+        background: #000;
+        color: #fff;
+    }
+
+    .hero-secondary-btn {
+        background: #f2ab1e;
+        color: #363638;
+        padding: 10px 18px;
+        border-radius: 10px;
+        /* border: 1px solid #e5e7eb; */
+        font-weight: 600;
+    }
+
+    .hero-secondary-btn:hover {
+        background: #f3f4ff;
+    }
+
+    .hero-trust-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 6px;
+    }
+
+    .hero-avatars {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .avatar-dot {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f97316, #facc15);
+        border: 2px solid #fff;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.25);
+        margin-left: -8px;
+    }
+
+    .avatar-dot:first-child {
+        margin-left: 0;
+    }
+
+    .hero-trust-text {
+        font-size: 0.9rem;
+        color: #ffffff;
+    }
+
+    /* RIGHT SIDE – visual stack */
+    .tensile-hero-visual {
+        position: relative;
+        flex: 1 1 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* big rounded frame like the travel hero */
+    .hero-orbit-frame {
+        position: relative;
+        width: min(900px, 80vw);
+        height: min(500px, 90vw);
+        border-radius: 200px 0px 0px 600px;
+        overflow: hidden;
+        box-shadow: 0 24px 70px rgba(15, 23, 42, 0.35);
+        background: #020617;
+    }
+
+    /* slides */
+    .hero-shot {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out;
+    }
+
+    .hero-shot.is-active {
+        opacity: 1;
+    }
+
+    /* small label pill at bottom of frame */
+    .hero-step-pill {
+        position: absolute;
+        left: 55%;
+        top: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        bottom: 18px;
+        transform: translateX(-50%);
+        background: rgba(15, 23, 42, 0.349);
+        color: #f9fafb;
+        padding: 6px 14px;
+        border-radius: 10px 10px 10px 50px;
+        font-size: 2rem;
+        font-weight: 600;
+        backdrop-filter: blur(1px);
+        width: 30rem;
+        /* box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4); */
+    }
+
+    /* floating badge top-left of frame */
+    .hero-floating-badge {
+        position: absolute;
+        top: 10px;
+        left: 4%;
+        transform: translateY(-40%);
+        background: #f97316;
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        box-shadow: 0 12px 26px rgba(248, 114, 23, 0.55);
+    }
+
+    /* smaller overlapping card */
+    .hero-secondary-frame {
+        position: absolute;
+        bottom: 6%;
+        right: 0;
+        width: 210px;
+        height: 160px;
+        border-radius: 40% 60% 55% 45%;
+        background: #fff;
+        box-shadow: 0 18px 38px rgba(15, 23, 42, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+    }
+
+    .hero-secondary-text {
+        font-size: 0.86rem;
+        text-align: center;
+        color: #111827;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+        .tensile-hero-inner {
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .tensile-hero-copy {
+            max-width: none;
+        }
+
+        .tensile-hero-visual {
+            margin-top: 18px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .tensile-hero {
+            padding-top: 40px;
+        }
+
+        .hero-orbit-frame {
+            width: min(320px, 86vw);
+            height: min(410px, 900vw);
+            border-radius: 200px;
+        }
+
+        .hero-secondary-frame {
+            width: 190px;
+            height: 140px;
+        }
+    }
+</style>
+
+<body>
+    <!-- TENSILE HERO: YOUR CONCEPT • OUR CREATION -->
+    <section class="tensile-hero">
+        <div class="tensile-hero-inner container">
+            <!-- LEFT: TEXT -->
+            <div class="tensile-hero-copy">
+                <p class="hero-kicker">Your Concept • Our Creation</p>
+                <h1 class="hero-heading">
+                    Let’s Shape Iconic <br />
+                    Tensile Spaces Together
+                </h1>
+                <p class="hero-lead">
+                    Share your vision, model or sketch — we transform it into
+                    a crafted tensile landmark with engineered detailing,
+                    premium membranes and clean installation.
+                </p>
+
+                <div class="hero-cta-row">
+                    <a href="./pages/product.html" class="btn hero-primary-btn">
+                        Contact US
+                    </a>
+                    <a href="./pages/contact.html" class="btn hero-secondary-btn">
+                        Gallery
+                    </a>
+                </div>
+
+                <div class="hero-trust-row">
+                    <div class="hero-avatars">
+                            <img  class="avatar-dot" src="/assets/hero-img/hero-user-1.png" alt="">
+                            <img  class="avatar-dot" src="/assets/hero-img/hero-user-2.png" alt="">
+                            <img  class="avatar-dot" src="/assets/hero-img/hero-user-3.png" alt="">
+                                           </div>
+                    <div class="hero-trust-text">
+                        <strong>10K+ sq.ft designed</strong><br />
+                        Trusted by architects & builders
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: 3D / IMAGE STACK -->
+            <div class="tensile-hero-visual">
+
+
+                <div class="hero-orbit-frame">
+                    <!-- slide 1: 3D model of the scale concept (2nd image idea) -->
+                    <img src="/assets/hero-img/hero-img-1.png" alt="3D concept model of tensile structure"
+                        class="hero-shot is-active" />
+
+                    <!-- slide 2: 3D model of the night structure -->
+                    <img src="/assets/hero-img/hero-img-2.png" alt="Night-time 3D render of tensile structure"
+                        class="hero-shot" />
+
+                    <!-- small step label -->
+                    <div class="hero-step-pill">
+                        <span id="heroStepLabel">Concept Model</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</body>
+<script>
+    (function () {
+        const shots = Array.from(document.querySelectorAll(".hero-shot"));
+        const labelEl = document.getElementById("heroStepLabel");
+
+        if (!shots.length || !labelEl) return;
+
+        const labels = [
+            "Concept model from your idea",
+            "3D vision – how it will look"
+        ];
+
+        let index = 0;
+
+        function showSlide(i) {
+            shots.forEach((img, idx) => {
+                img.classList.toggle("is-active", idx === i);
+            });
+            labelEl.textContent = labels[i] || "";
+        }
+
+        // initial
+        showSlide(index);
+
+        // change every ~2.2s
+        setInterval(() => {
+            index = (index + 1) % shots.length;
+            showSlide(index);
+        }, 2200);
+    })();
+</script>
+
+</html>

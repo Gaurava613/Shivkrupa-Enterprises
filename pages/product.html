@@ -22,7 +22,7 @@
             --accent-gold-2: #fbd382;
             --card-radius: 16px;
             --muted: #596376;
-            --ink: #0a2133; 
+            --ink: #0a2133;
             --glass: rgba(255, 255, 255, 0.06);
             --transition: 220ms cubic-bezier(.2, .9, .25, 1);
         }
@@ -317,7 +317,7 @@
         </div>
     </nav>
 
-     <!-- small hero for About page -->
+    <!-- small hero for About page -->
     <section class="mini-hero mini-hero--about" aria-labelledby="about-hero-title" role="banner">
         <div class="mini-hero__bg" aria-hidden="true"></div>
 
@@ -325,16 +325,15 @@
             <h1 id="about-hero-title" class="mini-hero__title"> Our Products</h1>
         </div>
     </section>
-    
+
     <!-- TOP CATEGORY BAR -->
     <header class="top-category-nav" role="navigation" aria-label="Main product categories">
         <div class="cat-scroll" role="tablist" aria-label="Product categories">
+            <button class="cat-pill" data-main="tensile" role="tab" aria-selected="false">Tensile Structures</button>
             <button class="cat-pill active" data-main="awnings" role="tab" aria-selected="true">Awnings</button>
             <button class="cat-pill" data-main="parking" role="tab" aria-selected="false">Car Parking</button>
-            <button class="cat-pill" data-main="tensile" role="tab" aria-selected="false">Tensile Structures</button>
             <button class="cat-pill" data-main="sheds" role="tab" aria-selected="false">Sheds</button>
-            <button class="cat-pill" data-main="resfab" role="tab" aria-selected="false">Residential
-                Fabrication</button>
+            <button class="cat-pill" data-main="canopy" role="tab" aria-selected="false">Canopy</button>
         </div>
     </header>
 
@@ -397,7 +396,7 @@
         </div>
     </div>
 
-     <!-- FOOTER (Bootstrap + your styles) -->
+    <!-- FOOTER (Bootstrap + your styles) -->
     <footer class="site-footer mt-4">
         <div class="footer-inner container d-grid" style="grid-template-columns:1.2fr 1fr 1fr;">
             <div class="footer-col footer-about">
@@ -455,22 +454,47 @@
     <script>
         // ---------- Data for categories + sub-items ----------
         const DATA = {
+            tensile: {
+                title: 'Tensile Structures',
+                subs: {
+                    conical: {
+                        title: 'conical Tensile Tensile',
+                        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg',
+                        desc: 'Minimal single-pole tensile shade for compact spaces.'
+                    },
+                    singlePole: {
+                        title: 'Single-pole Tensile',
+                        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-3.jpeg',
+                        desc: 'Minimal single-pole tensile shade for compact spaces.'
+                    },
+                    halfRound: {
+                        title: 'Half-Round Tensile',
+                        img: '/assets/shivkrupa-photos/Half-round-t/half-round-16.jpeg',
+                        desc: 'Minimal single-pole tensile shade for compact spaces.'
+                    },
+                    moreConical: {
+                        title: '2 & More Conical Tensile',
+                        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-3.jpeg',
+                        desc: 'Minimal single-pole tensile shade for compact spaces.'
+                    },
+                }
+            },
             awnings: {
                 title: 'Awnings',
                 subs: {
                     retractable: {
                         title: 'Retractable Awning',
-                        img: '/assets/awning-retractable.jpg',
+                        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-6.jpeg',
                         desc: 'Motorized or manual retractable awning ideal for balconies, windows & shop fronts. Stylish shade with easy operation; add sensors for automatic retraction on wind/rain.'
                     },
                     fixed: {
                         title: 'Fixed Frame Awning',
-                        img: '/assets/awning-fixed.jpg',
+                        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-1.jpeg',
                         desc: 'Permanent aluminum awning with coated fabric. Withstands harsh weather while enhancing exterior aesthetics. Custom sizes and powder-coated frames available.'
                     },
                     drop: {
                         title: 'Drop Awning',
-                        img: '/assets/awning-drop.jpg',
+                        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-2.jpeg',
                         desc: 'Vertical drop awning for privacy and shade. Ideal for terraces, kiosks and outdoor cafés — compact, simple and effective.'
                     }
                 }
@@ -478,27 +502,77 @@
             parking: {
                 title: 'Car Parking',
                 subs: {
-                    tensile: {
-                        title: 'Tensile Car Parking',
-                        img: '/assets/parking-tensile.jpg',
+                    carTensile: {
+                        title: 'Car Parking Shed',
+                        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-4.jpeg',
                         desc: 'High-strength tensile parking shades — modular, long-span, and built for fleets or residential complexes.'
                     },
                     frp: {
-                        title: 'FRP Car Shelter',
-                        img: '/assets/parking-frp.jpg',
+                        title: 'FRP Parking Shed',
+                        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-5.jpeg',
                         desc: 'Lightweight FRP canopies for compact car parks with fast installation.'
                     },
-                    steel: {
-                        title: 'Steel Frame Shelter',
-                        img: '/assets/parking-steel.jpg',
+                    tensileParking: {
+                        title: 'Tensile Parking',
+                        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-8.jpeg',
                         desc: 'Heavy-duty steel shelters used for large-capacity parking projects and industrial parks.'
                     }
                 }
             },
-            // additional categories can be added the same way (tensile, sheds, resfab)
-            tensile: { title: 'Tensile Structures', subs: { sample: { title: 'Single-pole Tensile', img: '/assets/tensile-1.jpg', desc: 'Minimal single-pole tensile shade for compact spaces.' } } },
-            sheds: { title: 'Sheds', subs: { sample: { title: 'Tin Shed', img: '/assets/shed-1.jpg', desc: 'Classic sheet-metal shed for warehouses and storage.' } } },
-            resfab: { title: 'Residential Fabrication', subs: { sample: { title: 'Decorative Canopy', img: '/assets/res-1.jpg', desc: 'Custom decorative canopies for homes and balconies.' } } }
+            sheds: {
+                title: 'Sheds',
+                subs: {
+                    monsoonShade: {
+                        title: 'Mosnoon Shade',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                    awingShade: {
+                        title: 'Awing Shade',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-9.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                    sunShade: {
+                        title: 'Sun Shade',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-3.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                    fabricShade: {
+                        title: 'Fabric Shade',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-4.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                    foldingShade: {
+                        title: 'Folding Shade',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-5.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                }
+            },
+            canopy: {
+                subs: {
+                    entrance: {
+                        title: 'Entrance Canopy',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                    outdoor: {
+                        title: 'Outdoor Canopy',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                    gazebo: {
+                        title: 'Gazebo',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                    window: {
+                        title: 'Window Canopy',
+                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+                        desc: 'Classic sheet-metal shed for warehouses and storage.'
+                    },
+                }
+            }
         };
 
         // ---------- Helpers ----------
@@ -521,6 +595,21 @@
         // set initial active keys
         let activeMain = 'awnings';
         let activeSub = 'fixed';
+
+        // read ?main=&sub= from URL (if present)
+        function applyQueryDefaults() {
+            const params = new URLSearchParams(window.location.search);
+            const qMain = params.get('main');
+            const qSub = params.get('sub');
+
+            // if main from URL exists in DATA, use it
+            if (qMain && DATA[qMain]) {
+                activeMain = qMain;
+                // choose this sub if valid, otherwise fallback handled by ensureActiveSub / setActiveMain
+                activeSub = ensureActiveSub(qMain, qSub);
+            }
+        }
+
 
         // ensure activeSub exists for the activeMain (fallback)
         function ensureActiveSub(main, maybeSub) {
@@ -650,13 +739,14 @@
             // navigator.clipboard.writeText(`${title} — I'm interested`).then(() => {
             //   alert('Product copied to clipboard (demo): ' + title);
             // });
-            window.location.href = '/contact.html?interest=' + encodeURIComponent(title);
+            window.location.href = 'contact.html?interest=' + encodeURIComponent(title);
         });
 
         // INITIALIZE page with defaults
         (function init() {
             // ensure assets exist: if not, placeholder fallback
             // set active main/sub and reflect UI
+            applyQueryDefaults();      // read ?main=&sub=
             setActiveMain(activeMain);
         })();
     </script>

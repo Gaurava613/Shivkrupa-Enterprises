@@ -59,8 +59,8 @@
       justify-content: center;
       flex-wrap: wrap;
       margin-bottom: 20px;
-      background-color: #1a085e;
-      padding:20px;
+      background-color: #ededed;
+      padding: 20px;
       width: 100%;
     }
 
@@ -324,16 +324,14 @@
   </section>
 
   <div class="page-wrap">
-    <header class="gallery-header">
-      <h2>Our Work</h2>
-      <p class="gallery-sub text-muted">Beautiful installations — click any tile to view full size.</p>
-    </header>
-
     <div class="filters" role="tablist" aria-label="Gallery filters">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="tensile">Tensile</button>
       <button class="filter-btn" data-filter="awning">Awnings</button>
       <button class="filter-btn" data-filter="parking">Car Parks</button>
+      <button class="filter-btn" data-filter="shades">Shades</button>
+            <button class="filter-btn" data-filter="gazebo">Gazebo</button>
+
     </div>
 
     <main class="masonry" id="masonry"></main>
@@ -352,23 +350,23 @@
   <script>
     // images array - update filenames & captions to match your ./assets
     const ITEMS = [
-      { src: '../assets/heroImg-1.png', title: 'Car Park Canopy', tag: 'parking', size: 'h-lg' },
-      { src: '../assets/heroImg-2.png', title: 'Retractable Awning', tag: 'awning', size: 'h-md' },
-      { src: '../assets/productImg-1.png', title: 'Entrance Tensile', tag: 'tensile', size: 'h-lg' },
-      { src: '../assets/productImg-2.png', title: 'Shade Structure', tag: 'tensile', size: 'h-sm' },
-      { src: '../assets/heroImg-3.png', title: 'FRP Car Shed', tag: 'parking', size: 'h-md' },
-      { src: '../assets/productImg-3.png', title: 'Motorized Awning', tag: 'awning', size: 'h-md' },
-      { src: '../assets/heroImg-4.png', title: 'Installation Team', tag: 'installation', size: 'h-lg' },
-      { src: '../assets/heroImg-5.png', title: 'Project Finish', tag: 'installation', size: 'h-sm' },
-      { src: '../assets/heroImg-1.png', title: 'Car Park Canopy', tag: 'parking', size: 'h-lg' },
-      { src: '../assets/heroImg-2.png', title: 'Retractable Awning', tag: 'awning', size: 'h-md' },
-      { src: '../assets/productImg-1.png', title: 'Entrance Tensile', tag: 'tensile', size: 'h-lg' },
-      { src: '../assets/productImg-2.png', title: 'Shade Structure', tag: 'tensile', size: 'h-sm' },
-      { src: '../assets/heroImg-3.png', title: 'FRP Car Shed', tag: 'parking', size: 'h-md' },
-      { src: '../assets/productImg-3.png', title: 'Motorized Awning', tag: 'awning', size: 'h-md' },
-      { src: '../assets/heroImg-4.png', title: 'Installation Team', tag: 'installation', size: 'h-lg' },
-      { src: '../assets/heroImg-5.png', title: 'Project Finish', tag: 'installation', size: 'h-sm' },
-      { src: '../assets/productImg-4.png', title: 'Gazebo Tensile', tag: 'tensile', size: 'h-md' }
+      { src: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-8.jpeg', title: 'Car Park Canopy', tag: 'parking', size: 'h-lg' },
+      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-15.jpeg', title: 'Retractable Awning', tag: 'awning', size: 'h-md' },
+      { src: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg', title: 'Entrance Tensile', tag: 'tensile', size: 'h-lg' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg', title: 'Shade Structure', tag: 'tensile', size: 'h-sm' },
+      { src: '/assets/shivkrupa-photos/PEB-parking-t/peb-parking-4.jpeg', title: 'FRP Car Shed', tag: 'parking', size: 'h-md' },
+      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-21.jpeg', title: 'Motorized Awning', tag: 'awning', size: 'h-md' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-12.jpeg', title: 'shades', tag: 'shades', size: 'h-lg' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-13.jpeg', title: 'shades', tag: 'shades', size: 'h-sm' },
+      { src: '/assets/shivkrupa-photos/Two-way-parking/two-way-parking-1.jpeg', title: 'Car Park Canopy', tag: 'parking', size: 'h-lg' },
+      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-20.jpeg', title: 'Retractable Awning', tag: 'awning', size: 'h-md' },
+      { src: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg', title: 'Entrance Tensile', tag: 'tensile', size: 'h-lg' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-4.jpeg', title: 'Shade Structure', tag: 'tensile', size: 'h-sm' },
+      { src: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-4.jpeg', title: 'FRP Car Shed', tag: 'parking', size: 'h-md' },
+      { src: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-6.jpeg', title: 'Motorized Awning', tag: 'awning', size: 'h-md' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg', title: 'shades', tag: 'shades', size: 'h-lg' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-8.jpeg', title: 'shades', tag: 'shades', size: 'h-sm' },
+      { src: '/assets/shivkrupa-photos/Gazebo-t/gazebo-t-1.jpeg', title: 'Gazebo Tensile', tag: 'gazebo', size: 'h-md' }
     ];
 
     const masonry = document.getElementById('masonry');
