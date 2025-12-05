@@ -1708,7 +1708,9 @@ h2 {
 }
 
 .site-footer {
-    background: #0a1e33;
+    /* background: #0a1e33; */
+        background: linear-gradient(50deg, #0c028b,  #76028b,#0c028b);
+
     color: rgba(255, 255, 255, 0.95);
     padding-top: 40px;
     padding-bottom: 18px;
