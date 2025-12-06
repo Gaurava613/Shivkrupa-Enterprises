@@ -377,7 +377,7 @@
                 <button id="enquireBtn" class="cta-btn" aria-label="Express interest in Fixed Frame Awning">I'm
                     Interested</button>
                 <!-- small secondary action (view gallery) -->
-                <button id="galleryBtn" class="sub-pill" aria-label="Open gallery">View Gallery</button>
+                <button id="galleryBtn" class="sub-pill" aria-label="Open gallery">View Image</button>
             </div>
         </div>
     </main>
@@ -396,40 +396,45 @@
         </div>
     </div>
 
-    <!-- FOOTER (Bootstrap + your styles) -->
-    <footer class="site-footer mt-4">
-        <div class="footer-inner container d-grid" style="grid-template-columns:1.2fr 1fr 1fr;">
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-inner container">
             <div class="footer-col footer-about">
                 <img src="/assets/logo.png" alt="Shivkrupa logo" class="footer-logo">
-                <p class="footer-desc">Shivkrupa Enterprises — designers & manufacturers of tensile structures,
-                    retractable awnings and car-park sheds. Quality materials, custom designs and timely installation
-                    since 2011.</p>
+                <p class="footer-desc">
+                    Shivkrupa Enterprises — designers & manufacturers of tensile structures, retractable awnings and
+                    car-park sheds.
+                    Quality materials, custom designs and timely installation since 2011.
+                </p>
+
                 <div class="footer-download">
                     <a href="/mnt/data/e profile  SHIVKRUPA ENTERPRISES.pdf.pdf.pdf" download class="btn-download"
-                        aria-label="Download company profile">&#128229; Download Company Profile</a>
+                        aria-label="Download company profile">
+                        &#128229; Download Company Profile
+                    </a>
                 </div>
             </div>
 
             <div class="footer-col footer-links" aria-labelledby="footer-links-heading">
                 <h4 id="footer-links-heading">Quick links</h4>
-                <ul class="list-unstyled mb-0">
+                <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#about">About us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="/pages/product.html">Products</a></li>
+                    <li><a href="/pages/gallery.html">Projects</a></li>
+                    <li><a href="/pages/about.html">About us</a></li>
+                    <li><a href="/pages/contact.html">Contact</a></li>
                 </ul>
             </div>
 
             <div class="footer-col footer-contact" aria-labelledby="footer-contact-heading">
                 <h4 id="footer-contact-heading">Contact</h4>
-                <address class="contact-meta mb-0">
-                    <div><strong>Phone:</strong> <a href="tel:+911234567890">+91 12345 67890</a></div>
-                    <div><strong>Email:</strong> <a href="mailto:info@shivkrupa.com">info@shivkrupa.com</a></div>
-                    <div><strong>Address:</strong> S. No. 33, Near Yuraj Castel, Warje, Pune, Maharashtra</div>
+                <address class="contact-meta">
+                    <div><strong>Phone:</strong> <a href="tel:+911234567890">9921242901 | 9881099003</a></div>
+                    <div><strong>Email:</strong> <a href="mailto:info@shivkrupa.com">shivkrupaent2011@gmail.com</a></div>
+                    <div><strong>Address:</strong> S. No. 33, Near Yuraj Castel, Cannel Road, Dattanagar, Warje, Pune-58, Maharashtra</div>
                 </address>
 
-                <div class="socials mt-2" aria-label="Social links">
+                <div class="socials" aria-label="Social links">
                     <a href="#" class="social" aria-label="Facebook" title="Facebook">f</a>
                     <a href="#" class="social" aria-label="Instagram" title="Instagram">ig</a>
                     <a href="#" class="social" aria-label="LinkedIn" title="LinkedIn">in</a>
@@ -437,9 +442,8 @@
             </div>
         </div>
 
-        <div class="footer-bottom mt-3">
-            <div
-                class="container footer-bottom-inner d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
                 <div class="copyright">© <span id="footer-year"></span> Shivkrupa Enterprises. All rights reserved.
                 </div>
                 <div class="powered">Made with care • <a href="#" rel="noopener">Terms</a> • <a href="#"
@@ -453,127 +457,131 @@
 
     <script>
         // ---------- Data for categories + sub-items ----------
-        const DATA = {
-            tensile: {
-                title: 'Tensile Structures',
-                subs: {
-                    conical: {
-                        title: 'conical Tensile Tensile',
-                        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg',
-                        desc: 'Minimal single-pole tensile shade for compact spaces.'
-                    },
-                    singlePole: {
-                        title: 'Single-pole Tensile',
-                        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-3.jpeg',
-                        desc: 'Minimal single-pole tensile shade for compact spaces.'
-                    },
-                    halfRound: {
-                        title: 'Half-Round Tensile',
-                        img: '/assets/shivkrupa-photos/Half-round-t/half-round-16.jpeg',
-                        desc: 'Minimal single-pole tensile shade for compact spaces.'
-                    },
-                    moreConical: {
-                        title: '2 & More Conical Tensile',
-                        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-3.jpeg',
-                        desc: 'Minimal single-pole tensile shade for compact spaces.'
-                    },
-                }
-            },
-            awnings: {
-                title: 'Awnings',
-                subs: {
-                    retractable: {
-                        title: 'Retractable Awning',
-                        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-6.jpeg',
-                        desc: 'Motorized or manual retractable awning ideal for balconies, windows & shop fronts. Stylish shade with easy operation; add sensors for automatic retraction on wind/rain.'
-                    },
-                    fixed: {
-                        title: 'Fixed Frame Awning',
-                        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-1.jpeg',
-                        desc: 'Permanent aluminum awning with coated fabric. Withstands harsh weather while enhancing exterior aesthetics. Custom sizes and powder-coated frames available.'
-                    },
-                    drop: {
-                        title: 'Drop Awning',
-                        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-2.jpeg',
-                        desc: 'Vertical drop awning for privacy and shade. Ideal for terraces, kiosks and outdoor cafés — compact, simple and effective.'
-                    }
-                }
-            },
-            parking: {
-                title: 'Car Parking',
-                subs: {
-                    carTensile: {
-                        title: 'Car Parking Shed',
-                        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-4.jpeg',
-                        desc: 'High-strength tensile parking shades — modular, long-span, and built for fleets or residential complexes.'
-                    },
-                    frp: {
-                        title: 'FRP Parking Shed',
-                        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-5.jpeg',
-                        desc: 'Lightweight FRP canopies for compact car parks with fast installation.'
-                    },
-                    tensileParking: {
-                        title: 'Tensile Parking',
-                        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-8.jpeg',
-                        desc: 'Heavy-duty steel shelters used for large-capacity parking projects and industrial parks.'
-                    }
-                }
-            },
-            sheds: {
-                title: 'Sheds',
-                subs: {
-                    monsoonShade: {
-                        title: 'Mosnoon Shade',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                    awingShade: {
-                        title: 'Awing Shade',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-9.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                    sunShade: {
-                        title: 'Sun Shade',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-3.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                    fabricShade: {
-                        title: 'Fabric Shade',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-4.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                    foldingShade: {
-                        title: 'Folding Shade',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-5.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                }
-            },
-            canopy: {
-                subs: {
-                    entrance: {
-                        title: 'Entrance Canopy',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                    outdoor: {
-                        title: 'Outdoor Canopy',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                    gazebo: {
-                        title: 'Gazebo',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                    window: {
-                        title: 'Window Canopy',
-                        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
-                        desc: 'Classic sheet-metal shed for warehouses and storage.'
-                    },
-                }
-            }
-        };
+     const DATA = {
+  tensile: {
+    title: 'Tensile Structures',
+    subs: {
+      conical: {
+        title: 'Conical Tensile',
+        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg',
+        desc: 'Signature conical tensile structure designed for plazas, courtyards and open walkways. Provides wide-span shade with minimal columns, excellent water drainage and a very iconic architectural look.'
+      },
+      singlePole: {
+        title: 'Single-pole Tensile',
+        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-3.jpeg',
+        desc: 'Compact single-pole tensile shade ideal for small sit-out areas, café corners and villa entrances. Uses a central mast to maximise covered area while keeping the footprint and steel usage low.'
+      },
+      halfRound: {
+        title: 'Half-Round Tensile',
+        img: '/assets/shivkrupa-photos/Half-round-t/half-round-16.jpeg',
+        desc: 'Curved half-round tensile profile that works perfectly for pathways, balcony extensions and semi-covered terraces. Offers smooth rainwater run-off, soft diffused light and a very clean elevation.'
+      },
+      moreConical: {
+        title: '2 & More Conical Tensile',
+        img: '/assets/shivkrupa-photos/Conical-tensile/conical-t-3.jpeg',
+        desc: 'Multiple conical modules combined to cover larger spaces such as campuses, food courts and public plazas. Modular design allows future expansion, uniform load distribution and a dramatic visual impact.'
+      }
+    }
+  },
+
+  awnings: {
+    title: 'Awnings',
+    subs: {
+      retractable: {
+        title: 'Retractable Awning',
+        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-6.jpeg',
+        desc: 'Manual or motorised retractable awning for balconies, shopfronts and terraces. Extends when shade is needed and folds back to open the sky, with high-grade fabric that resists UV, heat and light rain.'
+      },
+      fixed: {
+        title: 'Fixed Frame Awning',
+        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-1.jpeg',
+        desc: 'Permanent aluminium or MS frame awning with premium coated fabric. Ideal for windows, entrances and storefronts where continuous protection from sun and rain is required with low maintenance.'
+      },
+      drop: {
+        title: 'Drop Awning',
+        img: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-2.jpeg',
+        desc: 'Vertical drop awning that acts as both shade and privacy screen. Perfect for terraces, glass façades and balcony railings, cutting glare and heat while still allowing light and ventilation.'
+      }
+    }
+  },
+
+  parking: {
+    title: 'Car Parking',
+    subs: {
+      carTensile: {
+        title: 'Car Parking Shed',
+        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-4.jpeg',
+        desc: 'Robust tensile car parking shed engineered to protect vehicles from harsh sun, UV and rain. Suitable for societies, corporate campuses and commercial complexes with neat column placement for easy movement.'
+      },
+      frp: {
+        title: 'FRP Parking Shed',
+        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-5.jpeg',
+        desc: 'Lightweight FRP (fiber-reinforced plastic) parking shed with solid roofing. Offers long-term resistance to rust and leakage, making it a good option for individual bungalows and compact parking bays.'
+      },
+      tensileParking: {
+        title: 'Tensile Parking',
+        img: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-8.jpeg',
+        desc: 'Large-span tensile parking solution designed for multiple car bays and driveways. Combines aesthetic curved membranes with strong steel framing for malls, IT parks, showrooms and large housing projects.'
+      }
+    }
+  },
+
+  sheds: {
+    title: 'Sheds',
+    subs: {
+      monsoonShade: {
+        title: 'Monsoon Shade',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+        desc: 'Heavy-duty monsoon shade designed to handle strong rain and wind conditions. Ideal for temporary storage, loading–unloading zones and open terraces that need all-season protection.'
+      },
+      awingShade: {
+        title: 'Awning Shade',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-9.jpeg',
+        desc: 'Compact projection shade used over doors, windows and shopfronts. Helps reduce direct sun and water splash near the opening while improving the front elevation of the building.'
+      },
+      sunShade: {
+        title: 'Sun Shade',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-3.jpeg',
+        desc: 'Functional sun control shade for playgrounds, rooftop cafés and open seating areas. Cuts heat and glare significantly while allowing free air circulation under the structure.'
+      },
+      fabricShade: {
+        title: 'Fabric Shade',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-4.jpeg',
+        desc: 'Versatile fabric shade solution that can be customised for courtyards, walkways and side setbacks. Uses high-tensile, weather-resistant membrane that is easy to clean and maintain.'
+      },
+      foldingShade: {
+        title: 'Folding Shade',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-5.jpeg',
+        desc: 'Foldable shade system that can be opened or closed based on season. Perfect for terraces and rooftop restaurants where flexible open-to-sky and covered areas are required.'
+      }
+    }
+  },
+
+  canopy: {
+    subs: {
+      entrance: {
+        title: 'Entrance Canopy',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+        desc: 'Elegant entrance canopy that highlights the main entry of residences, hotels or commercial buildings. Offers visitors covered access while giving a premium first impression to the façade.'
+      },
+      outdoor: {
+        title: 'Outdoor Canopy',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+        desc: 'Multi-purpose outdoor canopy for sit-out zones, café seating and garden events. Provides comfortable shade with customisable shapes, colours and column layouts to suit your site.'
+      },
+      gazebo: {
+        title: 'Gazebo',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+        desc: 'Stand-alone gazebo structure that becomes a focal point in gardens, farmhouses and resorts. Designed for relaxation and gatherings with a cosy, semi-open feel and durable roofing.'
+      },
+      window: {
+        title: 'Window Canopy',
+        img: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg',
+        desc: 'Slim window canopy to protect openings from direct rain and sun while keeping natural light. Ideal for elevation enhancement on residential and commercial buildings.'
+      }
+    }
+  }
+};
 
         // ---------- Helpers ----------
         function qs(sel, ctx = document) { return ctx.querySelector(sel); }
