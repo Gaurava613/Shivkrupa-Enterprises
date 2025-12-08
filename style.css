@@ -1500,6 +1500,10 @@ h2 {
     margin: 0 auto 44px;
 }
 
+.stats-row .inner {
+background-color: #000;
+}
+
 .stat {
     width: var(--card-size);
     aspect-ratio: 1/1;
@@ -1525,7 +1529,7 @@ h2 {
     width: var(--inner-size);
     height: var(--inner-size);
     border-radius: 50%;
-    background: rgba(241, 245, 249, 0.98);
+    background: rgba(211, 224, 246, 0.98);
     display: flex;
     align-items: center;
     justify-content: center;
