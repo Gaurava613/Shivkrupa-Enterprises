@@ -28,7 +28,7 @@ h4 {
 
 h2 {
     font-size: clamp(1.5rem, 2.6vw, 2.6rem);
-        color: #373a8e;
+        color: #012a48;
 
 }
 
@@ -78,7 +78,7 @@ h2 {
 
 .nav-menu a {
     text-decoration: none;
-    color: #19199a;
+    color: #012a48;
     font-weight: 500;
     padding: 6px 12px;
     border-radius: 6px;
@@ -86,7 +86,7 @@ h2 {
 }
 
 .nav-menu a:hover {
-    background-color: #2e3267;
+    background-color: #012a48;
     color: white;
 }
 
@@ -97,7 +97,7 @@ h2 {
     align-items: center;
     height: 100%;
     padding-right: 50px;
-    background: linear-gradient(135deg, #807be5, #322e8e);
+    background: linear-gradient(135deg, #4540a4, #012a48);
     /* clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%); */
     border-radius: 1000px 0px 10px 1000px;
     box-sizing: border-box;
@@ -192,7 +192,7 @@ h2 {
     position: relative;
     overflow: hidden;
     /* background-image: url('/assets/hero-img/hero-bg-2.jpg'); */
-    background: linear-gradient(50deg, #04012d, #29028b, #04012d);
+    background: linear-gradient(50deg, #012a48, #402488, #012a48);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -671,6 +671,11 @@ h2 {
     transition: box-shadow 300ms ease;
     user-select: none;
     pointer-events: none;
+}
+
+.about-view-btn{
+    background-color: #012a48;
+    color: white;
 }
 
 
@@ -1731,7 +1736,7 @@ h2 {
 
 .site-footer {
     /* background: #0a1e33; */
-    background: linear-gradient(50deg, #04012d, #29028b, #04012d);
+    background: linear-gradient(50deg, #012a48, #402488, #012a48);
     color: rgba(255, 255, 255, 0.95);
     padding-top: 40px;
     padding-bottom: 18px;
@@ -1853,9 +1858,9 @@ h2 {
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 12px;
     color: rgba(255, 255, 255, 0.78);
     font-size: 0.92rem;
     box-sizing: border-box;
@@ -1937,6 +1942,27 @@ h2 {
     outline-offset: 3px;
     border-radius: 8px;
 }
+
+.social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: #ffffff10;
+    border-radius: 50%;
+    font-size: 18px;
+    color: #fff;
+    transition: 0.3s ease;
+}
+
+.social:hover {
+    background: #5a2ee8;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(90, 46, 232, .35);
+    color: #fff;
+}
+
 
 
 /* =======================MINI HERO SECTION====================== */
@@ -2071,4 +2097,32 @@ h2 {
     outline: 3px solid rgba(90, 46, 232, 0.16);
     outline-offset: 4px;
     border-radius: 10px;
+}
+
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 58px;
+    height: 58px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .25);
+    z-index: 9999;
+    transition: transform .25s ease, box-shadow .3s ease;
+}
+
+.whatsapp-float img {
+    width: 32px;
+    height: 32px;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.12) translateY(-4px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, .32);
 }
