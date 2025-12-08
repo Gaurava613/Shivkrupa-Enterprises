@@ -148,6 +148,10 @@ h2 {
         animation: slideDown 0.35s ease forwards;
     }
 
+        .nav-menu a{
+        color: white;
+        }
+
     .nav-menu li {
         width: 100%;
         text-align: center;
@@ -366,10 +370,10 @@ h2 {
     color: #f9fafb;
     padding: 6px 14px;
     border-radius: 10px 10px 10px 50px;
-    font-size: 2rem;
+    font-size: 30px;
     font-weight: 600;
     backdrop-filter: blur(1px);
-    width: 30rem;
+    width: 32rem;
     /* box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4); */
 }
 
@@ -434,13 +438,18 @@ h2 {
     .hero-orbit-frame {
         width: min(320px, 86vw);
         height: min(410px, 900vw);
-        border-radius: 200px;
+        border-radius: 20px;
     }
 
     .hero-secondary-frame {
         width: 190px;
         height: 140px;
     }
+    .hero-step-pill{
+
+        font-size: 17px;
+    }
+    
 }
 
 /* ====================================HERO========================= */
@@ -613,8 +622,8 @@ h2 {
 .about-section {
     /* background: linear-gradient(360deg, #ffffff, #0a0463); */
     color: #000;
-    padding-top: 48px;
-    padding-bottom: 48px;
+    /* padding-top: 48px;
+    padding-bottom: 48px; */
 }
 
 .about-card{
@@ -636,7 +645,7 @@ h2 {
 }
 
 #tensile-3d-section {
-    padding: 80px 0;
+    padding: 30px 0;
 }
 
 .tensile-3d-wrapper {

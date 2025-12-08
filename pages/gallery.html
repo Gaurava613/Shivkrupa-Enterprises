@@ -316,7 +316,7 @@
 
   <!-- small hero for About page -->
   <section class="mini-hero mini-hero--about" aria-labelledby="about-hero-title" role="banner">
-    <div class="mini-hero__bg" aria-hidden="true"></div>
+    <img src="/assets/hero-img/gallery-bg.png" class="mini-hero__bg" style="width: 100%" />
 
     <div class="mini-hero__inner container">
       <h1 id="about-hero-title" class="mini-hero__title">Project Gallery</h1>
@@ -347,6 +347,8 @@
     </div>
   </div>
 
+      <script src="/main.js"></script>
+
   <script>
     // images array - update filenames & captions to match your ./assets
     const ITEMS = [
@@ -367,6 +369,7 @@
       { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg', title: 'shades', tag: 'shades', size: 'h-lg' },
       { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-8.jpeg', title: 'shades', tag: 'shades', size: 'h-sm' },
       { src: '/assets/shivkrupa-photos/Gazebo-t/gazebo-t-1.jpeg', title: 'Gazebo Tensile', tag: 'gazebo', size: 'h-md' }
+   
     ];
 
     const masonry = document.getElementById('masonry');
