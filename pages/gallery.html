@@ -31,7 +31,6 @@
     .page-wrap {
       width: 100%;
       margin: 28px auto;
-      /* padding: 0 18px; */
     }
 
     .gallery-header {
@@ -79,68 +78,43 @@
       box-shadow: 0 6px 20px rgba(90, 46, 232, 0.12);
     }
 
-    /* Masonry column layout */
+    /* ==== NEW GRID LAYOUT (no gaps, centered when few items) ==== */
     .masonry {
-      column-gap: var(--gap);
-      column-fill: balance;
-      /* number of columns changes with width */
-      column-count: 5;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+      justify-content: center;
+      gap: var(--gap);
       width: 100%;
       padding: 30px;
-    }
-
-    @media (max-width:1200px) {
-      .masonry {
-        column-count: 4;
-      }
-    }
-
-    @media (max-width:992px) {
-      .masonry {
-        column-count: 3;
-      }
-    }
-
-    @media (max-width:720px) {
-      .masonry {
-        column-count: 2;
-      }
-    }
-
-    @media (max-width:420px) {
-      .masonry {
-        column-count: 1;
-      }
+      box-sizing: border-box;
     }
 
     .masonry-item {
-      display: inline-block;
-      /* important for columns */
-      width: 100%;
-      margin: 0 0 var(--gap);
       border-radius: var(--card-radius);
       overflow: hidden;
       background: #f3f3f1;
-      box-shadow: 0 12px 30px rgba(2, 8, 20, 0.04);
+      box-shadow: 0 12px 30px rgba(2, 8, 20, 0.06);
       position: relative;
       transform-origin: center;
       transition: transform .22s ease, box-shadow .22s ease;
+      display: flex;
+      flex-direction: column;
     }
 
     .masonry-item:hover {
       transform: translateY(-6px);
-      box-shadow: 0 26px 60px rgba(2, 8, 20, 0.08);
+      box-shadow: 0 26px 60px rgba(2, 8, 20, 0.12);
     }
 
     .masonry-item img {
       display: block;
       width: 100%;
-      height: auto;
+      /* same height for all -> no white gaps */
+      aspect-ratio: 4 / 3;
       object-fit: cover;
       vertical-align: middle;
-      /* smooth reveal */
       transition: transform .35s ease;
-      will-change: transform;
+      flex-shrink: 0;
     }
 
     .masonry-item:hover img {
@@ -181,27 +155,8 @@
       box-shadow: 0 6px 18px rgba(11, 27, 40, 0.06);
     }
 
-    /* tall / wide variants so items look mixed */
-    .h-lg img {
-      height: 420px;
-    }
-
-    /* tall */
-    .h-md img {
-      height: 300px;
-    }
-
-    /* medium */
-    .h-sm img {
-      height: 200px;
-    }
-
-    /* small */
-    .w-wide {
-      /* mimic wide tile by forcing inline-block width less than 100% of column */
-      display: inline-block;
-      width: 100%;
-    }
+    /* we no longer need h-lg / h-md / h-sm explicit heights,
+       grid + aspect-ratio keeps layout clean */
 
     /* lightbox modal (simple) */
     .lb-backdrop {
@@ -288,36 +243,27 @@
   <!-- Minimal nav for testing -->
   <nav class="clean-navbar">
     <div class="nav-container">
-
-      <!-- Logo -->
       <div class="nav-left">
         <a href="index.html"><img src="/assets/logo.png" alt="Logo" class="logo"></a>
       </div>
-
-      <!-- Toggle Button (Mobile) -->
       <button class="nav-toggle" id="navToggle" aria-label="Open Menu">
         ☰
       </button>
-
-      <!-- Center Menu -->
       <ul class="nav-menu" id="mainNav">
         <li><a href="/index.html" class="active">Home</a></li>
         <li><a href="./about.html">About Us</a></li>
         <li><a href="./product.html">Product</a></li>
         <li><a href="./gallery.html">Gallery</a></li>
       </ul>
-
-      <!-- Right Gradient Section -->
       <div class="nav-right">
         <a href="./contact.html" class="signin-btn">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- small hero for About page -->
+  <!-- Hero -->
   <section class="mini-hero mini-hero--about" aria-labelledby="about-hero-title" role="banner">
     <img src="/assets/hero-img/gallery-bg.png" class="mini-hero__bg" style="width: 100%" />
-
     <div class="mini-hero__inner container">
       <h1 id="about-hero-title" class="mini-hero__title">Project Gallery</h1>
     </div>
@@ -330,8 +276,7 @@
       <button class="filter-btn" data-filter="awning">Awnings</button>
       <button class="filter-btn" data-filter="parking">Car Parks</button>
       <button class="filter-btn" data-filter="shades">Shades</button>
-            <button class="filter-btn" data-filter="gazebo">Gazebo</button>
-
+      <button class="filter-btn" data-filter="gazebo">Gazebo</button>
     </div>
 
     <main class="masonry" id="masonry"></main>
@@ -347,37 +292,36 @@
     </div>
   </div>
 
-      <script src="/main.js"></script>
+  <script src="/main.js"></script>
 
   <script>
-    // images array - update filenames & captions to match your ./assets
     const ITEMS = [
-      { src: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-8.jpeg', title: 'Car Park Canopy', tag: 'parking', size: 'h-lg' },
-      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-15.jpeg', title: 'Retractable Awning', tag: 'awning', size: 'h-md' },
-      { src: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg', title: 'Entrance Tensile', tag: 'tensile', size: 'h-lg' },
-      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg', title: 'Shade Structure', tag: 'tensile', size: 'h-sm' },
-      { src: '/assets/shivkrupa-photos/PEB-parking-t/peb-parking-4.jpeg', title: 'FRP Car Shed', tag: 'parking', size: 'h-md' },
-      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-21.jpeg', title: 'Motorized Awning', tag: 'awning', size: 'h-md' },
-      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-12.jpeg', title: 'shades', tag: 'shades', size: 'h-lg' },
-      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-13.jpeg', title: 'shades', tag: 'shades', size: 'h-sm' },
-      { src: '/assets/shivkrupa-photos/Two-way-parking/two-way-parking-1.jpeg', title: 'Car Park Canopy', tag: 'parking', size: 'h-lg' },
-      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-20.jpeg', title: 'Retractable Awning', tag: 'awning', size: 'h-md' },
-      { src: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg', title: 'Entrance Tensile', tag: 'tensile', size: 'h-lg' },
-      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-4.jpeg', title: 'Shade Structure', tag: 'tensile', size: 'h-sm' },
-      { src: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-4.jpeg', title: 'FRP Car Shed', tag: 'parking', size: 'h-md' },
-      { src: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-6.jpeg', title: 'Motorized Awning', tag: 'awning', size: 'h-md' },
-      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg', title: 'shades', tag: 'shades', size: 'h-lg' },
-      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-8.jpeg', title: 'shades', tag: 'shades', size: 'h-sm' },
-      { src: '/assets/shivkrupa-photos/Gazebo-t/gazebo-t-1.jpeg', title: 'Gazebo Tensile', tag: 'gazebo', size: 'h-md' }
-   
+      { src: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-8.jpeg', title: 'Car Park Canopy', tag: 'parking' },
+      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-15.jpeg', title: 'Retractable Awning', tag: 'awning' },
+      { src: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg', title: 'Entrance Tensile', tag: 'tensile' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg', title: 'Shade Structure', tag: 'tensile' },
+      { src: '/assets/shivkrupa-photos/PEB-parking-t/peb-parking-4.jpeg', title: 'FRP Car Shed', tag: 'parking' },
+      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-21.jpeg', title: 'Motorized Awning', tag: 'awning' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-12.jpeg', title: 'shades', tag: 'shades' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-13.jpeg', title: 'shades', tag: 'shades' },
+      { src: '/assets/shivkrupa-photos/Two-way-parking/two-way-parking-1.jpeg', title: 'Car Park Canopy', tag: 'parking' },
+      { src: '/assets/shivkrupa-photos/Retractable-folding-awning/folding-awning-20.jpeg', title: 'Retractable Awning', tag: 'awning' },
+      { src: '/assets/shivkrupa-photos/Conical-tensile/conical-t-12.jpeg', title: 'Entrance Tensile', tag: 'tensile' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-4.jpeg', title: 'Shade Structure', tag: 'tensile' },
+      { src: '/assets/shivkrupa-photos/Car-parking-tensile/car-park-4.jpeg', title: 'FRP Car Shed', tag: 'parking' },
+      { src: '/assets/shivkrupa-photos/Fix-frame-Awaning-&-Canopy/fix-awaning-6.jpeg', title: 'Motorized Awning', tag: 'awning' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-1.jpeg', title: 'shades', tag: 'shades' },
+      { src: '/assets/shivkrupa-photos/Walt-tensile/walt-t-8.jpeg', title: 'shades', tag: 'shades' },
+      { src: '/assets/shivkrupa-photos/Gazebo-t/gazebo-t-1.jpeg', title: 'Gazebo Tensile', tag: 'gazebo' },
+      // duplicate sets as in your original, if you want more items:
+      // ...
     ];
 
     const masonry = document.getElementById('masonry');
 
-    // helper to create tile nodes
     function createTile(item, idx) {
       const el = document.createElement('article');
-      el.className = `masonry-item ${item.size}`;
+      el.className = 'masonry-item';
       el.tabIndex = 0;
       el.dataset.tag = item.tag;
       el.dataset.idx = idx;
@@ -393,25 +337,19 @@
       caption.innerHTML = `<div class="meta">${item.title}</div><div class="tile-badge">${item.tag}</div>`;
       el.appendChild(caption);
 
-      // open lightbox when clicked
       el.addEventListener('click', () => openLightbox(idx));
-      // also open on Enter key for keyboard users
       el.addEventListener('keydown', (e) => { if (e.key === 'Enter') openLightbox(idx); });
 
       return el;
     }
 
-    // render all
     function render(items) {
       masonry.innerHTML = '';
       items.forEach((it, i) => masonry.appendChild(createTile(it, i)));
-      // small delay to help images flow nicely
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 60);
     }
 
     render(ITEMS);
 
-    // filtering
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -429,6 +367,7 @@
     const lbPrev = document.getElementById('lbPrev');
     const lbNext = document.getElementById('lbNext');
     let current = 0;
+
     function openLightbox(i) {
       current = i;
       lbImg.src = ITEMS[current].src;
@@ -440,8 +379,14 @@
       lbBackdrop.classList.remove('active');
       lbBackdrop.setAttribute('aria-hidden', 'true');
     }
-    function showPrev() { current = (current - 1 + ITEMS.length) % ITEMS.length; lbImg.src = ITEMS[current].src; }
-    function showNext() { current = (current + 1) % ITEMS.length; lbImg.src = ITEMS[current].src; }
+    function showPrev() {
+      current = (current - 1 + ITEMS.length) % ITEMS.length;
+      lbImg.src = ITEMS[current].src;
+    }
+    function showNext() {
+      current = (current + 1) % ITEMS.length;
+      lbImg.src = ITEMS[current].src;
+    }
 
     lbClose.addEventListener('click', closeLightbox);
     lbPrev.addEventListener('click', showPrev);
