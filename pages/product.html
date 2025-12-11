@@ -42,10 +42,8 @@
 
         /* ---------- Top category nav ---------- */
         .top-category-nav {
-            /* background: linear-gradient(180deg, #061022 0%, #0f1b2a 100%); */
             background-color: #1a085e;
             padding: 18px 12px;
-            /* box-shadow: 0 18px 40px rgba(4, 8, 18, 0.45); */
             position: sticky;
             top: 0;
             z-index: 120;
@@ -150,7 +148,7 @@
         /* ---------- Product detail grid ---------- */
         .product-detail {
             max-width: 1200px;
-            margin: 34px auto 80px;
+            margin: 34px auto 40px;
             padding: 0 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -248,6 +246,137 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        /* ------------------ NEW: Related products (added) ------------------ */
+        .related-wrap {
+            max-width: 1200px;
+            margin: 28px auto 80px;
+            padding: 20px;
+        }
+
+        .related-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .related-title {
+            font-family: "Merriweather", serif;
+            color: #11a0b8;
+            font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+            margin: 0;
+            letter-spacing: .02em;
+        }
+
+        .related-sub {
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .related-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .related-card {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            background: linear-gradient(180deg, #f6f7fb, #ffffff);
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 12px 30px rgba(6, 12, 24, 0.06);
+            border: 1px solid rgba(10, 20, 30, 0.04);
+            transition: transform var(--transition), box-shadow var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .related-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 26px 70px rgba(6, 12, 24, 0.12);
+        }
+
+        .related-thumb {
+            width: 200px;
+            flex: 0 0 200px;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .related-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .related-body h4 {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            color: #0b2340;
+            font-weight: 800;
+        }
+
+        .related-body p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .related-action {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            border: 2px solid rgba(17, 160, 184, 0.12);
+            background: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #0b2340;
+            box-shadow: 0 8px 16px rgba(2, 8, 20, 0.06);
+        }
+
+        /* new view button */
+        .view-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, rgba(17,160,184,0.08), rgba(17,160,184,0.06));
+            border: 1px solid rgba(17,160,184,0.16);
+            color: #0b2340;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+        }
+
+        .view-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(2, 8, 20, 0.08);
+        }
+
+        @media (max-width: 900px) {
+            .related-list {
+                grid-template-columns: 1fr;
+            }
+            .related-thumb {
+                width: 160px;
+                height: 110px;
             }
         }
 
@@ -383,6 +512,23 @@
             </div>
         </div>
     </main>
+
+    <!-- ===================== NEW SECTION: Related Products (auto-populated) ===================== -->
+    <section id="relatedProducts" class="related-wrap" aria-label="Related products">
+        <div class="related-header">
+            <div>
+                <h3 id="relatedMainTitle" class="related-title">Related — Awnings</h3>
+                <div id="relatedMainSub" class="related-sub">Subcategories for the current selection</div>
+            </div>
+            <div aria-hidden="true">
+                <!-- optional action or small note -->
+            </div>
+        </div>
+
+        <div id="relatedList" class="related-list" role="list">
+            <!-- populated by JS -->
+        </div>
+    </section>
 
     <!-- Optional small gallery modal (lightweight) -->
     <div id="lightbox"
@@ -608,7 +754,7 @@
 
         // initial elements
         const catPills = qsa('.cat-pill');
-        const subPills = qsa('.sub-pill');
+        let subPills = qsa('.sub-pill'); // will be rebuilt dynamically
         const heroTitle = qs('#heroTitle');
         const pdImg = qs('#pd-img');
         const pdTitle = qs('#pd-title');
@@ -618,6 +764,11 @@
         const lbImg = qs('#lbImg');
         const lbClose = qs('#lbClose');
         const galleryBtn = qs('#galleryBtn');
+
+        // Related elements
+        const relatedMainTitle = qs('#relatedMainTitle');
+        const relatedMainSub = qs('#relatedMainSub');
+        const relatedList = qs('#relatedList');
 
         // set initial active keys
         let activeMain = 'awnings';
@@ -629,21 +780,17 @@
             const qMain = params.get('main');
             const qSub = params.get('sub');
 
-            // if main from URL exists in DATA, use it
             if (qMain && DATA[qMain]) {
                 activeMain = qMain;
-                // choose this sub if valid, otherwise fallback handled by ensureActiveSub / setActiveMain
                 activeSub = ensureActiveSub(qMain, qSub);
             }
         }
-
 
         // ensure activeSub exists for the activeMain (fallback)
         function ensureActiveSub(main, maybeSub) {
             const subs = DATA[main] && DATA[main].subs ? Object.keys(DATA[main].subs) : [];
             if (subs.length === 0) return null;
             if (maybeSub && subs.includes(maybeSub)) return maybeSub;
-            // prefer first declared
             return subs[0];
         }
 
@@ -675,21 +822,20 @@
                 btn.addEventListener('click', () => {
                     setActiveSub(sKey);
                 });
-                // keyboard support: Enter/Space
                 btn.addEventListener('keydown', (ev) => {
                     if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); btn.click(); }
                 });
                 subTabWrap.appendChild(btn);
             });
 
+            // refresh subPills reference
+            subPills = qsa('.sub-pill');
+
             // choose active sub (keep previous if available)
             activeSub = ensureActiveSub(key, activeSub) || Object.keys(subs)[0];
-            // update sub pills variable after building
-            const freshSubPills = qsa('.sub-pill');
-            // set active style
-            freshSubPills.forEach(btn => btn.classList.toggle('active', btn.dataset.sub === activeSub));
-            // now update product detail
+            subPills.forEach(btn => btn.classList.toggle('active', btn.dataset.sub === activeSub));
             updateDetail();
+            renderRelated(); // update related list when main changes
         }
 
         // update UI for selected sub item
@@ -704,24 +850,110 @@
                 p.setAttribute('aria-selected', String(is));
             });
             updateDetail();
+            renderRelated(); // refresh related after changing sub so header excludes the active sub
         }
 
         // animate & update detail panel with data
         function updateDetail() {
             const item = (DATA[activeMain] && DATA[activeMain].subs && DATA[activeMain].subs[activeSub]) || null;
             if (!item) return;
-            // fade effect: add class then update inside small timeout for smoothness
             productDetail.classList.remove('fade-in');
             void productDetail.offsetWidth; // reflow to restart animation
             pdImg.src = item.img;
             pdImg.alt = item.title;
             pdTitle.textContent = item.title;
             pdDesc.textContent = item.desc;
-            // small animation
             productDetail.classList.add('fade-in');
-            // update lightbox image too
             lbImg.src = item.img;
             lbImg.alt = item.title + " gallery";
+        }
+
+        // ---------- NEW: render related products (title + subtitles) ----------
+        function renderRelated() {
+            const payload = DATA[activeMain];
+            if (!payload) return;
+            relatedMainTitle.textContent = `Related — ${payload.title || activeMain}`;
+
+            // build sub-list excluding currently active sub to avoid repetition in header
+            const subsObj = payload.subs || {};
+            const allKeys = Object.keys(subsObj || {});
+            const subNamesForHeader = allKeys
+                .filter(k => k !== activeSub) // exclude active sub
+                .map(k => subsObj[k].title)
+                .join(' • ');
+            relatedMainSub.textContent = subNamesForHeader || '';
+
+            // build cards: show sub-items excluding the activeSub (so we don't duplicate the main product)
+            relatedList.innerHTML = ''; // clear
+
+            const keys = allKeys.filter(k => k !== activeSub);
+            // show up to 4 related items (adjust as needed)
+            const showKeys = keys.slice(0, 4);
+
+            showKeys.forEach(key => {
+                const item = subsObj[key];
+                const card = document.createElement('article');
+                card.className = 'related-card';
+                card.setAttribute('role', 'listitem');
+
+                const thumb = document.createElement('div');
+                thumb.className = 'related-thumb';
+                const img = document.createElement('img');
+                img.src = item.img;
+                img.alt = item.title;
+                thumb.appendChild(img);
+
+                const body = document.createElement('div');
+                body.className = 'related-body';
+                const h4 = document.createElement('h4');
+                h4.textContent = item.title;
+                const p = document.createElement('p');
+                // subtitle: first 10-12 words of description
+                const words = (item.desc || '').split(/\s+/).slice(0, 12).join(' ');
+                p.textContent = words + ((item.desc || '').split(/\s+/).length > 12 ? '…' : '');
+
+                body.appendChild(h4);
+                body.appendChild(p);
+
+                // view button (explicit action)
+                const viewBtn = document.createElement('button');
+                viewBtn.className = 'view-btn';
+                viewBtn.type = 'button';
+                viewBtn.textContent = 'View';
+                viewBtn.setAttribute('aria-label', `View ${item.title}`);
+                viewBtn.addEventListener('click', (ev) => {
+                    ev.stopPropagation();
+                    // set the main/sub and scroll into view
+                    // if main is different, setActiveMain first (keeps UI consistent)
+                    if (activeMain !== activeMain) {
+                        // (not applicable here — activeMain is already the same)
+                    }
+                    setActiveSub(key);
+                    // small delay to ensure UI updated before scrolling
+                    setTimeout(() => {
+                        const top = productDetail.getBoundingClientRect().top + window.scrollY - 24;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }, 60);
+                });
+
+                // place view button to right (inside a small wrapper)
+                const bodyWrap = document.createElement('div');
+                bodyWrap.style.display = 'flex';
+                bodyWrap.style.flexDirection = 'column';
+                bodyWrap.style.justifyContent = 'space-between';
+                bodyWrap.style.flex = '1';
+                bodyWrap.appendChild(body);
+
+                const btnRow = document.createElement('div');
+                btnRow.style.marginTop = '12px';
+                btnRow.appendChild(viewBtn);
+                bodyWrap.appendChild(btnRow);
+
+                card.appendChild(thumb);
+                card.appendChild(bodyWrap);
+
+                relatedList.appendChild(card);
+            });
         }
 
         // ---------- event wiring ----------
@@ -730,7 +962,6 @@
             p.addEventListener('click', () => {
                 const main = p.dataset.main;
                 setActiveMain(main);
-                // focus first sub for keyboard users
                 setTimeout(() => { qs('.sub-pill')?.focus(); }, 120);
             });
             p.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); p.click(); } });
@@ -744,7 +975,6 @@
         // gallery open
         galleryBtn?.addEventListener('click', () => {
             lightbox.style.display = 'flex';
-            // allow closing by ESC
             document.addEventListener('keydown', handleEsc);
         });
         lbClose?.addEventListener('click', closeLightbox);
@@ -758,23 +988,20 @@
             document.removeEventListener('keydown', handleEsc);
         }
 
-        // Enquire CTA (simple could open contact form or scroll)
+        // Enquire CTA (simple navigation to contact with interest)
         qs('#enquireBtn').addEventListener('click', () => {
-            // small micro-interaction: copy selected product info to clipboard as demo, then show alert
             const title = pdTitle.textContent;
-            // you can instead open contact modal or navigate to contact page
-            // navigator.clipboard.writeText(`${title} — I'm interested`).then(() => {
-            //   alert('Product copied to clipboard (demo): ' + title);
-            // });
             window.location.href = 'contact.html?interest=' + encodeURIComponent(title);
         });
 
+        // set footer year
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
         // INITIALIZE page with defaults
         (function init() {
-            // ensure assets exist: if not, placeholder fallback
-            // set active main/sub and reflect UI
-            applyQueryDefaults();      // read ?main=&sub=
+            applyQueryDefaults();
             setActiveMain(activeMain);
+            renderRelated();
         })();
     </script>
 </body>
