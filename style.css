@@ -136,8 +136,11 @@ h2 {
 }
 
 @media (max-width:992px) {
+
+    /* Keep the menu in DOM (flex) so we can animate children.
+       We control visibility with opacity/transform/pointer-events. */
     .nav-menu {
-        display: none;
+        display: flex;
         position: absolute;
         top: 70px;
         left: 0;
@@ -145,18 +148,58 @@ h2 {
         background: rgb(19, 68, 110);
         z-index: 9999;
         flex-direction: column;
-        animation: slideDown 0.35s ease forwards;
+        align-items: center;
+        /*center items horizontally */
+        padding: 8px 0 18px;
+        /* vertical padding for touch area */
+        box-sizing: border-box;
+        gap: 0;
+        height: 100vh;
+        width: 80%;
+        /* start closed */
+        opacity: 0;
+        transform: translateX(-6%);
+        pointer-events: none;
+        transition: opacity 360ms cubic-bezier(.2, .9, .25, 1), transform 360ms cubic-bezier(.2, .9, .25, 1);
     }
 
+    /* visually nicer links on mobile */
     .nav-menu a {
         color: white;
-    }
-
-    .nav-menu li {
+        display: block;
         width: 100%;
         text-align: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 14px 0;
+        padding: 40px 20px;
+    }
+
+    /* each li stretches full width */
+    .nav-menu li {
+        width: 100%;
+        list-style: none;
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        box-sizing: border-box;
+        /* starting position for per-item slide animation */
+        transform: translateX(-18px);
+        opacity: 0;
+        /* transition uses per-item delay var --delay set by JS */
+        transition: transform 360ms cubic-bezier(.2, .9, .25, 1) var(--delay, 0ms),
+            opacity 360ms cubic-bezier(.2, .9, .25, 1) var(--delay, 0ms);
+    }
+
+    /* toggle shows the menu and enables pointer-events */
+    .nav-menu.open {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+        box-shadow: 0 24px 60px rgba(2, 8, 20, 0.14);
+        padding-bottom: 200px;
+    }
+
+    /* each item when menu open becomes visible and slides to 0 */
+    .nav-menu.open li {
+        transform: translateX(0);
+        opacity: 1;
     }
 
     .nav-toggle {

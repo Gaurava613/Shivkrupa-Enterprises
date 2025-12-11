@@ -370,29 +370,70 @@
             box-shadow: 0 12px 32px rgba(2, 8, 20, 0.08);
         }
 
+        /* ---------------- RESPONSIVE ADJUSTMENTS ---------------- */
+        /* tablets and smaller: stack product-detail and tighten spacing */
+        @media (max-width: 992px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+                gap: 22px;
+                margin-top: 18px;
+                padding: 0 14px;
+            }
+            .p-img img {
+                height: 360px;
+            }
+            .related-wrap {
+                padding: 14px;
+            }
+            .related-title {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* related list single column and cards stacked */
         @media (max-width: 900px) {
             .related-list {
                 grid-template-columns: 1fr;
             }
+
+            .related-card {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 12px;
+            }
+
             .related-thumb {
-                width: 160px;
-                height: 110px;
+                width: 100%;
+                height: 180px;
+                flex: 0 0 auto;
+                border-radius: 10px;
+                margin-bottom: 12px;
+            }
+
+            .related-body h4 {
+                font-size: 1.06rem;
+            }
+
+            .related-action {
+                position: static;
+                margin-left: auto;
+                margin-top: 8px;
+                width: auto;
+                height: auto;
+                padding: 6px 8px;
+                border-radius: 8px;
+                border: 0;
+                box-shadow: none;
+                background: transparent;
+                color: var(--muted);
+            }
+
+            .view-btn {
+                align-self: flex-start;
             }
         }
 
-        /* responsive */
-        @media (max-width: 992px) {
-            .product-detail {
-                grid-template-columns: 1fr;
-                gap: 24px;
-                margin-top: 24px;
-            }
-
-            .p-img img {
-                height: 340px;
-            }
-        }
-
+        /* phones: tighter sizes */
         @media (max-width: 520px) {
             .hero-title {
                 font-size: 1.6rem;
@@ -403,9 +444,27 @@
                 border-radius: 12px;
             }
 
+            .related-thumb {
+                height: 160px;
+            }
+
+            .view-btn {
+                padding: 8px 10px;
+                font-size: 0.95rem;
+            }
+
+            .cat-pill {
+                padding: 8px 14px;
+                font-size: 0.95rem;
+            }
+
             .sub-pill {
-                padding: 8px 12px;
+                padding: 6px 12px;
                 font-size: 0.92rem;
+            }
+
+            .related-wrap {
+                margin-bottom: 48px;
             }
         }
 
@@ -748,6 +807,159 @@
             }
         };
 
+
+           (function () {
+            const navToggle = document.getElementById('navToggle');
+            const mainNav = document.getElementById('mainNav'); // ul.nav-menu
+            if (!navToggle || !mainNav) return;
+
+            // config
+            const MOBILE_BREAK = 992; // px
+            let docClickInstalled = false;
+            let resizeTimer = null;
+
+            // initial ARIA
+            navToggle.setAttribute('aria-expanded', 'false');
+            navToggle.setAttribute('aria-controls', 'mainNav');
+
+            // helper: get li elements only
+            function getNavItems() {
+                return Array.from(mainNav.children).filter(n => n.nodeType === 1 && (n.tagName === 'LI' || n.matches('li')));
+            }
+
+            // apply per-item delays for nice stagger
+            function applyStagger() {
+                const items = getNavItems();
+                items.forEach((li, i) => {
+                    const delay = 60 + i * 60; // tweak: base + step
+                    li.style.setProperty('--delay', delay + 'ms');
+                });
+            }
+
+            function clearStagger() {
+                getNavItems().forEach(li => li.style.removeProperty('--delay'));
+            }
+
+            // set aria-hidden for nav when closed on mobile (helps screenreaders)
+            function setNavHidden(hidden) {
+                mainNav.setAttribute('aria-hidden', String(hidden));
+            }
+
+            // open/close
+            function openMenu() {
+                // only on mobile widths
+                if (window.innerWidth > MOBILE_BREAK) return;
+                applyStagger();
+                // ensure CSS sees the delay before we add open
+                requestAnimationFrame(() => {
+                    mainNav.classList.add('open');
+                    setNavHidden(false);
+                    navToggle.setAttribute('aria-expanded', 'true');
+
+                    // focus first link for keyboard users (don't scroll)
+                    const firstLink = mainNav.querySelector('a, button, [tabindex="0"]');
+                    if (firstLink) firstLink.focus({ preventScroll: true });
+                });
+
+                // install doc click once
+                if (!docClickInstalled) {
+                    document.addEventListener('click', onDocClick);
+                    docClickInstalled = true;
+                }
+                document.addEventListener('keydown', onKeyDown);
+            }
+
+            function closeMenu({ returnFocus = true } = {}) {
+                mainNav.classList.remove('open');
+                setNavHidden(true);
+                navToggle.setAttribute('aria-expanded', 'false');
+                clearStagger();
+
+                document.removeEventListener('keydown', onKeyDown);
+                if (docClickInstalled) {
+                    document.removeEventListener('click', onDocClick);
+                    docClickInstalled = false;
+                }
+
+                // optional return focus to toggle
+                if (returnFocus) {
+                    navToggle.focus({ preventScroll: true });
+                }
+            }
+
+            function toggleMenu() {
+                if (mainNav.classList.contains('open')) closeMenu();
+                else openMenu();
+            }
+
+            // event handlers
+            function onKeyDown(e) {
+                if (e.key === 'Escape') closeMenu();
+            }
+
+            function onDocClick(e) {
+                // close only if click outside both nav and toggle
+                if (!mainNav.contains(e.target) && !navToggle.contains(e.target)) {
+                    closeMenu();
+                }
+            }
+
+            // wire toggle button
+            navToggle.addEventListener('click', (ev) => {
+                ev.stopPropagation();
+                toggleMenu();
+            });
+
+            navToggle.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Enter' || ev.key === ' ') {
+                    ev.preventDefault();
+                    navToggle.click();
+                }
+            });
+
+            // close when any nav link clicked (mobile). Use capture to catch dynamic links too.
+            mainNav.addEventListener('click', (ev) => {
+                const a = ev.target.closest('a');
+                if (!a) return;
+                // Only close automatically on mobile - desktop usually keeps nav visible.
+                if (window.innerWidth <= MOBILE_BREAK) {
+                    // allow navigation to happen, but close the menu quickly
+                    setTimeout(() => closeMenu({ returnFocus: false }), 220);
+                }
+            }, true);
+
+            // handle window resize: debounce and reset state when crossing breakpoint
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    const isMobile = window.innerWidth <= MOBILE_BREAK;
+                    // if moved to desktop, ensure menu is closed and cleaned
+                    if (!isMobile && mainNav.classList.contains('open')) {
+                        closeMenu();
+                    }
+                    // if moved to mobile and some ARIA missing, ensure hidden state is correct
+                    if (isMobile && !mainNav.classList.contains('open')) {
+                        setNavHidden(true);
+                        navToggle.setAttribute('aria-expanded', 'false');
+                        clearStagger();
+                    }
+                    // also remove any inline --delay if switching contexts
+                    if (!isMobile) clearStagger();
+                }, 120);
+            });
+
+            // initial setup: set aria-hidden based on starting width
+            if (window.innerWidth <= MOBILE_BREAK) {
+                setNavHidden(true);
+            } else {
+                setNavHidden(false);
+                // ensure mobile-specific classes cleared on desktop load
+                mainNav.classList.remove('open');
+                clearStagger();
+            }
+
+        })();
+
         // ---------- Helpers ----------
         function qs(sel, ctx = document) { return ctx.querySelector(sel); }
         function qsa(sel, ctx = document) { return Array.from(ctx.querySelectorAll(sel)); }
@@ -924,10 +1136,6 @@
                 viewBtn.addEventListener('click', (ev) => {
                     ev.stopPropagation();
                     // set the main/sub and scroll into view
-                    // if main is different, setActiveMain first (keeps UI consistent)
-                    if (activeMain !== activeMain) {
-                        // (not applicable here — activeMain is already the same)
-                    }
                     setActiveSub(key);
                     // small delay to ensure UI updated before scrolling
                     setTimeout(() => {
