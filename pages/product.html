@@ -18,27 +18,35 @@
     <link rel="stylesheet" href="/style.css">
 
     <style>
-        :root {
-            --bg-dark: #0b1220;
-            --accent-gold: #ecd332;
-            --accent-gold-2: #fbd382;
-            --card-radius: 16px;
-            --muted: #596376;
-            --ink: #0a2133;
-            --glass: rgba(255, 255, 255, 0.06);
-            --transition: 220ms cubic-bezier(.2, .9, .25, 1);
-        }
+       :root {
+        --bg-dark: #0b1220;
+        --accent-gold: #ecd332;
+        --accent-gold-2: #fbd382;
+        --card-radius: 16px;
+        --muted: #a1a1a1; /* Adjusted for dark bg readability */
+        --ink: #ffffff;    /* Changed text to white for dark bg */
+        --glass: rgba(255, 255, 255, 0.06);
+        --transition: 220ms cubic-bezier(.2, .9, .25, 1);
+        --grid-color: rgba(255, 255, 255, 0.05); /* Grid color */
+                    --gold: #FFC300;
 
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-            color: var(--ink);
-            background: #fbfcfd;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        color: var(--ink);
+        /* --- UPDATED TO DARK BLUE GRID BACKGROUND --- */
+        background-color: #001524;
+        background-image: 
+            linear-gradient(var(--grid-color) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+        background-size: 40px 40px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
         /* ---------- Top category nav ---------- */
         .top-category-nav {
@@ -96,7 +104,7 @@
         .product-hero {
             text-align: center;
             padding: 40px 12px 10px;
-            background: linear-gradient(180deg, rgba(250, 248, 246, 1), rgba(248, 249, 252, 1));
+            /* background: linear-gradient(180deg, rgba(250, 248, 246, 1), rgba(248, 249, 252, 1)); */
             border-bottom: 1px solid rgba(10, 20, 30, 0.03);
         }
 
@@ -187,11 +195,11 @@
             font-family: "Merriweather", serif;
             font-size: clamp(1.25rem, 2.4vw, 1.9rem);
             margin: 0 0 12px;
-            color: #0b2133;
+            color: #ffffff;
         }
 
         .p-info p {
-            color: var(--muted);
+            /* color: var(--muted); */
             line-height: 1.7;
             margin: 0 0 22px;
             font-size: 0.98rem;
@@ -206,8 +214,8 @@
         }
 
         .badge-soft {
-            background: linear-gradient(180deg, rgba(13, 110, 253, 0.06), rgba(111, 60, 255, 0.03));
-            color: #0b2340;
+            background: linear-gradient(180deg, rgba(169, 201, 249, 0.564), rgba(111, 60, 255, 0.03));
+            /* color: #0b2340; */
             padding: 8px 12px;
             border-radius: 10px;
             font-weight: 700;
@@ -508,13 +516,12 @@
     </nav>
 
     <!-- small hero for About page -->
-    <section class="mini-hero mini-hero--about" aria-labelledby="about-hero-title" role="banner">
-        <img src="/assets/hero-img/product-bg.png" class="mini-hero__bg" style="width: 100%" />
-
-        <div class="mini-hero__inner container">
-            <h1 id="about-hero-title" class="mini-hero__title"> Our Products</h1>
+     <header class="mini-hero">
+        <div class="hero-square-box">
+            <span class="text-white-50 fw-bold d-block mb-2" style="letter-spacing: 4px;">SINCE 2011</span>
+            <h1 class="display-3 text-white fw-bold mb-0" style="font-family: 'Merriweather', serif;">OUR LEGACY</h1>
         </div>
-    </section>
+    </header>
 
     <!-- TOP CATEGORY BAR -->
     <header class="top-category-nav" role="navigation" aria-label="Main product categories">

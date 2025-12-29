@@ -553,131 +553,85 @@ const IMAGES = [
 })();
 
 /* ---------------- TESTIMONIALS (guarded) ---------------- */
-if (document.getElementById('testimonialTrack')) {
-  (function () {
-    const testimonials = [
-      { name: "Nikhil Agarwal", role: "Founder", message: "Nirvista transformed our payments infrastructure with a seamless UPI + Wallet system. Their fintech expertise helped us go live 3 weeks ahead of schedule.", avatar: "./assets/user1.jpg" },
-      { name: "Aarav Mehta", role: "Founder, GreenLeaf Organics", message: "The custom eco-friendly boxes have completely elevated our unboxing experience. The quality, print and finish are all top-notch.", avatar: "./assets/user2.jpg" },
-      { name: "Sarah Mitchell", role: "CTO", message: "Their AI team built us a scalable prediction system that improved appointment forecasting — reduced no-shows and increased utilization.", avatar: "./assets/user3.jpg" },
-      { name: "Rahul Verma", role: "Owner, BrewBox Coffee", message: "Sturdy, stylish and on-brand. Our customers constantly compliment the packaging. It really helps us stand out on the shelf.", avatar: "./assets/user4.jpg" },
-      { name: "Simran Kaur", role: "CEO, NatureDrops", message: "From samples to final delivery, everything was handled smoothly. The team gave great suggestions for materials and finishes.", avatar: "./assets/user5.jpg" }
-    ];
+const testimonialData = [
+    { name: "Nikhil Agarwal", role: "Founder", message: "Nirvista transformed our payments infrastructure with a seamless UPI + Wallet system.", avatar: "./assets/user1.jpg" },
+    { name: "Aarav Mehta", role: "Founder, GreenLeaf Organics", message: "The custom eco-friendly boxes have completely elevated our unboxing experience.", avatar: "./assets/user2.jpg" },
+    { name: "Sarah Mitchell", role: "CTO", message: "Their AI team built us a scalable prediction system that improved appointment forecasting.", avatar: "./assets/user3.jpg" },
+    { name: "Rahul Verma", role: "Owner, BrewBox Coffee", message: "Sturdy, stylish and on-brand. Our customers constantly compliment the packaging.", avatar: "./assets/user4.jpg" },
+    { name: "Simran Kaur", role: "CEO, NatureDrops", message: "From samples to final delivery, everything was handled smoothly.", avatar: "./assets/user5.jpg" }
+];
 
-    const VISIBLE = 3;
-    let index = 0;
-    const track = document.getElementById('testimonialTrack');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const dotsWrap = document.getElementById('testDots');
-    const autoplay = true;
-    const AUTOPLAY_MS = 4000;
-    let autoplayTimer = null;
+const track = document.getElementById('testimonialTrack');
+const dotsWrap = document.getElementById('testDots');
+let currentIndex = 0;
 
-    function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]); }
-
-    function renderCards() {
-      track.innerHTML = '';
-      testimonials.forEach((t, i) => {
-        const card = document.createElement('article');
-        card.className = 'testimonial-card';
-        card.dataset.idx = i;
-        card.innerHTML = `
-          <div class="test-quote-mark">“</div>
-          <div class="test-footer">
-            <div class="test-meta" style="display:flex; flex-direction:row; gap:30px"; alignment-items:center; justify-content:space-between>
-              <div class="test-avatar" style="height:40px; width:40px; border-radius:100%; backbroud-color:red">
-              <img src="./assets/user.png" alt="${escapeHtml(t.name)}" style="height:30px"; border-radius:100%>
-              </div>
-              <div style="text-align:left">
-                <div class="test-name">${escapeHtml(t.name)}</div>
-                <div class="test-role" style="font-size:14px; color:gray">${escapeHtml(t.role)}</div>
-              </div>
-                          <div class="test-stars" style="color:#d2c91a">★★★★★</div>
-
+function initTestimonials() {
+    // 1. Render Cards
+    track.innerHTML = testimonialData.map((t, i) => `
+        <article class="testimonial-card" data-index="${i}">
+            <div class="test-quote-mark">“</div>
+            <div class="test-meta" style="display:flex; align-items:center; gap:15px;">
+                <div style="width:50px; height:50px; border-radius:50%; background:#334; overflow:hidden;">
+                    <img src="./assets/user.png" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div>
+                    <div class="test-name" style="color:white; font-weight:700;">${t.name}</div>
+                    <div class="test-role" style="color:var(--accent-blue); font-size:12px;">${t.role}</div>
+                </div>
+                <div style="margin-left:auto; color:#FFD700;">★★★★★</div>
             </div>
-          </div>
-          <p class="testimonial-message">${escapeHtml(t.message)}</p>
-          
-          <div class="score-badge" aria-hidden="true">
-          <img src="./assets/quote.png" style="height:30px" />
-          </div>
-        `;
-        track.appendChild(card);
-      });
-      renderDots();
-      updateLayout();
-    }
+            <p class="testimonial-message">${t.message}</p>
+        </article>
+    `).join('');
 
-    function renderDots() {
-      dotsWrap.innerHTML = '';
-      for (let i = 0; i < testimonials.length; i++) {
-        const d = document.createElement('button');
-        d.className = 'dot';
-        d.type = 'button';
-        d.dataset.idx = i;
-        d.addEventListener('click', () => { goTo(i); restartAutoplay(); });
-        dotsWrap.appendChild(d);
-      }
-    }
+    // 2. Render Dots
+    dotsWrap.innerHTML = testimonialData.map((_, i) => `<button class="dot" onclick="goTo(${i})"></button>`).join('');
 
-    function getCardWidth() {
-      const card = track.querySelector('.testimonial-card');
-      if (!card) return 360;
-      return card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).gap || 28);
-    }
-
-    function updateLayout() {
-      const cards = Array.from(track.children);
-      if (!cards.length) return;
-      const total = cards.length;
-      const activeIndex = index + Math.floor(VISIBLE / 2);
-      const safeActive = ((activeIndex % total) + total) % total;
-
-      const viewport = document.querySelector('.testimonial-window');
-      const viewportWidth = viewport.getBoundingClientRect().width;
-      const cardWidth = track.children[0].getBoundingClientRect().width;
-      const gap = parseFloat(getComputedStyle(track).gap) || 28;
-      const itemTotal = cardWidth + gap;
-
-      const translateX = (viewportWidth / 2) - (itemTotal * safeActive) - (cardWidth / 2);
-      track.style.transform = `translateX(${translateX}px)`;
-
-      cards.forEach((c, i) => {
-        c.classList.remove('active', 'side');
-        if (i === safeActive) c.classList.add('active');
-        else if (i === safeActive - 1 || i === safeActive + 1) c.classList.add('side');
-      });
-
-      cards.forEach(c => {
-        const badge = c.querySelector('.score-badge');
-        if (!badge) return;
-        if (c.classList.contains('active')) badge.style.display = 'flex';
-        else badge.style.display = 'none';
-      });
-
-      Array.from(dotsWrap.children).forEach((d, i) => d.classList.toggle('active', i === safeActive));
-    }
-
-    function next() { index = (index + 1) % testimonials.length; updateLayout(); }
-    function prev() { index = (index - 1 + testimonials.length) % testimonials.length; updateLayout(); }
-    function goTo(i) { index = (i - Math.floor(VISIBLE / 2) + testimonials.length) % testimonials.length; updateLayout(); }
-
-    function startAutoplay() { if (!autoplay) return; stopAutoplay(); autoplayTimer = setInterval(() => next(), AUTOPLAY_MS); }
-    function stopAutoplay() { if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; } }
-    function restartAutoplay() { stopAutoplay(); startAutoplay(); }
-
-    prevBtn && prevBtn.addEventListener('click', () => { prev(); restartAutoplay(); });
-    nextBtn && nextBtn.addEventListener('click', () => { next(); restartAutoplay(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') prev(); if (e.key === 'ArrowRight') next(); });
-
-    let resizeTimer = null;
-    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(updateLayout, 90); });
-
-    renderCards();
-    goTo(0);
-    startAutoplay();
-  })();
+    updateSlider();
 }
+
+function updateSlider() {
+    const cards = document.querySelectorAll('.testimonial-card');
+    const dots = document.querySelectorAll('.dot');
+    const windowWidth = document.querySelector('.testimonial-window').offsetWidth;
+    const cardWidth = cards[0].offsetWidth;
+    const gap = 30;
+
+    // Calculate center position
+    const translateX = (windowWidth / 2) - (currentIndex * (cardWidth + gap)) - (cardWidth / 2);
+    track.style.transform = `translateX(${translateX}px)`;
+
+    // Update classes
+    cards.forEach((card, i) => {
+        card.classList.toggle('active', i === currentIndex);
+    });
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+    });
+}
+
+function next() {
+    currentIndex = (currentIndex + 1) % testimonialData.length;
+    updateSlider();
+}
+
+function prev() {
+    currentIndex = (currentIndex - 1 + testimonialData.length) % testimonialData.length;
+    updateSlider();
+}
+
+function goTo(i) {
+    currentIndex = i;
+    updateSlider();
+}
+
+// Event Listeners
+document.getElementById('nextBtn').addEventListener('click', next);
+document.getElementById('prevBtn').addEventListener('click', prev);
+window.addEventListener('resize', updateSlider);
+
+// Initialize
+initTestimonials();
 
 /* ---------------- ANIMATE ON SCROLL (IntersectionObserver) ---------------- */
 (function scrollAnimateInit() {

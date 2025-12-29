@@ -14,6 +14,12 @@
         href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&family=Poppins:wght@400;600;700&display=swap"
         rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=BBH+Bogle&family=Baloo+Paaji+2:wght@400..800&family=Bebas+Neue&family=Rubik:ital,wght@0,300..900;1,300..900&family=Supermercado+One&display=swap"
+        rel="stylesheet">
+
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -234,192 +240,230 @@
 
     <!-- HERO (fixed markup) -->
     <!-- (kept exactly as you had, just skipped here for brevity) -->
-
     <section class="tensile-hero">
-        <div class="tensile-hero-inner container">
-            <!-- LEFT: TEXT -->
-            <div class="tensile-hero-copy">
-                <p class="hero-kicker" data-aos="fade-up">Your Concept • Our Creation</p>
-                <h1 class="hero-heading" data-aos="fade-up" data-aos-delay="100">
-                    Let’s Shape Iconic <br /> Tensile Spaces Together
+        <div class="hero-bg-glow"></div>
+        <div class="container hero-inner">
+            <div class="hero-text-side">
+                <div class="hero-badge">
+                    <span class="pulse-dot"></span>
+                    <p class="hero-kicker">Visionary Engineering</p>
+                </div>
+
+                <h1 class="hero-title">
+                    Let’s Shape <span class="text-gradient">Iconic</span> <br>
+                    Tensile Spaces
                 </h1>
 
-                <p class="hero-lead" data-aos="fade-up" data-aos-delay="200">
-                    Share your vision, model or sketch…
+                <p class="hero-lead">
+                    Transforming engineering models into structural landmarks with over 14 years of precision
+                    excellence.
                 </p>
 
-            </div>
-
-            <!-- RIGHT: 3D / IMAGE STACK -->
-            <div class="tensile-hero-visual" data-aos="fade-left" data-aos-delay="300">
-
-
-                <div class="hero-orbit-frame">
-                    <!-- slide 1: 3D model of the scale concept (2nd image idea) -->
-                    <img src="/assets/hero-img/hero-img-1.png" alt="3D concept model of tensile structure"
-                        class="hero-shot is-active" />
-
-                    <!-- slide 2: 3D model of the night structure -->
-                    <img src="/assets/hero-img/hero-img-2.png" alt="Night-time 3D render of tensile structure"
-                        class="hero-shot" />
-
-                    <!-- small step label -->
-                    <div class="hero-step-pill">
-                        <span id="heroStepLabel">Concept Model</span>
-                    </div>
+                <div class="hero-actions">
+                    <button type="button" class="btn-primary" onclick="window.location.href='#gallery'">
+                        Explore Our Gallery
+                    </button>
                 </div>
-
             </div>
-        </div>
-    </section>
 
-    <!-- ABOUT SECTION -->
-    <section id="about" class="about-section ">
-        <div class="container">
-            <div class="row g-4 align-items-center">
-                <!-- Left: image -->
-                <div class="col-lg-6">
-                    <section id="tensile-3d-section" class="animate-on-scroll">
-                        <div class="tensile-3d-wrapper">
-                            <img id="tensile-3d-img" src="./assets/img3d.png" alt="Tensile 3D render">
+            <div class="hero-visual-side">
+                <div class="architectural-stage">
+                    <div class="img-wrapper active" id="beforeImg">
+                        <img src="/assets/hero-img/hero-img-1.png" alt="Concept">
+                    </div>
+                    <div class="img-wrapper" id="afterImg">
+                        <img src="/assets/hero-img/hero-img-2.png" alt="Reality">
+                    </div>
+
+                    <div class="status-pill">
+                        <div class="pill-content">
+                            <strong id="statusText">Phase 01: Concept</strong>
                         </div>
-                    </section>
-                </div>
-
-                <!-- Right: content -->
-                <div class="about-card col-lg-6 animate-on-scroll">
-                    <h2 class="mb-3">About Shivkrupa Enterprises</h2>
-                    <p class="lead mb-3" style="color: #9c9b9b;">
-                        Since 2011, Shivkrupa Enterprises has been delivering high-quality tensile structures,
-                        retractable awnings and car parking sheds across residential and commercial projects.
-                        We focus on durable materials, precise engineering and timely installation.
-                    </p>
-
-                    <!-- CTAs -->
-                    <div class="d-flex flex-wrap gap-2">
-                        <a href="/pages/about.html" class="btn btn-lg gradient-btn about-view-btn">View More</a>
+                        <div class="timer-track">
+                            <div class="timer-bar"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- ====================== ABOUT SECTION =================== -->
+    <section id="about" class="about-section position-relative overflow-hidden">
+        <div class="bg-grid-overlay"></div>
+        <div class="bg-blur-circle-1"></div>
 
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row g-5 align-items-center">
 
+                <div class="col-lg-6">
+                    <div class="visual-wrapper">
+                        <div class="scale-wrapper">
+                            <img id="tensile-3d-img" src="./assets/img3d.png" alt="Tensile 3D render" class="img-fluid">
+                        </div>
+
+                        <div class="experience-pill-floating">
+                            <span class="pill-num">14+</span>
+                            <div class="pill-text">
+                                <strong>Years</strong>
+                                <span>of Innovation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="about-text-wrapper">
+                        <span class="badge-accent mb-3">Since 2011</span>
+                        <h2 class="display-5 fw-bold text-white mb-4">
+                            Mastering <span class="text-info">Modern Shelters</span>
+                        </h2>
+
+                        <p class="text-light-50 mb-5 fs-5 hero-lead">
+                            Shivkrupa Enterprises engineers high-performance tensile structures that blend technical
+                            precision with architectural elegance.
+                        </p>
+
+                        <div class="row g-4 mb-5">
+                            <div class="col-6">
+                                <div class="minimal-stat">
+                                    <span class="stat-num text-info">500+</span>
+                                    <span class="stat-label text-white-50">Global Projects</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="minimal-stat">
+                                    <span class="stat-num text-info">100%</span>
+                                    <span class="stat-label text-white-50">Design Accuracy</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="/pages/about.html" class="btn btn-primary premium-btn">
+                            Explore Our Journey <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
     <!-- NUMBERS SECTION -->
-    <section class="stats-sec">
-        <h2 class="stats-heading" style="text-align:center; margin-bottom:24px; ">
-            Key Highlights of Shivkrupa Enterprises
-        </h2>
+    <section class="stats-sec position-relative">
+        <div class="stats-grid-overlay"></div>
 
-
-        <div class="stats-row">
-            <div class="stat animate-on-scroll" data-default-angle="220" data-offset="-18">
-                <span class="ring"></span>
-                <div class="inner">
-                    <div class="col">
-                        <div class="value">14+</div>
-                        <div class="label">Experience</div>
-                    </div>
-                </div>
-                <div class="rotator">
-                    <div class="dot"></div>
-                </div>
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="text-center mb-5">
+                <span class="badge-accent mb-2">Our Impact</span>
+                <h2 class="display-5 fw-bold text-white">Engineering in Numbers</h2>
             </div>
 
-            <div class="stat animate-on-scroll" data-default-angle="20" data-offset="-42">
-                <span class="ring"></span>
-                <div class="inner">
-                    <div class="col">
-                        <div class="value">12+</div>
-                        <div class="label">Products Categories</div>
+            <div class="stats-row">
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-gauge">
+                        <div class="gauge-ring"></div>
+                        <div class="gauge-dot"></div>
+                        <div class="gauge-inner">
+                            <i class="bi bi-clock-history text-info mb-2 fs-3"></i>
+                            <div class="value">14+</div>
+                            <div class="label">Years</div>
+                        </div>
                     </div>
                 </div>
-                <div class="rotator">
-                    <div class="dot"></div>
-                </div>
-            </div>
 
-            <div class="stat animate-on-scroll" data-default-angle="290" data-offset="8">
-                <span class="ring"></span>
-                <div class="inner">
-                    <div class="col">
-                        <div class="value">500+</div>
-                        <div class="label">Installations</div>
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-gauge">
+                        <div class="gauge-ring"></div>
+                        <div class="gauge-dot second"></div>
+                        <div class="gauge-inner">
+                            <i class="bi bi-grid-3x3-gap text-info mb-2 fs-3"></i>
+                            <div class="value">12+</div>
+                            <div class="label">Categories</div>
+                        </div>
                     </div>
                 </div>
-                <div class="rotator">
-                    <div class="dot"></div>
-                </div>
-            </div>
 
-            <div class="stat animate-on-scroll" data-default-angle="60" data-offset="-6">
-                <span class="ring"></span>
-                <div class="inner">
-                    <div class="col">
-                        <div class="value">300+</div>
-                        <div class="label">Happy Clients</div>
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-gauge">
+                        <div class="gauge-ring"></div>
+                        <div class="gauge-dot third"></div>
+                        <div class="gauge-inner">
+                            <i class="bi bi-building-check text-info mb-2 fs-3"></i>
+                            <div class="value">500+</div>
+                            <div class="label">Projects</div>
+                        </div>
                     </div>
                 </div>
-                <div class="rotator">
-                    <div class="dot"></div>
+
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-gauge">
+                        <div class="gauge-ring"></div>
+                        <div class="gauge-dot fourth"></div>
+                        <div class="gauge-inner">
+                            <i class="bi bi-people text-info mb-2 fs-3"></i>
+                            <div class="value">300+</div>
+                            <div class="label">Clients</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- WHY CHOOSE US SECTION -->
-    <section class="why-section" aria-labelledby="why-title">
-        <div class="why-inner container" data-aos="fade-up">
-            <header class="why-header">
-                <h2 id="why-title" class="test-title">Why Choose Us</h2>
+    <section id="why-us" class="why-section position-relative">
+        <div class="why-grid-overlay"></div>
+        <div class="why-blur-circle"></div>
+
+        <div class="container position-relative" style="z-index: 5;">
+            <header class="why-header text-center mb-5 animate-on-scroll">
+                <span class="badge-accent mb-2">The Shivkrupa Edge</span>
+                <h2 class="display-5 fw-bold text-white">Why Architectural Leaders <span class="text-info">Trust
+                        Us</span></h2>
             </header>
 
-            <div class="why-grid">
-                <!-- Card 1 -->
-                <article class="why-card animate-on-scroll" tabindex="0">
-                    <div class="icon-wrap">
-                        <i class="wc-icon ri-award-line"></i>
+            <div class="why-grid-modern">
+                <article class="why-card-modern animate-on-scroll">
+                    <div class="card-glow"></div>
+                    <div class="icon-box-modern">
+                        <i class="ri-award-line"></i>
                     </div>
-                    <h3>Premium Quality</h3>
-                    <p>
-                        Every product is crafted using top-grade materials and strict quality controls—ensuring
-                        unmatched durability and finish.
-                    </p>
-                    <span class="tag">Superior Standards</span>
+                    <div class="card-body-modern">
+                        <span class="card-tag-mini">Quality First</span>
+                        <h3>Premium Grade Materials</h3>
+                        <p>Every structure is crafted using top-tier tensile fabrics and precision-engineered steel for
+                            20+ years of durability.</p>
+                    </div>
                 </article>
 
-                <!-- Card 2 -->
-                <article class="why-card animate-on-scroll" tabindex="0">
-                    <div class="icon-wrap">
-                        <i class="wc-icon ri-team-line"></i>
+                <article class="why-card-modern animate-on-scroll">
+                    <div class="card-glow"></div>
+                    <div class="icon-box-modern">
+                        <i class="ri-settings-3-line"></i>
                     </div>
-                    <h3>Customer-First Approach</h3>
-                    <p>
-                        We analyze exact client requirements and deliver tailor-made solutions with complete
-                        transparency and support.
-                    </p>
-                    <span class="tag">100% Satisfaction</span>
+                    <div class="card-body-modern">
+                        <span class="card-tag-mini">Custom Fit</span>
+                        <h3>Tailor-Made Engineering</h3>
+                        <p>We don't do "one size fits all." Our designers create 3D models specific to your site’s
+                            wind-load and aesthetics.</p>
+                    </div>
                 </article>
 
-                <!-- Card 3 -->
-                <article class="why-card animate-on-scroll" tabindex="0">
-                    <div class="icon-wrap">
-                        <i class="wc-icon ri-truck-line"></i>
+                <article class="why-card-modern animate-on-scroll">
+                    <div class="card-glow"></div>
+                    <div class="icon-box-modern">
+                        <i class="ri-truck-line"></i>
                     </div>
-                    <h3>Fast & Reliable Delivery</h3>
-                    <p>
-                        Our efficient supply chain ensures timely delivery to your doorstep—anywhere across the country.
-                    </p>
-                    <span class="tag">Nationwide Delivery</span>
+                    <div class="card-body-modern">
+                        <span class="card-tag-mini">Pan-India</span>
+                        <h3>Fast & Reliable Execution</h3>
+                        <p>From manufacturing to on-site installation, our streamlined supply chain ensures project
+                            completion on schedule.</p>
+                    </div>
                 </article>
-
-
             </div>
+
         </div>
-
-
     </section>
-
 
     <!-- Product -->
     <section class="product-sec">
@@ -512,42 +556,59 @@
     </section>
 
     <!-- CLIENTS (gallery-style) -->
-    <section class="clients-section" aria-label="Trusted clients">
+    <section class="clients-section position-relative">
+        <div class="clients-glow"></div>
+
         <div class="clients-container">
             <div class="clients-header animate-on-scroll">
-                <h2 class="clients-title">Trusted by brands</h2>
+                <span class="badge-accent mb-2">Our Ecosystem</span>
+                <h2 class="display-6 fw-bold text-white">Trusted by <span class="text-info">Industry Leaders</span></h2>
             </div>
 
-            <div class="clients-slider" id="clientsSlider" aria-hidden="false" aria-label="Client logos slider">
-                <div class="clients-track" id="clientsTrack" role="list">
-                    <!-- Logos will be injected by JS for duplication -->
+            <div class="clients-slider-wrapper">
+                <div class="clients-slider" id="clientsSlider">
+                    <div class="slider-mask-left"></div>
+                    <div class="slider-mask-right"></div>
+
+                    <div class="clients-track" id="clientsTrack" role="list">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- TESTIMONIALS -->
-    <div class="testimonial-sec">
-        <section class="testimonial-wrapper animate-on-scroll">
-            <div class="test-header">
-                <h2 class="test-title">What our customers say</h2>
+    <section class="testimonial-sec position-relative">
+    <div class="test-bg-glow"></div>
+
+    <div class="testimonial-wrapper">
+        <div class="test-header mb-5">
+            <span class="badge-accent mb-2">Voice of Trust</span>
+            <h2 class="test-title display-5 fw-bold text-white">
+                Clients <span class="text-info">Perspective</span>
+            </h2>
+        </div>
+
+        <div class="testimonial-container">
+            <button class="test-arrow-btn prev" id="prevBtn" aria-label="Previous">
+                <i class="ri-arrow-left-s-line"></i>
+            </button>
+
+            <div class="testimonial-window" aria-live="polite">
+                <div class="testimonial-track" id="testimonialTrack">
+                    </div>
             </div>
 
-            <div class="testimonial-container">
-                <button class="test-arrow-btn prev" id="prevBtn" aria-label="Previous testimonials">‹</button>
+            <button class="test-arrow-btn next" id="nextBtn" aria-label="Next">
+                <i class="ri-arrow-right-s-line"></i>
+            </button>
+        </div>
 
-                <div class="testimonial-window" aria-live="polite">
-                    <div class="testimonial-track" id="testimonialTrack"><!-- cards injected by JS --></div>
-                </div>
-
-                <button class="test-arrow-btn next" id="nextBtn" aria-label="Next testimonials">›</button>
-            </div>
-
-            <div class="test-controls">
-                <div class="dots" id="testDots" role="tablist" aria-label="Testimonial pages"></div>
-            </div>
-        </section>
+        <div class="test-controls mt-4">
+            <div class="dots" id="testDots" role="tablist"></div>
+        </div>
     </div>
+</section>
 
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/919921242901" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
@@ -795,43 +856,35 @@
         // add AOS attributes via JS (so we don't touch your HTML)
         // add AOS attributes via JS (NOT for 3D model to avoid conflict)
         (function () {
+            const section = document.querySelector('#about');
+            const model = document.querySelector('#tensile-3d-img');
 
-            // DO NOT apply AOS to 3D section — your custom animation will work
-            // (this is the fix)
+            if (!section || !model) return;
 
-            document.querySelectorAll('.about-card').forEach((el) => {
-                if (!el.hasAttribute('data-aos')) {
-                    el.setAttribute('data-aos', 'fade-left');
-                    el.setAttribute('data-aos-delay', '140');
+            window.addEventListener('scroll', () => {
+                const rect = section.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+
+                // Check if the section is visible
+                if (rect.top < windowHeight && rect.bottom > 0) {
+
+                    // Calculate how far the section has traveled through the viewport (0 to 1)
+                    let scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+
+                    // Clamp value between 0 and 1
+                    scrollProgress = Math.min(Math.max(scrollProgress, 0), 1);
+
+                    // Set your scale range: 
+                    // 0.85 (when appearing) to 1.15 (at peak scroll)
+                    const minScale = 0.85;
+                    const maxScale = 1.15;
+                    const targetScale = minScale + (scrollProgress * (maxScale - minScale));
+
+                    // Apply growth/shrink
+                    model.style.transform = `scale(${targetScale})`;
                 }
             });
-
-            document.querySelectorAll('.stat').forEach((el, i) => {
-                if (!el.hasAttribute('data-aos')) {
-                    el.setAttribute('data-aos', 'zoom-in');
-                    el.setAttribute('data-aos-delay', String(80 + i * 80));
-                }
-            });
-
-            document.querySelectorAll('.product-card').forEach((el, i) => {
-                if (!el.hasAttribute('data-aos')) {
-                    el.setAttribute('data-aos', 'fade-up');
-                    el.setAttribute('data-aos-delay', String(80 + i * 90));
-                }
-            });
-
-            const testWrap = document.querySelector('.testimonial-wrapper');
-            if (testWrap && !testWrap.hasAttribute('data-aos')) {
-                testWrap.setAttribute('data-aos', 'fade-up');
-                testWrap.setAttribute('data-aos-delay', '120');
-            }
-
-            const clientsHead = document.querySelector('.clients-header');
-            if (clientsHead && !clientsHead.hasAttribute('data-aos')) {
-                clientsHead.setAttribute('data-aos', 'fade-up');
-            }
         })();
-
         // hero image auto crossfade + label swap
         (function () {
             const shots = Array.from(document.querySelectorAll('.hero-shot'));
@@ -879,6 +932,44 @@
 
             toReveal.forEach((el) => observer.observe(el));
         })();
+
+        const before = document.getElementById('beforeImg');
+        const after = document.getElementById('afterImg');
+        const statusText = document.getElementById('statusText');
+        const timerBar = document.querySelector('.timer-bar');
+
+        let isBefore = true;
+
+        function switchHero() {
+            // Reset and Restart Timer Bar Animation
+            timerBar.style.transition = 'none';
+            timerBar.style.width = '0%';
+
+            setTimeout(() => {
+                timerBar.style.transition = 'width 2s linear';
+                timerBar.style.width = '100%';
+            }, 50);
+
+            // Toggle Images with smooth morph
+            if (isBefore) {
+                before.classList.add('active');
+                after.classList.remove('active');
+                statusText.innerText = "Phase 01: Concept Model";
+            } else {
+                before.classList.remove('active');
+                after.classList.add('active');
+                statusText.innerText = "Phase 02: On-Site Reality";
+            }
+
+            isBefore = !isBefore;
+        }
+
+        // Initial Call and Interval
+        setInterval(switchHero, 2000);
+        switchHero();
+
+
+        
     </script>
 
 </body>
